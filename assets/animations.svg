@@ -20,7 +20,9 @@
     <rect x="12" y="64" width="34" height="7" rx="2" class="eq"/>
     <line x1="17" y1="71" x2="17" y2="103" class="eqL"/>
     <line x1="41" y1="71" x2="41" y2="103" class="eqL"/>
-    <line x1="108" y1="103" x2="126" y2="103" class="bd"/>
+    <circle cx="81" cy="95" r="5" class="hd">
+      <animate attributeName="cy" dur="2.6s" repeatCount="indefinite" values="95;65;65;95;95" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/>
+    </circle>
     <circle cx="34" cy="48" r="7" class="hd">
       <animate attributeName="cy" dur="2.6s" repeatCount="indefinite" values="48;58;58;48;48" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/>
     </circle>
@@ -41,7 +43,7 @@
   <g transform="translate(220,10)">
     <rect width="200" height="120" rx="8" class="cell"/>
     <line x1="8" y1="105" x2="192" y2="105" class="gnd"/>
-    <line x1="96" y1="103" x2="114" y2="103" class="bd"/>
+    <circle cx="105" cy="71" r="5" class="hd"/>
     <line x1="100" y1="68" x2="104" y2="86" class="bd"/>
     <line x1="104" y1="86" x2="102" y2="103" class="bd"/>
     <circle cx="100" cy="30" r="7" class="hd">
@@ -74,6 +76,7 @@
     <line x1="134" y1="85" x2="134" y2="103" class="eqL"/>
     <circle cx="48" cy="70" r="7" class="hd"/>
     <line x1="60" y1="74" x2="118" y2="74" class="bd"/>
+    <circle cx="118" cy="77" r="4.5" class="hd"/>
     <line x1="118" y1="74" x2="138" y2="88" class="bd"/>
     <line x1="138" y1="88" x2="136" y2="103" class="bd"/>
     <line x1="72" y1="72" x2="80" y2="56" class="bd">
@@ -99,6 +102,7 @@
     </line>
     <circle cx="86" cy="42" r="7" class="hd"/>
     <line x1="95" y1="86" x2="88" y2="52" class="bd"/>
+    <circle cx="90" cy="88" r="5" class="hd"/>
     <line x1="95" y1="86" x2="120" y2="84" class="bd"/>
     <line x1="120" y1="84" x2="118" y2="103" class="bd"/>
     <line x1="90" y1="54" x2="108" y2="32" class="bd" stroke-width="4">
@@ -139,12 +143,13 @@
     <rect x="182" y="52" width="10" height="52" rx="2" class="eq"/>
     <line x1="94" y1="103" x2="101" y2="80" class="bd"/>
     <line x1="108" y1="103" x2="101" y2="80" class="bd"/>
-    <line x1="101" y1="80" x2="103" y2="52" class="bd"/>
-    <circle cx="100" cy="43" r="7" class="hd"/>
+    <line x1="101" y1="80" x2="99" y2="52" class="bd"/>
+    <circle cx="106" cy="80" r="5" class="hd"/>
+    <circle cx="96" cy="43" r="7" class="hd"/>
     <line x1="184" y1="58" x2="94" y2="60" class="acT">
       <animate attributeName="x2" dur="2.6s" repeatCount="indefinite" values="94;68;68;94;94" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/>
     </line>
-    <line x1="103" y1="54" x2="94" y2="60" class="bd" stroke-width="4">
+    <line x1="99" y1="54" x2="94" y2="60" class="bd" stroke-width="4">
       <animate attributeName="x2" dur="2.6s" repeatCount="indefinite" values="94;68;68;94;94" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/>
     </line>
     <circle cx="94" cy="60" r="3.5" class="acF">
@@ -158,20 +163,18 @@
     <rect width="200" height="120" rx="8" class="cell"/>
     <line x1="8" y1="105" x2="192" y2="105" class="gnd"/>
     <rect x="106" y="90" width="56" height="15" rx="2" class="eq"/>
-    <line x1="114" y1="88" x2="100" y2="96" class="bd">
-      <animateTransform attributeName="transform" type="rotate" dur="2.6s" repeatCount="indefinite" values="0 114 88;-25 114 88;-25 114 88;0 114 88;0 114 88" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/>
-    </line>
-    <line x1="108" y1="58" x2="104" y2="88" class="bd">
+    <line x1="106" y1="58" x2="102" y2="90" class="bd">
       <animate attributeName="y1" dur="2.6s" repeatCount="indefinite" values="58;49;49;58;58" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/>
-      <animate attributeName="x2" dur="2.6s" repeatCount="indefinite" values="104;102;102;104;104" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/>
-      <animate attributeName="y2" dur="2.6s" repeatCount="indefinite" values="88;78;78;88;88" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/>
+      <animate attributeName="x2" dur="2.6s" repeatCount="indefinite" values="102;100;100;102;102" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/>
+      <animate attributeName="y2" dur="2.6s" repeatCount="indefinite" values="90;80;80;90;90" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/>
     </line>
     <g>
       <animateTransform attributeName="transform" type="translate" dur="2.6s" repeatCount="indefinite" values="0 0;0 -9;0 -9;0 0;0 0" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/>
-      <line x1="108" y1="58" x2="106" y2="30" class="bd"/>
-      <circle cx="103" cy="21" r="7" class="hd"/>
-      <line x1="107" y1="34" x2="103" y2="58" class="bd" stroke-width="4"/>
-      <circle cx="103" cy="63" r="5.5" class="ac"/>
+      <line x1="106" y1="58" x2="104" y2="30" class="bd"/>
+      <circle cx="111" cy="59" r="5" class="hd"/>
+      <circle cx="101" cy="21" r="7" class="hd"/>
+      <line x1="105" y1="34" x2="101" y2="58" class="bd" stroke-width="4"/>
+      <circle cx="101" cy="63" r="5.5" class="ac"/>
     </g>
     <text x="100" y="134" class="cap">STANDING CALF RAISE</text>
   </g>
@@ -194,6 +197,10 @@
       <animate attributeName="y1" dur="2.6s" repeatCount="indefinite" values="62;82;82;62;62" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/>
       <animate attributeName="y2" dur="2.6s" repeatCount="indefinite" values="34;54;54;34;34" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/>
     </line>
+    <circle cx="101" cy="64" r="5" class="hd">
+      <animate attributeName="cx" dur="2.6s" repeatCount="indefinite" values="101;103;103;101;101" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/>
+      <animate attributeName="cy" dur="2.6s" repeatCount="indefinite" values="64;84;84;64;64" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/>
+    </circle>
     <circle cx="89" cy="26" r="7" class="hd">
       <animate attributeName="cy" dur="2.6s" repeatCount="indefinite" values="26;46;46;26;26" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/>
     </circle>
@@ -214,6 +221,7 @@
     <line x1="44" y1="62" x2="78" y2="96" class="eqL" stroke-width="7"/>
     <circle cx="44" cy="58" r="7" class="hd"/>
     <line x1="76" y1="90" x2="50" y2="66" class="bd"/>
+    <circle cx="72" cy="92" r="5" class="hd"/>
     <polyline points="76,88 94,58 104,70" class="bd">
       <animate attributeName="points" dur="2.6s" repeatCount="indefinite" values="76,88 94,58 104,70;76,88 98,64 124,54;76,88 98,64 124,54;76,88 94,58 104,70;76,88 94,58 104,70" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/>
     </polyline>
@@ -258,7 +266,7 @@
     <rect width="200" height="120" rx="8" class="cell"/>
     <line x1="8" y1="105" x2="192" y2="105" class="gnd"/>
     <rect x="178" y="62" width="10" height="42" rx="2" class="eq"/>
-    <line x1="91" y1="103" x2="107" y2="103" class="bd"/>
+    <circle cx="100" cy="72" r="5" class="hd"/>
     <line x1="95" y1="70" x2="101" y2="87" class="bd"/>
     <line x1="101" y1="87" x2="98" y2="103" class="bd"/>
     <circle cx="62" cy="52" r="7" class="hd">
@@ -295,6 +303,7 @@
     <line x1="136" y1="85" x2="136" y2="103" class="eqL"/>
     <circle cx="60" cy="50" r="7" class="hd"/>
     <line x1="112" y1="62" x2="72" y2="56" class="bd"/>
+    <circle cx="116" cy="59" r="5" class="hd"/>
     <line x1="78" y1="58" x2="68" y2="77" class="bd" stroke-width="4"/>
     <line x1="112" y1="62" x2="128" y2="76" class="bd"/>
     <polyline points="112,62 122,88 120,103" class="bd"/>
@@ -318,6 +327,7 @@
     <line x1="140" y1="87" x2="140" y2="103" class="eqL"/>
     <circle cx="44" cy="72" r="7" class="hd"/>
     <line x1="55" y1="77" x2="114" y2="77" class="bd"/>
+    <circle cx="116" cy="72" r="5" class="hd"/>
     <line x1="114" y1="77" x2="122" y2="79" class="bd"/>
     <g>
       <animateTransform attributeName="transform" type="rotate" dur="2.6s" repeatCount="indefinite" values="0 122 79;-100 122 79;-100 122 79;0 122 79;0 122 79" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/>
