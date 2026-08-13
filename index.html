@@ -180,7 +180,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--blue);outline-o
   <section class="screen on" id="s-home">
     <div class="head">
       <div>
-        <h1>Wrack<span class="ver">v5</span></h1>
+        <h1>Wrack<span class="ver">v6</span></h1>
         <div class="motto">why are we still here? just to suffer?</div>
       </div>
       <div class="lights">
@@ -551,7 +551,16 @@ if ("serviceWorker" in navigator && canSW){
 }
 let deferredInstall = null;
 const isStandalone = matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
-if (!isStandalone) $("installWrap").hidden = false;
+if (!isStandalone){
+  $("installWrap").hidden = false;
+  // Hide the button if this device already has the app installed
+  // (Chromium never re-fires beforeinstallprompt while an install exists).
+  if (navigator.getInstalledRelatedApps){
+    navigator.getInstalledRelatedApps()
+      .then(apps => { if (apps.length) $("installWrap").hidden = true; })
+      .catch(() => {});
+  }
+}
 window.addEventListener("beforeinstallprompt", e => {
   e.preventDefault();
   deferredInstall = e;
@@ -563,11 +572,13 @@ $("installBtn").onclick = async () => {
     deferredInstall = null;
     return;
   }
-  // No programmatic prompt available (iOS Safari, Firefox, or already dismissed).
+  // No programmatic prompt available.
   const ios = /iPhone|iPad|iPod/.test(navigator.userAgent);
   alert(ios
     ? "Tap the Share button, then \"Add to Home Screen\"."
-    : "Open your browser menu and choose \"Install app\" or \"Add to Home Screen\".");
+    : "onbeforeinstallprompt" in window
+      ? "It may already be installed. If not, open the browser menu and choose \"Install app\"."
+      : "Open your browser menu and choose \"Install app\" or \"Add to Home Screen\".");
 };
 window.addEventListener("appinstalled", () => { $("installWrap").hidden = true; });
 
