@@ -77,6 +77,11 @@ export const FIGURES = [
     parts: [
       { kind: "fline", p: [100, 4, 100, 10] },
       { kind: "line", joints: [[100, 8], "barC"], cls: "eqT" },
+      // legs first: seen from behind, the seat occludes them
+      { kind: "line", joints: [[93, 90], [90, 99]] },
+      { kind: "line", joints: [[107, 90], [110, 99]] },
+      { kind: "foot", at: [90, 99], front: true },
+      { kind: "foot", at: [110, 99], front: true },
       { kind: "rect", x: 84, y: 90, w: 32, h: 6 },
       { kind: "fline", p: [100, 96, 100, 103] },
       { kind: "rect", x: 78, y: 84, w: 12, h: 5 },
@@ -87,10 +92,6 @@ export const FIGURES = [
       { kind: "line", joints: [[100, 50], [100, 84]] },
       { kind: "line", joints: ["lSh", "rSh"] },
       { kind: "head", at: [100, 38] },
-      { kind: "line", joints: [[93, 90], [90, 99]] },
-      { kind: "line", joints: [[107, 90], [110, 99]] },
-      { kind: "foot", at: [90, 99], front: true },
-      { kind: "foot", at: [110, 99], front: true },
       { kind: "poly", joints: ["lSh", "lElbow", "lHand"], cls: "bd4" },
       { kind: "poly", joints: ["rSh", "rElbow", "rHand"], cls: "bd4" },
     ],
