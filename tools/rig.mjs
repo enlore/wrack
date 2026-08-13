@@ -89,7 +89,7 @@ function footEl(ankleA, ankleB, pitchA, pitchB, facing, front) {
 // Reference segment lengths (cell units). Skeleton factories below use these
 // proportions; figure-specific poses should stay close to them — the chain
 // validators hold whatever pose A establishes.
-export const SEG = { torso: 28, thigh: 17, shin: 15, upperArm: 12, foreArm: 12, neck: 10, headR: 7, buttR: 5, sole: 6 };
+export const SEG = { torso: 28, shoulders: 18, thigh: 17, shin: 15, upperArm: 15, foreArm: 15, neck: 10, headR: 7, buttR: 5, sole: 6 };
 
 const GROUND = 105;
 const ANKLE_Y = GROUND - SEG.sole; // 99
@@ -113,6 +113,7 @@ export function skeleton(kind, opts = {}) {
       parts: [
         { kind: "poly", joints: ["hip", "knee", "ankle"] },
         { kind: "line", joints: ["hip", "sh"] },
+        { kind: "joint", at: "sh" },
         { kind: "head", at: "head" },
         { kind: "butt", at: "butt" },
         { kind: "poly", joints: ["sh", "elbow", "hand"], cls: "bd4" },
@@ -136,6 +137,7 @@ export function skeleton(kind, opts = {}) {
         { kind: "poly", joints: ["pelvis", "lKnee", "lAnkle"] },
         { kind: "poly", joints: ["pelvis", "rKnee", "rAnkle"] },
         { kind: "line", joints: ["pelvis", "neckB"] },
+        { kind: "line", joints: ["lSh", "rSh"] },
         { kind: "head", at: "head" },
         { kind: "foot", at: "lAnkle", front: true },
         { kind: "foot", at: "rAnkle", front: true },
@@ -152,6 +154,7 @@ export function skeleton(kind, opts = {}) {
       chains: [],
       parts: [
         { kind: "line", joints: ["hip", "sh"] },
+        { kind: "joint", at: "sh" },
         { kind: "head", at: "head" },
         { kind: "butt", at: "butt" },
         { kind: "poly", joints: ["hip", "knee", "ankle"] },
@@ -163,12 +166,13 @@ export function skeleton(kind, opts = {}) {
     // lying face-up on a bench with feet on the floor, head at left
     return {
       joints: {
-        sh: [72, 72], hipS: [118, 74], knee: [137, 86], ankle: [136, ANKLE_Y],
+        sh: [72, 72], hipS: [118, 74], knee: [133, 84], ankle: [136, ANKLE_Y],
         head: [48, 70], butt: [118, 77],
       },
       chains: [],
       parts: [
         { kind: "line", joints: [[60, 74], "hipS"] },
+        { kind: "joint", at: "sh" },
         { kind: "head", at: "head" },
         { kind: "butt", at: "butt", r: 4.5 },
         { kind: "poly", joints: ["hipS", "knee", "ankle"] },
@@ -177,12 +181,14 @@ export function skeleton(kind, opts = {}) {
     };
   }
   if (kind === "prone-bench") {
-    // lying face-down along a bench, head at left, knees at the bench end
+    // lying face-down along a bench, head at left, knees at the bench end;
+    // SEG-proportioned: torso 28, thigh 17 to the knee pivot
     return {
-      joints: { head: [44, 72], hipP: [114, 77], knee: [122, 79], butt: [116, 72] },
+      joints: { head: [48, 73], shP: [59, 76], hipP: [87, 77], knee: [104, 79], butt: [88, 72] },
       chains: [],
       parts: [
-        { kind: "line", joints: [[55, 77], "hipP"] },
+        { kind: "line", joints: ["shP", "hipP"] },
+        { kind: "joint", at: "shP" },
         { kind: "head", at: "head" },
         { kind: "butt", at: "butt" },
         { kind: "line", joints: ["hipP", "knee"] },
@@ -213,6 +219,14 @@ export function resolvePoses(fig, warn) {
     const [rA, mA, eA] = [A[c.root], A[c.mid], A[c.end]];
     if (!rA || !mA || !eA) { warn(`${fig.name}: chain ${c.mid} missing joints in pose A`); continue; }
     const l1 = dist(rA, mA), l2 = dist(mA, eA);
+    // enforce the standardized skeleton: limb segments within 40% of SEG
+    // (chains marked loose: true are documented exceptions)
+    if (!c.loose) {
+      const isArm = /elbow/i.test(c.mid);
+      const std1 = isArm ? SEG.upperArm : SEG.thigh, std2 = isArm ? SEG.foreArm : SEG.shin;
+      if (Math.abs(l1 / std1 - 1) > 0.4) warn(`${fig.name}: ${c.root}->${c.mid} is ${fmt(l1)} vs standard ${std1}`);
+      if (Math.abs(l2 / std2 - 1) > 0.4) warn(`${fig.name}: ${c.mid}->${c.end} is ${fmt(l2)} vs standard ${std2}`);
+    }
     const u = [eA[0] - rA[0], eA[1] - rA[1]];
     const w = [mA[0] - rA[0], mA[1] - rA[1]];
     let side = Math.sign(cross(u, w)) || (c.side ?? 1);
@@ -257,9 +271,9 @@ function renderPart(part, A, B, warn) {
     const sB = ptsB.map(p => `${fmt(p[0])},${fmt(p[1])}`).join(" ");
     return tag("polyline", { points: sA, class: cls }, animTag("points", sA, sB));
   }
-  if (k === "head" || k === "butt" || k === "ring" || k === "dot") {
+  if (k === "head" || k === "butt" || k === "ring" || k === "dot" || k === "joint") {
     const a = P(A, part.at), b = P(B, part.at);
-    const r = part.r ?? (k === "head" ? 7 : 5);
+    const r = part.r ?? (k === "head" ? 7 : k === "joint" ? 3.5 : 5);
     const cls = part.cls ?? (k === "ring" ? "ac" : k === "dot" ? "acF" : "hd");
     const inner = animTag("cx", fmt(a[0]), fmt(b[0])) + animTag("cy", fmt(a[1]), fmt(b[1]));
     return tag("circle", { cx: fmt(a[0]), cy: fmt(a[1]), r, class: cls }, inner);

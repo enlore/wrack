@@ -14,12 +14,14 @@ export const FIGURES = [
       // top: hips finish ON the shoulder-knee line, not arched above it
       B: { hip: [85, 70], head: [34, 56], butt: [81, 73], plate: [85, 59] },
     },
-    chains: [{ root: "hip", mid: "knee", end: "ankle" }],
+    // loose: bridged torso/leg span longer than the standing standard
+    chains: [{ root: "hip", mid: "knee", end: "ankle", loose: true }],
     parts: [
       { kind: "rect", x: 12, y: 64, w: 34, h: 7 },
       { kind: "fline", p: [17, 71, 17, 103] },
       { kind: "fline", p: [41, 71, 41, 103] },
       { kind: "line", joints: ["sh", "hip"] },
+      { kind: "joint", at: "sh" },
       { kind: "poly", joints: ["hip", "knee", "ankle"] },
       { kind: "head", at: "head" },
       { kind: "butt", at: "butt" },
@@ -84,6 +86,7 @@ export const FIGURES = [
       { kind: "butt", at: [95, 86], r: 4.5 },
       { kind: "butt", at: [105, 86], r: 4.5 },
       { kind: "line", joints: [[100, 50], [100, 84]] },
+      { kind: "line", joints: ["lSh", "rSh"] },
       { kind: "head", at: [100, 38] },
       { kind: "line", joints: [[93, 90], [90, 99]] },
       { kind: "line", joints: [[107, 90], [110, 99]] },
@@ -103,6 +106,7 @@ export const FIGURES = [
       { kind: "butt", at: [104, 86], r: 4 },
       { kind: "head", at: [100, 42] },
       { kind: "line", joints: [[100, 52], [100, 84]] },
+      { kind: "line", joints: [[92, 54], [108, 54]] },
       {
         kind: "group", transform: { type: "rotate", values: ["0 100 82", "-14 100 82"] },
         children: [
@@ -166,6 +170,7 @@ export const FIGURES = [
       { kind: "rect", x: 106, y: 90, w: 56, h: 15 },
       { kind: "poly", joints: ["legTop", "knee", "ankle"] },
       { kind: "line", joints: ["legTop", "sh"] },
+      { kind: "joint", at: "sh" },
       { kind: "butt", at: "butt" },
       { kind: "head", at: "head" },
       { kind: "poly", joints: ["sh", "elbow", "hand"], cls: "bd4" },
@@ -181,7 +186,8 @@ export const FIGURES = [
     },
     chains: [
       { root: "hip", mid: "fknee", end: "fankle" },
-      { root: "hip", mid: "rknee", end: "rfoot" },
+      // loose: rear leg elongated for the elevated-foot perspective
+      { root: "hip", mid: "rknee", end: "rfoot", loose: true },
       { root: "sh", mid: "elbow", end: "hand" },
     ],
     parts: [
@@ -191,6 +197,7 @@ export const FIGURES = [
       { kind: "poly", joints: ["hip", "fknee", "fankle"] },
       { kind: "poly", joints: ["hip", "rknee", "rfoot"] },
       { kind: "line", joints: ["hip", "sh"] },
+      { kind: "joint", at: "sh" },
       { kind: "head", at: "head" },
       { kind: "butt", at: "butt" },
       { kind: "poly", joints: ["sh", "elbow", "hand"], cls: "bd4" },
@@ -206,11 +213,13 @@ export const FIGURES = [
       A: { hip: [76, 88], knee: [85, 57], ankle: [102, 75], platA: [99, 61], platB: [114, 82] },
       B: { ankle: [120, 57], platA: [117, 43], platB: [132, 64] },
     },
-    chains: [{ root: "hip", mid: "knee", end: "ankle" }],
+    // loose: the machine figure is drawn at a larger scale than standing
+    chains: [{ root: "hip", mid: "knee", end: "ankle", loose: true }],
     parts: [
       { kind: "fline", p: [44, 62, 78, 96] },
       { kind: "head", at: [44, 58] },
       { kind: "line", joints: [[76, 90], [50, 66]] },
+      { kind: "joint", at: [52, 68] },
       { kind: "butt", at: [72, 92] },
       { kind: "poly", joints: ["hip", "knee", "ankle"] },
       { kind: "line", joints: ["platA", "platB"], cls: "ac5" },
@@ -250,6 +259,7 @@ export const FIGURES = [
     parts: [
       { kind: "poly", joints: ["hip", "knee", "ankle"] },
       { kind: "line", joints: ["hip", "sh"] },
+      { kind: "joint", at: "sh" },
       { kind: "head", at: "head" },
       { kind: "butt", at: "butt" },
       { kind: "poly", joints: ["sh", "elbow", "hand"], cls: "bd4" },
@@ -271,6 +281,7 @@ export const FIGURES = [
       { kind: "fline", p: [136, 85, 136, 103] },
       { kind: "head", at: [60, 50] },
       { kind: "line", joints: [[112, 62], [72, 56]] },
+      { kind: "joint", at: "sh" },
       { kind: "butt", at: [116, 59] },
       { kind: "poly", joints: [[78, 58], [71, 68], [68, 77]], cls: "bd4" },
       { kind: "line", joints: [[112, 62], [128, 76]] },
@@ -285,24 +296,24 @@ export const FIGURES = [
   compose(skeleton("prone-bench"), {
     name: "LYING LEG CURL",
     // padC tracks the roller pad's position through the group's -100 rotation
-    poses: { A: { padC: [145, 82] }, B: { padC: [121, 56] } },
+    poses: { A: { padC: [116, 81] }, B: { padC: [104, 67] } },
     equipment: [
-      { kind: "rect", x: 36, y: 80, w: 116, h: 7 },
+      { kind: "rect", x: 36, y: 80, w: 74, h: 7 },
       { kind: "fline", p: [44, 87, 44, 103] },
-      { kind: "fline", p: [140, 87, 140, 103] },
+      { kind: "fline", p: [102, 87, 102, 103] },
       // selectorized machine: weight stack and frame off the bench end
-      { kind: "fline", p: [152, 86, 164, 86] },
+      { kind: "fline", p: [110, 86, 164, 86] },
       { kind: "rect", x: 164, y: 78, w: 12, h: 26 },
     ],
     parts: [
       { kind: "line", joints: [[170, 78], "padC"], cls: "acT" },
       {
-        kind: "group", transform: { type: "rotate", values: ["0 122 79", "-100 122 79"] },
+        kind: "group", transform: { type: "rotate", values: ["0 104 79", "-100 104 79"] },
         children: [
-          { kind: "fline", p: [122, 82, 143, 85] },
-          { kind: "line", joints: [[122, 79], [148, 82]] },
-          { kind: "dot", at: [145, 82], r: 4.5 },
-          { kind: "foot", at: [148, 82], facing: -1, pitch: [90, 90] },
+          { kind: "fline", p: [104, 82, 117, 84] },
+          { kind: "line", joints: [[104, 79], [119, 81]] },
+          { kind: "dot", at: [116, 81], r: 4.5 },
+          { kind: "foot", at: [119, 81], facing: -1, pitch: [90, 90] },
         ],
       },
     ],
