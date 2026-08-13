@@ -225,7 +225,7 @@
     <polyline points="86,58 86,73 86,88" class="bd4"><animate attributeName="points" dur="2.6s" repeatCount="indefinite" values="86,58 86,73 86,88;86,58 99.5,51.4 96,66;86,58 99.5,51.4 96,66;86,58 86,73 86,88;86,58 86,73 86,88" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/></polyline>
     <circle cx="86" cy="94" r="5.5" class="ac"><animate attributeName="cx" dur="2.6s" repeatCount="indefinite" values="86;96;96;86;86" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/><animate attributeName="cy" dur="2.6s" repeatCount="indefinite" values="94;72;72;94;94" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/></circle>
     <g transform="translate(120 99)"><g><animateTransform attributeName="transform" type="rotate" dur="2.6s" repeatCount="indefinite" values="0 0 0;0 0 0;0 0 0;0 0 0;0 0 0" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/><path d="M -4.5 0 L -5.5 3.5 Q -5.5 6 -3 6 L 7 6 Q 10.5 6 11 3.5 Q 11 1.8 6.5 1 L 2 -0.5 Q -1.5 -1 -4.5 0 Z" class="hd" transform="scale(-1,1)"/></g></g>
-    <g transform="translate(141 80)"><g><animateTransform attributeName="transform" type="rotate" dur="2.6s" repeatCount="indefinite" values="110 0 0;110 0 0;110 0 0;110 0 0;110 0 0" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/><path d="M -4.5 0 L -5.5 3.5 Q -5.5 6 -3 6 L 7 6 Q 10.5 6 11 3.5 Q 11 1.8 6.5 1 L 2 -0.5 Q -1.5 -1 -4.5 0 Z" class="hd" transform="scale(-1,1)"/></g></g>
+    <g transform="translate(141 80)"><g><animateTransform attributeName="transform" type="rotate" dur="2.6s" repeatCount="indefinite" values="-110 0 0;-110 0 0;-110 0 0;-110 0 0;-110 0 0" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/><path d="M -4.5 0 L -5.5 3.5 Q -5.5 6 -3 6 L 7 6 Q 10.5 6 11 3.5 Q 11 1.8 6.5 1 L 2 -0.5 Q -1.5 -1 -4.5 0 Z" class="hd" transform="scale(-1,1)"/></g></g>
     <text x="100" y="134" class="cap">ONE-ARM ROW</text>
   </g>
   <!-- LYING LEG CURL -->
@@ -235,11 +235,14 @@
     <rect x="36" y="80" width="116" height="7" rx="2" class="eq"/>
     <line x1="44" y1="87" x2="44" y2="103" class="eqL"/>
     <line x1="140" y1="87" x2="140" y2="103" class="eqL"/>
+    <line x1="152" y1="86" x2="164" y2="86" class="eqL"/>
+    <rect x="164" y="78" width="12" height="26" rx="2" class="eq"/>
     <line x1="55" y1="77" x2="114" y2="77" class="bd"/>
     <circle cx="44" cy="72" r="7" class="hd"/>
     <circle cx="116" cy="72" r="5" class="hd"/>
     <line x1="114" y1="77" x2="122" y2="79" class="bd"/>
     <g><animateTransform attributeName="transform" type="rotate" dur="2.6s" repeatCount="indefinite" values="0 122 79;-100 122 79;-100 122 79;0 122 79;0 122 79" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/>
+    <line x1="122" y1="82" x2="143" y2="85" class="eqL"/>
     <line x1="122" y1="79" x2="148" y2="82" class="bd"/>
     <circle cx="145" cy="82" r="4.5" class="acF"/>
     <g transform="translate(148 82)"><g><animateTransform attributeName="transform" type="rotate" dur="2.6s" repeatCount="indefinite" values="-90 0 0;-90 0 0;-90 0 0;-90 0 0;-90 0 0" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/><path d="M -4.5 0 L -5.5 3.5 Q -5.5 6 -3 6 L 7 6 Q 10.5 6 11 3.5 Q 11 1.8 6.5 1 L 2 -0.5 Q -1.5 -1 -4.5 0 Z" class="hd" transform="scale(-1,1)"/></g></g></g>

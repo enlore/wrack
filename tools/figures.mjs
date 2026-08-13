@@ -279,7 +279,7 @@ export const FIGURES = [
       { kind: "poly", joints: ["sh", "elbow", "hand"], cls: "bd4" },
       { kind: "ring", at: "db", r: 5.5 },
       { kind: "foot", at: [120, 99], facing: -1 },
-      { kind: "foot", at: [141, 80], facing: -1, pitch: [-110, -110] },
+      { kind: "foot", at: [141, 80], facing: -1, pitch: [110, 110] },
     ],
   },
   compose(skeleton("prone-bench"), {
@@ -289,11 +289,15 @@ export const FIGURES = [
       { kind: "rect", x: 36, y: 80, w: 116, h: 7 },
       { kind: "fline", p: [44, 87, 44, 103] },
       { kind: "fline", p: [140, 87, 140, 103] },
+      // selectorized machine: weight stack and frame off the bench end
+      { kind: "fline", p: [152, 86, 164, 86] },
+      { kind: "rect", x: 164, y: 78, w: 12, h: 26 },
     ],
     parts: [
       {
         kind: "group", transform: { type: "rotate", values: ["0 122 79", "-100 122 79"] },
         children: [
+          { kind: "fline", p: [122, 82, 143, 85] },
           { kind: "line", joints: [[122, 79], [148, 82]] },
           { kind: "dot", at: [145, 82], r: 4.5 },
           { kind: "foot", at: [148, 82], facing: -1, pitch: [90, 90] },
