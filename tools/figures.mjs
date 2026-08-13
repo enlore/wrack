@@ -264,7 +264,7 @@ export const FIGURES = [
         children: [
           { kind: "line", joints: [[122, 79], [148, 82]] },
           { kind: "dot", at: [145, 82], r: 4.5 },
-          { kind: "foot", at: [148, 82], facing: -1, pitch: [-90, -90] },
+          { kind: "foot", at: [148, 82], facing: -1, pitch: [90, 90] },
         ],
       },
     ],

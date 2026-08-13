@@ -225,7 +225,7 @@
     <g><animateTransform attributeName="transform" type="rotate" dur="2.6s" repeatCount="indefinite" values="0 122 79;-100 122 79;-100 122 79;0 122 79;0 122 79" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/>
     <line x1="122" y1="79" x2="148" y2="82" class="bd"/>
     <circle cx="145" cy="82" r="4.5" class="acF"/>
-    <g transform="translate(148 82)"><g><animateTransform attributeName="transform" type="rotate" dur="2.6s" repeatCount="indefinite" values="90 0 0;90 0 0;90 0 0;90 0 0;90 0 0" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/><path d="M -4.5 0 L -5.5 3.5 Q -5.5 6 -3 6 L 7 6 Q 10.5 6 11 3.5 Q 11 1.8 6.5 1 L 2 -0.5 Q -1.5 -1 -4.5 0 Z" class="hd" transform="scale(-1,1)"/></g></g></g>
+    <g transform="translate(148 82)"><g><animateTransform attributeName="transform" type="rotate" dur="2.6s" repeatCount="indefinite" values="-90 0 0;-90 0 0;-90 0 0;-90 0 0;-90 0 0" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/><path d="M -4.5 0 L -5.5 3.5 Q -5.5 6 -3 6 L 7 6 Q 10.5 6 11 3.5 Q 11 1.8 6.5 1 L 2 -0.5 Q -1.5 -1 -4.5 0 Z" class="hd" transform="scale(-1,1)"/></g></g></g>
     <text x="100" y="134" class="cap">LYING LEG CURL</text>
   </g>
 </svg>
