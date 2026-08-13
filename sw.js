@@ -1,6 +1,6 @@
 /* Wrack service worker — cache-first app shell.
    Bump CACHE on every deploy to force clients to pick up new code. */
-const CACHE = "wrack-v6";
+const CACHE = "wrack-v7";
 const SHELL = [
   "./",
   "./index.html",
@@ -15,8 +15,12 @@ const SHELL = [
 self.addEventListener("install", e => {
   e.waitUntil(
     caches.open(CACHE)
-      // addAll rejects wholesale if any one request fails, so add individually
-      .then(c => Promise.allSettled(SHELL.map(u => c.add(u))))
+      // Fetch individually (addAll rejects wholesale) and revalidate with the
+      // origin — a plain fetch here can precache a stale copy out of the
+      // browser HTTP cache (GH Pages serves max-age=600).
+      .then(c => Promise.allSettled(SHELL.map(u =>
+        fetch(u, { cache: "no-cache" }).then(res => { if (res.ok) return c.put(u, res); })
+      )))
       .then(() => self.skipWaiting())
   );
 });

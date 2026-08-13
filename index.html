@@ -180,7 +180,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--blue);outline-o
   <section class="screen on" id="s-home">
     <div class="head">
       <div>
-        <h1>Wrack<span class="ver">v6</span></h1>
+        <h1>Wrack<span class="ver">v7</span></h1>
         <div class="motto">why are we still here? just to suffer?</div>
       </div>
       <div class="lights">
@@ -209,6 +209,9 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--blue);outline-o
       </div>
       <div style="padding:8px 16px 0" id="installWrap" hidden>
         <button class="btn soft" id="installBtn">Install</button>
+      </div>
+      <div style="padding:8px 16px 0" id="updateWrap" hidden>
+        <button class="btn soft" id="updateBtn">Check for update</button>
       </div>
       <input type="file" id="importFile" accept="application/json" hidden>
     </div>
@@ -551,6 +554,9 @@ if ("serviceWorker" in navigator && canSW){
 }
 let deferredInstall = null;
 const isStandalone = matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
+if (isStandalone && "serviceWorker" in navigator){
+  $("updateWrap").hidden = false;
+}
 if (!isStandalone){
   $("installWrap").hidden = false;
   // Hide the button if this device already has the app installed
@@ -581,6 +587,21 @@ $("installBtn").onclick = async () => {
       : "Open your browser menu and choose \"Install app\" or \"Add to Home Screen\".");
 };
 window.addEventListener("appinstalled", () => { $("installWrap").hidden = true; });
+$("updateBtn").onclick = async () => {
+  const btn = $("updateBtn");
+  btn.disabled = true; btn.textContent = "Checking…";
+  const reset = txt => { btn.textContent = txt;
+    setTimeout(() => { btn.textContent = "Check for update"; btn.disabled = false; }, 2000); };
+  try {
+    const reg = await navigator.serviceWorker.getRegistration();
+    if (!reg){ reset("No service worker"); return; }
+    await reg.update();
+    if (reg.installing || reg.waiting){
+      // New SW found: it skipWaits + claims, then controllerchange reloads us.
+      btn.textContent = "Updating…";
+    } else reset("Up to date");
+  } catch(e){ reset("Check failed — offline?"); }
+};
 
 /* ============================================================
    STATE
