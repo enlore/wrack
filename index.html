@@ -180,7 +180,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--blue);outline-o
   <section class="screen on" id="s-home">
     <div class="head">
       <div>
-        <h1>Wrack<span class="ver">v9</span></h1>
+        <h1>Wrack<span class="ver">v10</span></h1>
         <div class="motto">why are we still here? just to suffer?</div>
       </div>
       <div class="lights">
@@ -298,6 +298,7 @@ const PROGRAM = {
         setup:"Upper back against a bench just under the shoulder blades, feet flat and hip-width. Set the feet so the shins are vertical at the top of the rep. Pad the bar across the hip crease.",
         move:"Drive through the heels until torso and thighs form a straight line. Hold the top for a beat, then lower until the plates almost touch the floor.",
         cue:"Tuck the ribs down and finish the rep with the glutes, not by arching the lower back.",
+        load:"Men 95–135 lb, women 65–95 lb on the bar to start. This lift loads fast — add 10–20 lb once every set hits the top of the range.",
         watch:"Feet too close turns this into a quad exercise; too far forward and the hamstrings take it over."
       }},
     { id:"rdl", name:"Romanian deadlift", sets:3, reps:"8", rest:120,
@@ -305,6 +306,7 @@ const PROGRAM = {
         setup:"Bar against the thighs, weight in the mid-foot, knees bent slightly and then held at that same angle throughout.",
         move:"Push the hips straight back and let the bar drag down the legs until the hamstrings load up — usually just below the knee. Stand by driving the hips forward.",
         cue:"The bar stays in contact with the leg the whole way down and up.",
+        load:"Men 65–95 lb, women 45–65 lb to start. Let the hamstring stretch, not the lower back, decide the load.",
         watch:"Stop at the point where the lower back would round. Depth isn't the goal, the stretch is."
       }},
     { id:"dbbench", name:"DB bench press", sets:3, reps:"8–10", rest:90,
@@ -313,6 +315,7 @@ const PROGRAM = {
         setup:"Palms facing each other, elbows tucked to about 45°, dumbbells stacked over the lower chest.",
         move:"Lower until the upper arm is roughly parallel with the floor, then press back up without clashing the bells.",
         cue:"Wrists stacked over elbows, shoulder blades pinned to the bench.",
+        load:"Men 25–40 lb, women 10–20 lb per dumbbell to start.",
         watch:"Stop the descent before the elbows travel behind the torso — that's the position that stresses a tenodesis."
       }},
     { id:"pulldown", name:"Lat pulldown", sets:3, reps:"10", rest:90,
@@ -321,6 +324,7 @@ const PROGRAM = {
         setup:"Thighs snug under the pad, hands just outside shoulder width, a slight lean back from the hips.",
         move:"Pull the bar to the collarbone by driving the elbows down and back. Control the return until the arms are fully straight.",
         cue:"Treat the hands as hooks and let the elbows do the work.",
+        load:"Men 70–100 lb, women 40–60 lb on the stack to start.",
         watch:"Bar to the front, never behind the neck. A supinated grip loads the biceps anchor directly — skip it."
       }},
     { id:"abduct", name:"Cable hip abduction", sets:3, reps:"12–15", rest:45, side:true,
@@ -329,6 +333,7 @@ const PROGRAM = {
         setup:"Ankle cuff on the low pin, working leg furthest from the stack. Stand tall and hold the frame for balance.",
         move:"Sweep the leg out and slightly behind you, roughly 30–45°, then return under control without letting the stack rest.",
         cue:"Lock the standing leg and stop the torso from leaning away as a counterweight.",
+        load:"Men 10–20 lb, women 5–15 lb. Stay light — control matters more than the stack.",
         watch:"A small range done honestly beats a big swing driven by the lower back."
       }},
     { id:"pallof", name:"Cable Pallof press", sets:3, reps:"10", rest:45, side:true,
@@ -336,6 +341,7 @@ const PROGRAM = {
         setup:"Cable at chest height. Stand side-on to the stack, handle at the sternum, feet hip-width.",
         move:"Press the handle straight out and hold for 2–3 seconds while the cable tries to rotate you, then bring it back to the chest.",
         cue:"The rep is the resistance to rotation, not the arm movement.",
+        load:"Men 15–25 lb, women 10–15 lb. If the hips twist, it's too heavy.",
         watch:"Ribs down and hips square. Step further from the stack to make the hold harder."
       }}
   ]},
@@ -345,6 +351,7 @@ const PROGRAM = {
         setup:"Rear foot on a bench, front foot far enough forward that the front shin stays near vertical at the bottom.",
         move:"Drop straight down until the back knee is just off the floor, then drive up through the front heel.",
         cue:"A slight forward torso lean shifts the work onto the glute.",
+        load:"Bodyweight until the stance is dialed, then men 15–25 lb, women 8–15 lb per dumbbell.",
         watch:"Dial in stance length before adding load. Too short and it becomes a quad-and-knee exercise."
       }},
     { id:"pullthru", name:"Cable pull-through", sets:3, reps:"12", rest:90,
@@ -352,6 +359,7 @@ const PROGRAM = {
         setup:"Rope on the lowest pin. Face away from the stack, rope between the legs, soft knees, hands loose.",
         move:"Let the cable pull the hips back into a stretch, then snap the hips forward to stand tall.",
         cue:"Finish standing, glutes squeezed — don't lean back past vertical.",
+        load:"Men 40–60 lb, women 25–40 lb to start. A smooth hip snap beats stack size.",
         watch:"Arms are just straps. If the biceps are working, you're rowing it."
       }},
     { id:"fly", name:"Standing cable fly", sets:3, reps:"12", rest:90,
@@ -360,6 +368,7 @@ const PROGRAM = {
         setup:"Both cables at or slightly above shoulder height. Split stance, slight forward lean, elbows soft.",
         move:"Bring the handles together in front of the chest in a wide arc, then let them travel back out to about chest width.",
         cue:"Fix the elbow angle at the start and hold it for the whole rep.",
+        load:"Men 15–25 lb, women 7.5–15 lb per side. Err light to keep the elbow angle fixed.",
         watch:"Don't chase the stretch behind the torso — stop the hands at the plane of your chest."
       }},
     { id:"row", name:"One-arm row", sets:3, reps:"10", rest:90, side:true,
@@ -367,6 +376,7 @@ const PROGRAM = {
         setup:"Hand and knee on a bench for dumbbells, or a split stance facing a mid-height cable. Flat back, hips square.",
         move:"Pull the handle to the hip with the elbow tracking past the ribs. Lower until the shoulder blade reaches forward.",
         cue:"Lead with the elbow, finish with the shoulder blade.",
+        load:"Men 30–45 lb, women 15–25 lb to start.",
         watch:"Neutral grip keeps the load off the biceps anchor. No twisting the torso to finish the rep."
       }},
     { id:"kickback", name:"Cable glute kickback", sets:3, reps:"12", rest:45, side:true,
@@ -375,6 +385,7 @@ const PROGRAM = {
         setup:"Ankle cuff on the low pin, facing the stack. Hinge forward slightly and brace a hand on the frame.",
         move:"Drive the leg straight back, squeeze at the top, then return without letting the weight settle.",
         cue:"End range is a glute squeeze, not a lower-back arch.",
+        load:"Men 10–20 lb, women 5–15 lb. Any weight that arches the back is too much.",
         watch:"If the ribs flare or the back extends to get more range, you've already passed your end range."
       }},
     { id:"ohp", name:"DB shoulder press", sets:3, reps:"10", rest:60,
@@ -382,6 +393,7 @@ const PROGRAM = {
         setup:"Seated or standing, palms facing each other, dumbbells at ear height.",
         move:"Press until the arms are straight without banging the bells together, then lower under control to ear height.",
         cue:"Squeeze the glutes and brace the midsection so the press doesn't turn into a standing back arch.",
+        load:"Men 20–30 lb, women 8–15 lb per dumbbell to start.",
         watch:"Neutral grip, path in front of the body. No behind-the-neck pressing and no wide flared elbows."
       }}
   ]}
@@ -740,6 +752,7 @@ function renderHow(e){
       <dt>Set up</dt><dd>${h.setup}</dd>
       <dt>Move</dt><dd>${h.move}</dd>
       <dt>Cue</dt><dd>${h.cue}</dd>
+      ${h.load ? `<dt>Starting weight</dt><dd>${h.load}</dd>` : ""}
       <dt class="warn">Watch for</dt><dd>${h.watch}</dd>
     </dl>`;
 }
