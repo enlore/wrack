@@ -180,7 +180,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--blue);outline-o
   <section class="screen on" id="s-home">
     <div class="head">
       <div>
-        <h1>Wrack<span class="ver">v4</span></h1>
+        <h1>Wrack<span class="ver">v5</span></h1>
         <div class="motto">why are we still here? just to suffer?</div>
       </div>
       <div class="lights">
@@ -532,7 +532,21 @@ const Wake = (() => {
 const canSW = location.protocol === "https:" || ["localhost","127.0.0.1"].includes(location.hostname);
 if ("serviceWorker" in navigator && canSW){
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("sw.js").catch(() => {});
+    navigator.serviceWorker.register("sw.js").then(reg => {
+      // Check for a new version whenever the app comes back to the foreground.
+      document.addEventListener("visibilitychange", () => {
+        if (document.visibilityState === "visible") reg.update().catch(() => {});
+      });
+    }).catch(() => {});
+  });
+  // When an updated SW takes control, reload once so the new shell is served.
+  // Skip on first install (no prior controller) and mid-workout.
+  const hadController = !!navigator.serviceWorker.controller;
+  let reloaded = false;
+  navigator.serviceWorker.addEventListener("controllerchange", () => {
+    if (!hadController || reloaded || live) return;
+    reloaded = true;
+    location.reload();
   });
 }
 let deferredInstall = null;
