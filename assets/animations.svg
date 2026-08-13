@@ -25,7 +25,6 @@
     <line x1="17" y1="71" x2="17" y2="103" class="eqL"/>
     <line x1="41" y1="71" x2="41" y2="103" class="eqL"/>
     <line x1="46" y1="60" x2="85" y2="92" class="bd"><animate attributeName="y2" dur="2.6s" repeatCount="indefinite" values="92;70;70;92;92" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/></line>
-    <circle cx="46" cy="60" r="3.5" class="hd"/>
     <polyline points="85,92 112,76 115,99" class="bd"><animate attributeName="points" dur="2.6s" repeatCount="indefinite" values="85,92 112,76 115,99;85,70 115.8,75.8 115,99;85,70 115.8,75.8 115,99;85,92 112,76 115,99;85,92 112,76 115,99" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/></polyline>
     <circle cx="34" cy="48" r="7" class="hd"><animate attributeName="cy" dur="2.6s" repeatCount="indefinite" values="48;56;56;48;48" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/></circle>
     <circle cx="81" cy="95" r="5" class="hd"><animate attributeName="cy" dur="2.6s" repeatCount="indefinite" values="95;73;73;95;95" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/></circle>
@@ -39,7 +38,6 @@
     <line x1="8" y1="105" x2="192" y2="105" class="gnd"/>
     <polyline points="100,68 99,84 102,99" class="bd"><animate attributeName="points" dur="2.6s" repeatCount="indefinite" values="100,68 99,84 102,99;114,70 107.1,84.5 102,99;114,70 107.1,84.5 102,99;100,68 99,84 102,99;100,68 99,84 102,99" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/></polyline>
     <line x1="100" y1="68" x2="100" y2="40" class="bd"><animate attributeName="x1" dur="2.6s" repeatCount="indefinite" values="100;114;114;100;100" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/><animate attributeName="y1" dur="2.6s" repeatCount="indefinite" values="68;70;70;68;68" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/><animate attributeName="x2" dur="2.6s" repeatCount="indefinite" values="100;98;98;100;100" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/><animate attributeName="y2" dur="2.6s" repeatCount="indefinite" values="40;60;60;40;40" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/></line>
-    <circle cx="100" cy="40" r="3.5" class="hd"><animate attributeName="cx" dur="2.6s" repeatCount="indefinite" values="100;98;98;100;100" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/><animate attributeName="cy" dur="2.6s" repeatCount="indefinite" values="40;60;60;40;40" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/></circle>
     <circle cx="100" cy="30" r="7" class="hd"><animate attributeName="cx" dur="2.6s" repeatCount="indefinite" values="100;88;88;100;100" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/><animate attributeName="cy" dur="2.6s" repeatCount="indefinite" values="30;56;56;30;30" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/></circle>
     <circle cx="105" cy="71" r="5" class="hd"><animate attributeName="cx" dur="2.6s" repeatCount="indefinite" values="105;119;119;105;105" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/><animate attributeName="cy" dur="2.6s" repeatCount="indefinite" values="71;73;73;71;71" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/></circle>
     <polyline points="100,40 101,52 100,64" class="bd4"><animate attributeName="points" dur="2.6s" repeatCount="indefinite" values="100,40 101,52 100,64;98,60 103,71 103,83;98,60 103,71 103,83;100,40 101,52 100,64;100,40 101,52 100,64" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/></polyline>
@@ -55,7 +53,6 @@
     <line x1="54" y1="85" x2="54" y2="103" class="eqL"/>
     <line x1="134" y1="85" x2="134" y2="103" class="eqL"/>
     <line x1="60" y1="74" x2="118" y2="74" class="bd"/>
-    <circle cx="72" cy="72" r="3.5" class="hd"/>
     <circle cx="48" cy="70" r="7" class="hd"/>
     <circle cx="118" cy="77" r="4.5" class="hd"/>
     <polyline points="118,74 133,84 136,99" class="bd"/>
@@ -144,7 +141,6 @@
     <rect x="106" y="90" width="56" height="15" rx="2" class="eq"/>
     <polyline points="106,60 105,76 103,93" class="bd"><animate attributeName="points" dur="2.6s" repeatCount="indefinite" values="106,60 105,76 103,93;106,49 104.5,65 101,82;106,49 104.5,65 101,82;106,60 105,76 103,93;106,60 105,76 103,93" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/></polyline>
     <line x1="106" y1="60" x2="108" y2="32" class="bd"><animate attributeName="y1" dur="2.6s" repeatCount="indefinite" values="60;49;49;60;60" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/><animate attributeName="y2" dur="2.6s" repeatCount="indefinite" values="32;21;21;32;32" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/></line>
-    <circle cx="108" cy="32" r="3.5" class="hd"><animate attributeName="cy" dur="2.6s" repeatCount="indefinite" values="32;21;21;32;32" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/></circle>
     <circle cx="101" cy="61" r="5" class="hd"><animate attributeName="cy" dur="2.6s" repeatCount="indefinite" values="61;50;50;61;61" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/></circle>
     <circle cx="111" cy="23" r="7" class="hd"><animate attributeName="cy" dur="2.6s" repeatCount="indefinite" values="23;12;12;23;23" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/></circle>
     <polyline points="108,32 113,47 111,60" class="bd4"><animate attributeName="points" dur="2.6s" repeatCount="indefinite" values="108,32 113,47 111,60;108,21 113,36 111,49;108,21 113,36 111,49;108,32 113,47 111,60;108,32 113,47 111,60" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/></polyline>
@@ -162,7 +158,6 @@
     <polyline points="95,62 86,81 80,99" class="bd"><animate attributeName="points" dur="2.6s" repeatCount="indefinite" values="95,62 86,81 80,99;97,82 76,80.4 80,99;97,82 76,80.4 80,99;95,62 86,81 80,99;95,62 86,81 80,99" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/></polyline>
     <polyline points="95,62 122,84 148,70" class="bd"><animate attributeName="points" dur="2.6s" repeatCount="indefinite" values="95,62 122,84 148,70;97,82 129.9,93.4 148,70;97,82 129.9,93.4 148,70;95,62 122,84 148,70;95,62 122,84 148,70" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/></polyline>
     <line x1="95" y1="62" x2="90" y2="34" class="bd"><animate attributeName="x1" dur="2.6s" repeatCount="indefinite" values="95;97;97;95;95" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/><animate attributeName="y1" dur="2.6s" repeatCount="indefinite" values="62;82;82;62;62" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/><animate attributeName="y2" dur="2.6s" repeatCount="indefinite" values="34;54;54;34;34" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/></line>
-    <circle cx="90" cy="34" r="3.5" class="hd"><animate attributeName="cy" dur="2.6s" repeatCount="indefinite" values="34;54;54;34;34" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/></circle>
     <circle cx="89" cy="26" r="7" class="hd"><animate attributeName="cy" dur="2.6s" repeatCount="indefinite" values="26;46;46;26;26" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/></circle>
     <circle cx="100" cy="64" r="5" class="hd"><animate attributeName="cx" dur="2.6s" repeatCount="indefinite" values="100;102;102;100;100" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/><animate attributeName="cy" dur="2.6s" repeatCount="indefinite" values="64;84;84;64;64" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/></circle>
     <polyline points="90,34 94,47 93,60" class="bd4"><animate attributeName="points" dur="2.6s" repeatCount="indefinite" values="90,34 94,47 93,60;90,54 94,67 93,80;90,54 94,67 93,80;90,34 94,47 93,60;90,34 94,47 93,60" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/></polyline>
@@ -178,7 +173,6 @@
     <line x1="44" y1="62" x2="78" y2="96" class="eqL"/>
     <circle cx="44" cy="58" r="7" class="hd"/>
     <line x1="76" y1="90" x2="50" y2="66" class="bd"/>
-    <circle cx="52" cy="68" r="3.5" class="hd"/>
     <circle cx="72" cy="92" r="5" class="hd"/>
     <polyline points="76,88 85,57 102,75" class="bd"><animate attributeName="points" dur="2.6s" repeatCount="indefinite" values="76,88 85,57 102,75;76,88 95.9,62.6 120,57;76,88 95.9,62.6 120,57;76,88 85,57 102,75;76,88 85,57 102,75" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/></polyline>
     <line x1="99" y1="61" x2="114" y2="82" class="ac5"><animate attributeName="x1" dur="2.6s" repeatCount="indefinite" values="99;117;117;99;99" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/><animate attributeName="y1" dur="2.6s" repeatCount="indefinite" values="61;43;43;61;61" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/><animate attributeName="x2" dur="2.6s" repeatCount="indefinite" values="114;132;132;114;114" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/><animate attributeName="y2" dur="2.6s" repeatCount="indefinite" values="82;64;64;82;82" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/></line>
@@ -210,7 +204,6 @@
     <line x1="8" y1="105" x2="192" y2="105" class="gnd"/>
     <polyline points="106,73 104,87 98,99" class="bd"><animate attributeName="points" dur="2.6s" repeatCount="indefinite" values="106,73 104,87 98,99;95,70 97.3,84 98,99;95,70 97.3,84 98,99;106,73 104,87 98,99;106,73 104,87 98,99" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/></polyline>
     <line x1="106" y1="73" x2="80" y2="62" class="bd"><animate attributeName="x1" dur="2.6s" repeatCount="indefinite" values="106;95;95;106;106" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/><animate attributeName="y1" dur="2.6s" repeatCount="indefinite" values="73;70;70;73;73" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/><animate attributeName="x2" dur="2.6s" repeatCount="indefinite" values="80;95;95;80;80" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/><animate attributeName="y2" dur="2.6s" repeatCount="indefinite" values="62;42;42;62;62" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/></line>
-    <circle cx="80" cy="62" r="3.5" class="hd"><animate attributeName="cx" dur="2.6s" repeatCount="indefinite" values="80;95;95;80;80" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/><animate attributeName="cy" dur="2.6s" repeatCount="indefinite" values="62;42;42;62;62" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/></circle>
     <circle cx="70" cy="58" r="7" class="hd"><animate attributeName="cx" dur="2.6s" repeatCount="indefinite" values="70;93;93;70;70" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/><animate attributeName="cy" dur="2.6s" repeatCount="indefinite" values="58;32;32;58;58" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/></circle>
     <circle cx="111" cy="75" r="5" class="hd"><animate attributeName="cx" dur="2.6s" repeatCount="indefinite" values="111;100;100;111;111" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/><animate attributeName="cy" dur="2.6s" repeatCount="indefinite" values="75;72;72;75;75" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/></circle>
     <polyline points="80,62 90,73 80,84" class="bd4"><animate attributeName="points" dur="2.6s" repeatCount="indefinite" values="80,62 90,73 80,84;95,42 96.8,56.8 97,72;95,42 96.8,56.8 97,72;80,62 90,73 80,84;80,62 90,73 80,84" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/></polyline>
@@ -228,7 +221,6 @@
     <line x1="136" y1="85" x2="136" y2="103" class="eqL"/>
     <circle cx="60" cy="50" r="7" class="hd"/>
     <line x1="112" y1="62" x2="72" y2="56" class="bd"/>
-    <circle cx="86" cy="58" r="3.5" class="hd"/>
     <circle cx="116" cy="59" r="5" class="hd"/>
     <polyline points="78,58 71,68 68,77" class="bd4"/>
     <line x1="112" y1="62" x2="128" y2="76" class="bd"/>
@@ -250,7 +242,6 @@
     <line x1="110" y1="86" x2="164" y2="86" class="eqL"/>
     <rect x="164" y="78" width="12" height="26" rx="2" class="eq"/>
     <line x1="59" y1="76" x2="87" y2="77" class="bd"/>
-    <circle cx="59" cy="76" r="3.5" class="hd"/>
     <circle cx="48" cy="73" r="7" class="hd"/>
     <circle cx="88" cy="72" r="5" class="hd"/>
     <line x1="87" y1="77" x2="104" y2="79" class="bd"/>

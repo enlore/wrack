@@ -113,7 +113,6 @@ export function skeleton(kind, opts = {}) {
       parts: [
         { kind: "poly", joints: ["hip", "knee", "ankle"] },
         { kind: "line", joints: ["hip", "sh"] },
-        { kind: "joint", at: "sh" },
         { kind: "head", at: "head" },
         { kind: "butt", at: "butt" },
         { kind: "poly", joints: ["sh", "elbow", "hand"], cls: "bd4" },
@@ -154,7 +153,6 @@ export function skeleton(kind, opts = {}) {
       chains: [],
       parts: [
         { kind: "line", joints: ["hip", "sh"] },
-        { kind: "joint", at: "sh" },
         { kind: "head", at: "head" },
         { kind: "butt", at: "butt" },
         { kind: "poly", joints: ["hip", "knee", "ankle"] },
@@ -172,7 +170,6 @@ export function skeleton(kind, opts = {}) {
       chains: [],
       parts: [
         { kind: "line", joints: [[60, 74], "hipS"] },
-        { kind: "joint", at: "sh" },
         { kind: "head", at: "head" },
         { kind: "butt", at: "butt", r: 4.5 },
         { kind: "poly", joints: ["hipS", "knee", "ankle"] },
@@ -188,7 +185,6 @@ export function skeleton(kind, opts = {}) {
       chains: [],
       parts: [
         { kind: "line", joints: ["shP", "hipP"] },
-        { kind: "joint", at: "shP" },
         { kind: "head", at: "head" },
         { kind: "butt", at: "butt" },
         { kind: "line", joints: ["hipP", "knee"] },
