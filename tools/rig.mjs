@@ -10,14 +10,15 @@
 //
 // Run tools/build-sheet.mjs with node to regenerate assets/animations.svg.
 
-const DUR = "3.2s";
+const DUR = "5.2s";
 // Rep tempo: values always run A;B;B;A;A — keyTimes shape the phases.
-// lift  (A = bottom/stretch): fast concentric, short top hold, slow eccentric,
-//                             noticeable pause at the bottom
+// Phase budget: ~0.9s concentric, ~0.5s top hold, ~2.2s eccentric,
+// ~1.6s pause in the bottom stretch.
+// lift  (A = bottom/stretch): up, top hold, slow eccentric, bottom pause
 // lower (A = top, e.g. RDL/BSS): slow eccentric down, bottom pause, drive up
 const TEMPO = {
-  lift: "0;0.25;0.4;0.8;1",
-  lower: "0;0.4;0.6;0.85;1",
+  lift: "0;0.17;0.27;0.69;1",
+  lower: "0;0.42;0.73;0.9;1",
 };
 let KT = TEMPO.lift; // set per figure in renderSheet
 const KS = ".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1";
