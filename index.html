@@ -78,7 +78,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--blue);outline-o
 .btn{display:block;width:100%;text-align:center;font-family:var(--disp);text-transform:uppercase;
   letter-spacing:.12em;font-weight:700;font-size:17px;padding:17px;border-radius:12px;background:var(--blue);color:#fff}
 .btn:active{transform:translateY(1px)}
-.btn.quiet{background:none;color:var(--dust);font-size:13px;padding:12px;letter-spacing:.1em}
+.btn.quiet{background:none;color:var(--dust);border:1px solid var(--line);padding:16px}
 .btn.soft{background:var(--panel);color:var(--chalk);font-size:13px;padding:13px;border-radius:10px;letter-spacing:.1em}
 
 .hist{margin:0;padding:0;list-style:none}
@@ -180,7 +180,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--blue);outline-o
   <section class="screen on" id="s-home">
     <div class="head">
       <div>
-        <h1>Wrack<span class="ver">v10</span></h1>
+        <h1>Wrack<span class="ver">v11</span></h1>
         <div class="motto">why are we still here? just to suffer?</div>
       </div>
       <div class="lights">
@@ -196,8 +196,10 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--blue);outline-o
         <div class="sub" id="nextSub">Hinge-dominant · 6 exercises</div>
         <ul class="exlist" id="nextList"></ul>
       </div>
-      <button class="btn" id="startBtn" style="margin:0 16px;width:auto">Start workout</button>
-      <button class="btn quiet" id="swapBtn" style="margin:0 16px;width:auto">Switch to the other day</button>
+      <div style="padding:0 16px;display:flex;flex-direction:column;gap:10px">
+        <button class="btn" id="startBtn">Start workout</button>
+        <button class="btn quiet" id="swapBtn">Switch to the other day</button>
+      </div>
 
       <div class="pad" style="margin-top:18px"><div class="eyebrow">History</div></div>
       <ul class="hist" id="hist"></ul>
