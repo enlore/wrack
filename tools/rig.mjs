@@ -334,7 +334,7 @@ export function renderSheet(figures, warn = m => console.error("warn: " + m), { 
     <text x="100" y="134" class="cap">${fig.name}</text>
   </g>`;
   });
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="960">
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W * 3}" height="${H * 3}">
   <style>${STYLE}
   </style>
   <rect width="${W}" height="${H}" fill="#131519"/>
