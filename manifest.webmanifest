@@ -1,6 +1,6 @@
 {
   "id": "/wrack/",
-  "name": "Wrack — Workout Tracker",
+  "name": "Wrack",
   "short_name": "Wrack",
   "description": "Guided full-body workout tracker with rest timers and screen wake lock.",
   "start_url": ".",

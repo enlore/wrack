@@ -64,6 +64,8 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--blue);outline-o
 
 .head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:16px 16px 4px}
 .head h1{font-family:var(--disp);font-weight:700;font-size:32px;letter-spacing:.16em;margin:0;text-transform:uppercase}
+.motto{font-family:var(--disp);font-size:11px;letter-spacing:.08em;color:#4A5058;margin-top:-2px}
+.ver{font-size:13px;font-weight:500;letter-spacing:.08em;color:#4A5058;vertical-align:middle}
 
 /* ---------- home ---------- */
 .card{background:var(--panel);border-radius:14px;padding:18px;margin:14px 16px}
@@ -80,7 +82,13 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--blue);outline-o
 .btn.soft{background:var(--panel);color:var(--chalk);font-size:13px;padding:13px;border-radius:10px;letter-spacing:.1em}
 
 .hist{margin:0;padding:0;list-style:none}
-.hist li{display:flex;justify-content:space-between;align-items:center;padding:13px 16px;border-bottom:1px solid #22262E}
+.hist li{display:flex;justify-content:space-between;align-items:center;padding:13px 16px;border-bottom:1px solid #22262E;
+  user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+.hist .del{display:none;background:var(--red);color:#fff;font-family:var(--disp);font-weight:700;
+  font-size:12px;letter-spacing:.12em;text-transform:uppercase;padding:8px 14px;border-radius:8px}
+.hist li.arm{background:#20232B}
+.hist li.arm .v{display:none}
+.hist li.arm .del{display:block}
 .hist .d{font-family:var(--disp);font-size:15px;letter-spacing:.06em}
 .hist .v{color:var(--dust);font-size:13px}
 .empty{color:var(--dust);font-size:14px;padding:6px 16px 20px}
@@ -171,7 +179,10 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--blue);outline-o
   <!-- HOME -->
   <section class="screen on" id="s-home">
     <div class="head">
-      <h1>Wrack</h1>
+      <div>
+        <h1>Wrack <span class="ver">v3</span></h1>
+        <div class="motto">why are we still here? just to suffer?</div>
+      </div>
       <div class="lights">
         <span class="light"><i class="led" id="ledStore"></i><span id="txtStore">storage</span></span>
         <span class="light"><i class="led" id="ledWakeH"></i><span id="txtWakeH">screen</span></span>
@@ -188,10 +199,6 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--blue);outline-o
       <button class="btn" id="startBtn" style="margin:0 16px">Start workout</button>
       <button class="btn quiet" id="swapBtn">Switch to the other day</button>
 
-      <div style="padding:0 16px" id="installWrap" hidden>
-        <button class="btn soft" id="installBtn">Install to home screen</button>
-      </div>
-
       <div class="pad" style="margin-top:18px"><div class="eyebrow">History</div></div>
       <ul class="hist" id="hist"></ul>
       <div class="empty" id="histEmpty">No sessions logged yet.</div>
@@ -199,6 +206,9 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--blue);outline-o
       <div style="display:flex;gap:8px;padding:22px 16px 0">
         <button class="btn soft" id="exportBtn">Export data</button>
         <button class="btn soft" id="importBtn">Import data</button>
+      </div>
+      <div style="padding:8px 16px 0" id="installWrap" hidden>
+        <button class="btn soft" id="installBtn">Install</button>
       </div>
       <input type="file" id="importFile" accept="application/json" hidden>
     </div>
@@ -526,17 +536,24 @@ if ("serviceWorker" in navigator && canSW){
   });
 }
 let deferredInstall = null;
+const isStandalone = matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
+if (!isStandalone) $("installWrap").hidden = false;
 window.addEventListener("beforeinstallprompt", e => {
   e.preventDefault();
   deferredInstall = e;
-  $("installWrap").hidden = false;
 });
 $("installBtn").onclick = async () => {
-  if (!deferredInstall) return;
-  deferredInstall.prompt();
-  await deferredInstall.userChoice;
-  deferredInstall = null;
-  $("installWrap").hidden = true;
+  if (deferredInstall){
+    deferredInstall.prompt();
+    await deferredInstall.userChoice;
+    deferredInstall = null;
+    return;
+  }
+  // No programmatic prompt available (iOS Safari, Firefox, or already dismissed).
+  const ios = /iPhone|iPad|iPod/.test(navigator.userAgent);
+  alert(ios
+    ? "Tap the Share button, then \"Add to Home Screen\"."
+    : "Open your browser menu and choose \"Install app\" or \"Add to Home Screen\".");
 };
 window.addEventListener("appinstalled", () => { $("installWrap").hidden = true; });
 
@@ -576,10 +593,12 @@ function renderHome(){
 
   const h = sessions.slice().reverse().slice(0, 12);
   $("histEmpty").style.display = h.length ? "none" : "block";
-  $("hist").innerHTML = h.map(s => {
+  $("hist").innerHTML = h.map((s, di) => {
     const dt = new Date(s.startedAt);
-    return `<li><span class="d">${PROGRAM[s.day].name} · ${dt.toLocaleDateString(undefined,{month:"short",day:"numeric"})}</span>
-            <span class="v num">${s.setCount} sets · ${volume(s).toLocaleString()} lb</span></li>`;
+    return `<li data-i="${sessions.length - 1 - di}">
+            <span class="d">${PROGRAM[s.day].name} · ${dt.toLocaleDateString(undefined,{month:"short",day:"numeric"})}</span>
+            <span class="v num">${s.setCount} sets · ${volume(s).toLocaleString()} lb</span>
+            <button class="del">Delete</button></li>`;
   }).join("");
 }
 function volume(s){
@@ -794,6 +813,42 @@ $("importFile").onchange = async ev => {
   } catch(e){ alert("That file couldn't be read. Pick a wrack-*.json export."); }
   ev.target.value = "";
 };
+
+/* ---------- history: long-press to delete ---------- */
+(() => {
+  const hist = $("hist");
+  let timer = null, sx = 0, sy = 0, armed = false;
+
+  const disarm = () => hist.querySelectorAll("li.arm").forEach(li => li.classList.remove("arm"));
+
+  hist.addEventListener("contextmenu", e => e.preventDefault());
+  hist.addEventListener("pointerdown", e => {
+    const li = e.target.closest("li"); if (!li) return;
+    sx = e.clientX; sy = e.clientY;
+    timer = setTimeout(() => {
+      disarm();
+      li.classList.add("arm");
+      armed = true;                       // swallow the click that fires on release
+      if (navigator.vibrate) navigator.vibrate(15);
+    }, 500);
+  });
+  hist.addEventListener("pointermove", e => {
+    if (Math.abs(e.clientX - sx) > 10 || Math.abs(e.clientY - sy) > 10) clearTimeout(timer);
+  });
+  ["pointerup", "pointercancel"].forEach(t => hist.addEventListener(t, () => clearTimeout(timer)));
+
+  hist.addEventListener("click", async e => {
+    if (armed){ armed = false; return; }
+    const del = e.target.closest(".del");
+    if (!del){ disarm(); return; }
+    const i = +del.closest("li").dataset.i;
+    sessions.splice(i, 1);
+    await Store.set("sessions", sessions);
+    renderHome();
+  });
+  // tapping anywhere outside the list puts armed rows back to normal
+  document.addEventListener("pointerdown", e => { if (!e.target.closest("#hist li")) disarm(); });
+})();
 
 window.addEventListener("beforeunload", e => { if (live){ e.preventDefault(); e.returnValue = ""; } });
 </script>
