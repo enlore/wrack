@@ -1,0 +1,6 @@
+[tools]
+node = "22"
+
+[tasks.sheet]
+description = "Regenerate assets/animations.svg from tools/figures.mjs"
+run = "node tools/build-sheet.mjs"
