@@ -85,7 +85,7 @@ function footEl(ankleA, ankleB, pitchA, pitchB, facing, front) {
     (trA === trB ? "" : animTransform("translate", trA, trB)) + inner);
 }
 
-/* ---------- standard skeletons ---------- */
+/* ---------- bodies ---------- */
 // Reference segment lengths (cell units). Skeleton factories below use these
 // proportions; figure-specific poses should stay close to them — the chain
 // validators hold whatever pose A establishes.
@@ -94,62 +94,103 @@ export const SEG = { torso: 28, shoulders: 18, thigh: 17, shin: 15, upperArm: 15
 const GROUND = 105;
 const ANKLE_Y = GROUND - SEG.sole; // 99
 
-// skeleton(kind, opts) -> { joints, chains, parts } for pose A of a common
-// body position. Figures compose() these, override joints in poses.A/B, and
-// add equipment. facing: -1 = figure faces left (+1 right).
-export function skeleton(kind, opts = {}) {
-  const { x = 100, facing = -1 } = opts;
-  if (kind === "standing-side") {
-    return {
+// A body is a standardized figure in a common position. Each BODIES factory
+// returns:
+//   joints   — flat name->[x,y] map (pose A defaults; figures override via poses)
+//   segments — structured, addressable tree, e.g.
+//              BODIES.standing().segments.legs.left.upper  -> ['hip','knee']
+//              BODIES.standing().segments.legs.left.foot   -> {at:'ankle',...}
+//   chains   — IK chains derived from segments (legs/arms), honoring
+//              per-limb side / loose / chain:false flags
+//   parts    — renderable parts derived from segments (or hand-ordered when a
+//              body needs specific occlusion, e.g. seatedBack's seat sandwich)
+// Segment refs are joint names or literal [x,y] points.
+
+function partsFromSegments(s) {
+  const parts = [];
+  for (const b of s.butts || []) parts.push({ kind: "butt", ...b });
+  for (const leg of Object.values(s.legs || {})) {
+    parts.push({ kind: "poly", joints: [leg.upper[0], leg.upper[1], leg.lower[1]] });
+    if (leg.foot) parts.push({ kind: "foot", ...leg.foot });
+  }
+  if (s.torso) parts.push({ kind: "line", joints: s.torso });
+  if (s.shoulders) parts.push({ kind: "line", joints: s.shoulders });
+  if (s.head) parts.push({ kind: "head", ...s.head });
+  for (const arm of Object.values(s.arms || {})) {
+    parts.push({ kind: "poly", joints: [arm.upper[0], arm.upper[1], arm.lower[1]], cls: "bd4" });
+  }
+  for (const p of s.extras || []) parts.push(p);
+  return parts;
+}
+
+function chainsFromSegments(s) {
+  const chains = [];
+  for (const limbs of [s.legs, s.arms]) {
+    for (const limb of Object.values(limbs || {})) {
+      if (limb.chain === false) continue;
+      if (typeof limb.upper[0] !== "string") continue; // literal-point limbs aren't posed
+      chains.push({
+        root: limb.upper[0], mid: limb.upper[1], end: limb.lower[1],
+        ...(limb.side ? { side: limb.side } : {}),
+        ...(limb.loose ? { loose: true } : {}),
+      });
+    }
+  }
+  return chains;
+}
+
+function body({ joints, segments, parts, chains }) {
+  return {
+    joints, segments,
+    chains: chains ?? chainsFromSegments(segments),
+    parts: parts ?? partsFromSegments(segments),
+  };
+}
+
+export const BODIES = {
+  // profile stance; facing -1 = left. footPitch/legSide thread through to the
+  // foot part and leg chain for platform work (calf raise).
+  standing({ x = 100, facing = -1, footPitch, legSide } = {}) {
+    return body({
       joints: {
         hip: [x, 68], knee: [x + facing, 84], ankle: [x - facing * 2, ANKLE_Y],
         sh: [x, 40], head: [x, 30], butt: [x - facing * 5, 71],
         elbow: [x - facing, 52], hand: [x, 64],
       },
-      chains: [
-        { root: "hip", mid: "knee", end: "ankle" },
-        { root: "sh", mid: "elbow", end: "hand" },
-      ],
-      parts: [
-        { kind: "poly", joints: ["hip", "knee", "ankle"] },
-        { kind: "line", joints: ["hip", "sh"] },
-        { kind: "head", at: "head" },
-        { kind: "butt", at: "butt" },
-        { kind: "poly", joints: ["sh", "elbow", "hand"], cls: "bd4" },
-        { kind: "foot", at: "ankle", facing },
-      ],
-    };
-  }
-  if (kind === "standing-front") {
-    // The glutes peek out past the hips on both sides — always visible.
-    return {
+      segments: {
+        butts: [{ at: "butt" }],
+        legs: { left: { upper: ["hip", "knee"], lower: ["knee", "ankle"], side: legSide, foot: { at: "ankle", facing, pitch: footPitch } } },
+        torso: ["hip", "sh"],
+        head: { at: "head" },
+        arms: { left: { upper: ["sh", "elbow"], lower: ["elbow", "hand"] } },
+      },
+    });
+  },
+  // dead-on front view; glutes peek past the hips on both sides
+  standingFront({ x = 100 } = {}) {
+    return body({
       joints: {
         pelvis: [x, 68], lKnee: [x - 5, 84], rKnee: [x + 5, 84],
         lAnkle: [x - 8, ANKLE_Y], rAnkle: [x + 8, ANKLE_Y],
         neckB: [x, 40], head: [x, 28], lSh: [x - 9, 42], rSh: [x + 9, 42],
         lButt: [x - 5, 70], rButt: [x + 5, 70],
       },
-      chains: [],
-      parts: [
-        { kind: "butt", at: "lButt", r: 4.5 },
-        { kind: "butt", at: "rButt", r: 4.5 },
-        { kind: "poly", joints: ["pelvis", "lKnee", "lAnkle"] },
-        { kind: "poly", joints: ["pelvis", "rKnee", "rAnkle"] },
-        { kind: "line", joints: ["pelvis", "neckB"] },
-        { kind: "line", joints: ["lSh", "rSh"] },
-        { kind: "head", at: "head" },
-        { kind: "foot", at: "lAnkle", front: true },
-        { kind: "foot", at: "rAnkle", front: true },
-      ],
-    };
-  }
-  if (kind === "standing-3q") {
-    // Three-quarter view: camera at standing height, slightly off to the
-    // subject's side. Near (viewer-left) and far joints are offset a touch in
-    // x/y to convey the turn; "straight ahead of the chest" projects along a
-    // foreshortened down-left diagonal. 2D projection convention, not a 3D
-    // camera — author far-side reach with the diagonal in mind.
-    return {
+      segments: {
+        butts: [{ at: "lButt", r: 4.5 }, { at: "rButt", r: 4.5 }],
+        legs: {
+          left: { upper: ["pelvis", "lKnee"], lower: ["lKnee", "lAnkle"], foot: { at: "lAnkle", front: true } },
+          right: { upper: ["pelvis", "rKnee"], lower: ["rKnee", "rAnkle"], foot: { at: "rAnkle", front: true } },
+        },
+        torso: ["pelvis", "neckB"],
+        shoulders: ["lSh", "rSh"],
+        head: { at: "head" },
+      },
+    });
+  },
+  // three-quarter view: standing height, slightly off-axis; near/far joints
+  // offset to convey the turn, depth axis projects down-left foreshortened
+  standing3q({ x = 100 } = {}) {
+    return body({
       joints: {
         pelvis: [x + 2, 68], neck3: [x, 40], head: [x, 28],
         lSh: [x - 9, 43], rSh: [x + 9, 41],
@@ -157,79 +198,164 @@ export function skeleton(kind, opts = {}) {
         nKnee: [x - 5, 84], nAnkle: [x - 7, ANKLE_Y],
         fKnee: [x + 7, 84], fAnkle: [x + 9, ANKLE_Y],
       },
-      chains: [],
-      parts: [
-        { kind: "butt", at: "lButt", r: 4.5 },
-        { kind: "butt", at: "rButt", r: 4.5 },
-        { kind: "poly", joints: ["pelvis", "nKnee", "nAnkle"] },
-        { kind: "poly", joints: ["pelvis", "fKnee", "fAnkle"] },
-        { kind: "line", joints: ["pelvis", "neck3"] },
-        { kind: "line", joints: ["lSh", "rSh"] },
-        { kind: "head", at: "head" },
-        { kind: "foot", at: "nAnkle", front: true },
-        { kind: "foot", at: "fAnkle", front: true },
-      ],
-    };
-  }
-  if (kind === "seated-side") {
-    // seated tall, thighs forward toward +facing... pulldown-style: thighs to the right
-    return {
-      joints: {
-        hip: [95, 86], sh: [88, 52], head: [86, 42], butt: [90, 88],
-        knee: [120, 84], ankle: [118, ANKLE_Y],
+      segments: {
+        butts: [{ at: "lButt", r: 4.5 }, { at: "rButt", r: 4.5 }],
+        legs: {
+          near: { upper: ["pelvis", "nKnee"], lower: ["nKnee", "nAnkle"], foot: { at: "nAnkle", front: true } },
+          far: { upper: ["pelvis", "fKnee"], lower: ["fKnee", "fAnkle"], foot: { at: "fAnkle", front: true } },
+        },
+        torso: ["pelvis", "neck3"],
+        shoulders: ["lSh", "rSh"],
+        head: { at: "head" },
       },
+    });
+  },
+  // front view seated on a machine; legs are figure-specific (abduction pads)
+  seatedFront() {
+    return body({
+      joints: { pelvisS: [100, 84], neckS: [100, 52], head: [100, 42] },
+      segments: {
+        butts: [{ at: [96, 86], r: 4 }, { at: [104, 86], r: 4 }],
+        torso: ["pelvisS", "neckS"],
+        shoulders: [[92, 54], [108, 54]],
+        head: { at: "head" },
+      },
+    });
+  },
+  // back view seated at a machine; includes its seat so the shins render
+  // occluded behind it, and a slot for figure parts that must sit behind the
+  // torso (compose() splices fig.slot there)
+  seatedBack() {
+    const segments = {
+      butts: [{ at: [95, 86], r: 4.5 }, { at: [105, 86], r: 4.5 }],
+      torso: [[100, 50], [100, 84]],
+      shoulders: ["lSh", "rSh"],
+      head: { at: "head" },
+    };
+    return body({
+      joints: { lSh: [91, 52], rSh: [109, 52], head: [100, 38] },
+      segments,
       chains: [],
       parts: [
-        { kind: "line", joints: ["hip", "sh"] },
-        { kind: "head", at: "head" },
-        { kind: "butt", at: "butt" },
-        { kind: "poly", joints: ["hip", "knee", "ankle"] },
-        { kind: "foot", at: "ankle", facing: 1 },
+        { kind: "line", joints: [[93, 90], [90, 99]] },
+        { kind: "line", joints: [[107, 90], [110, 99]] },
+        { kind: "foot", at: [90, 99], front: true },
+        { kind: "foot", at: [110, 99], front: true },
+        { kind: "rect", x: 84, y: 90, w: 32, h: 6 },
+        { kind: "fline", p: [100, 96, 100, 103] },
+        { kind: "slot" },
+        ...partsFromSegments(segments),
       ],
-    };
-  }
-  if (kind === "supine-bench") {
-    // lying face-up on a bench with feet on the floor, head at left
-    return {
+    });
+  },
+  // lying face-up on a bench, feet on the floor, head at left
+  supine() {
+    return body({
       joints: {
         sh: [72, 72], hipS: [118, 74], knee: [133, 84], ankle: [136, ANKLE_Y],
         head: [48, 70], butt: [118, 77],
       },
-      chains: [],
-      parts: [
-        { kind: "line", joints: [[60, 74], "hipS"] },
-        { kind: "head", at: "head" },
-        { kind: "butt", at: "butt", r: 4.5 },
-        { kind: "poly", joints: ["hipS", "knee", "ankle"] },
-        { kind: "foot", at: "ankle", facing: 1 },
-      ],
-    };
-  }
-  if (kind === "prone-bench") {
-    // lying face-down along a bench, head at left, knees at the bench end;
-    // SEG-proportioned: torso 28, thigh 17 to the knee pivot
-    return {
+      segments: {
+        butts: [{ at: "butt", r: 4.5 }],
+        legs: { left: { upper: ["hipS", "knee"], lower: ["knee", "ankle"], foot: { at: "ankle", facing: 1 } } },
+        torso: [[60, 74], "hipS"],
+        head: { at: "head" },
+      },
+    });
+  },
+  // lying face-down along a bench, head at left, thigh to the knee pivot;
+  // the lower leg is figure-specific (leg curl's rotating group)
+  prone() {
+    return body({
       joints: { head: [48, 73], shP: [59, 76], hipP: [87, 77], knee: [104, 79], butt: [88, 72] },
-      chains: [],
-      parts: [
-        { kind: "line", joints: ["shP", "hipP"] },
-        { kind: "head", at: "head" },
-        { kind: "butt", at: "butt" },
-        { kind: "line", joints: ["hipP", "knee"] },
-      ],
-    };
-  }
-  throw new Error(`unknown skeleton kind: ${kind}`);
-}
+      segments: {
+        butts: [{ at: "butt" }],
+        torso: ["shP", "hipP"],
+        head: { at: "head" },
+        extras: [{ kind: "line", joints: ["hipP", "knee"] }],
+      },
+    });
+  },
+  // supine bridge off a bench (hip thrust): shoulders pinned, hips travel
+  bridge() {
+    return body({
+      joints: {
+        sh: [46, 60], hip: [85, 92], knee: [112, 76], ankle: [115, ANKLE_Y],
+        head: [34, 48], butt: [81, 95],
+      },
+      segments: {
+        butts: [{ at: "butt" }],
+        legs: { left: { upper: ["hip", "knee"], lower: ["knee", "ankle"], loose: true, foot: { at: "ankle", facing: 1 } } },
+        torso: ["sh", "hip"],
+        head: { at: "head" },
+      },
+    });
+  },
+  // rear-foot-elevated split stance (Bulgarian split squat)
+  splitStance() {
+    return body({
+      joints: {
+        hip: [95, 62], fknee: [86, 81], fankle: [80, ANKLE_Y], rknee: [122, 84], rfoot: [148, 70],
+        sh: [90, 34], elbow: [94, 47], hand: [93, 60], head: [89, 26], butt: [100, 64],
+      },
+      segments: {
+        butts: [{ at: "butt" }],
+        legs: {
+          front: { upper: ["hip", "fknee"], lower: ["fknee", "fankle"], foot: { at: "fankle", facing: -1 } },
+          rear: { upper: ["hip", "rknee"], lower: ["rknee", "rfoot"], loose: true, foot: { at: "rfoot", facing: -1, pitch: [60, 60] } },
+        },
+        torso: ["hip", "sh"],
+        head: { at: "head" },
+        arms: { left: { upper: ["sh", "elbow"], lower: ["elbow", "hand"] } },
+      },
+    });
+  },
+  // reclined in a machine seat, pressing along a diagonal (leg press)
+  recline() {
+    return body({
+      joints: { hip: [76, 88], knee: [85, 57], ankle: [102, 75], head: [44, 58] },
+      segments: {
+        butts: [{ at: [72, 92] }],
+        legs: { left: { upper: ["hip", "knee"], lower: ["knee", "ankle"], loose: true, foot: { at: "ankle", facing: 1, pitch: [-125, -125] } } },
+        torso: [[76, 90], [50, 66]],
+        head: { at: "head" },
+      },
+    });
+  },
+  // three-point bench position (one-arm row): hand and knee on the bench,
+  // working arm hangs from the shoulder
+  kneelingBench() {
+    return body({
+      joints: { sh: [86, 58], elbow: [86, 73], hand: [86, 88], head: [60, 50] },
+      segments: {
+        butts: [{ at: [116, 59] }],
+        legs: {
+          standing: { upper: [[112, 62], [113, 84]], lower: [[113, 84], [120, 99]], foot: { at: [120, 99], facing: -1 } },
+        },
+        torso: [[112, 62], [72, 56]],
+        head: { at: "head" },
+        arms: { row: { upper: ["sh", "elbow"], lower: ["elbow", "hand"], side: -1 } },
+        extras: [
+          { kind: "poly", joints: [[78, 58], [71, 68], [68, 77]], cls: "bd4" },
+          { kind: "line", joints: [[112, 62], [128, 76]] },
+          { kind: "line", joints: [[128, 76], [140, 79]] },
+          { kind: "foot", at: [141, 80], facing: -1, pitch: [110, 110] },
+        ],
+      },
+    });
+  },
+};
 
-// Layer a figure over a skeleton: equipment renders behind the body,
-// figure parts on top; figure pose values override skeleton joints.
+// Layer a figure over a body: equipment renders behind the body, figure parts
+// on top; figure pose values override body joints. A {kind:'slot'} part in the
+// body is replaced by fig.slot (parts that must interleave inside the body).
 export function compose(base, fig) {
+  const bodyParts = base.parts.flatMap(p => p.kind === "slot" ? (fig.slot || []) : [p]);
   return {
     ...fig,
     poses: { A: { ...base.joints, ...(fig.poses?.A || {}) }, B: fig.poses?.B || {} },
     chains: [...(base.chains || []), ...(fig.chains || [])],
-    parts: [...(fig.equipment || []), ...base.parts.filter(p => !p.skip), ...(fig.parts || [])],
+    parts: [...(fig.equipment || []), ...bodyParts, ...(fig.parts || [])],
   };
 }
 

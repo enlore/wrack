@@ -1,48 +1,39 @@
-// Figure definitions for the wrack exercise sheet. See rig.mjs for the model:
-// pose A = rep start, pose B = mid-rep hold; knees/elbows omitted from B are
-// IK-solved from pose A's segment lengths and bend side. Coordinates are
-// cell-local (200x120, ground at y=105, sole depth puts planted ankles at 99).
-// Figures build on skeleton() templates where a standard body position fits;
-// equipment renders behind the body, figure parts on top.
-import { skeleton, compose } from "./rig.mjs";
+// Figure definitions for the wrack exercise sheet. Every figure composes over
+// a standardized body from BODIES (see rig.mjs): the body supplies joints,
+// segments, chains, and body parts; the figure supplies equipment, pose
+// overrides (A = rep start, B = mid-rep hold), and implement parts. Weights
+// (bar and dumbbell rings) center on the hand joint that holds them.
+import { BODIES, compose } from "./rig.mjs";
 
 export const FIGURES = [
-  {
+  compose(BODIES.bridge(), {
     name: "HIP THRUST",
     poses: {
-      A: { sh: [46, 60], hip: [85, 92], knee: [112, 76], ankle: [115, 99], head: [34, 48], butt: [81, 95], plate: [85, 81] },
+      A: { plate: [85, 81] },
       // top: hips finish ON the shoulder-knee line, not arched above it
       B: { hip: [85, 70], head: [34, 56], butt: [81, 73], plate: [85, 59] },
     },
-    // loose: bridged torso/leg span longer than the standing standard
-    chains: [{ root: "hip", mid: "knee", end: "ankle", loose: true }],
-    parts: [
+    equipment: [
       { kind: "rect", x: 12, y: 64, w: 34, h: 7 },
       { kind: "fline", p: [17, 71, 17, 103] },
       { kind: "fline", p: [41, 71, 41, 103] },
-      { kind: "line", joints: ["sh", "hip"] },
-      { kind: "poly", joints: ["hip", "knee", "ankle"] },
-      { kind: "head", at: "head" },
-      { kind: "butt", at: "butt" },
-      { kind: "ring", at: "plate", r: 11 },
-      { kind: "foot", at: "ankle", facing: 1 },
     ],
-  },
-  compose(skeleton("standing-side", { x: 100, facing: -1 }), {
+    parts: [{ kind: "ring", at: "plate", r: 11 }],
+  }),
+  compose(BODIES.standing({ x: 100, facing: -1 }), {
     name: "ROMANIAN DEADLIFT",
     poses: {
       A: {},
-      // hips back as counterweight; bar stays plumb under the shoulders,
-      // brushing the legs just below the knee
+      // hips back as counterweight; bar plumb under the shoulders, at the legs
       B: { hip: [114, 70], sh: [98, 60], hand: [103, 83], head: [88, 56], butt: [119, 73] },
     },
     parts: [{ kind: "ring", at: "hand", r: 8 }],
   }),
-  compose(skeleton("supine-bench"), {
+  compose(BODIES.supine(), {
     name: "DB BENCH PRESS",
     poses: {
-      A: { sh: [72, 72], elbow: [90, 71], hand: [89, 53], db: [89, 47] },
-      B: { hand: [74, 36], db: [74, 30] },
+      A: { elbow: [90, 71], hand: [89, 53] },
+      B: { hand: [74, 36] },
     },
     chains: [{ root: "sh", mid: "elbow", end: "hand" }],
     equipment: [
@@ -52,16 +43,16 @@ export const FIGURES = [
     ],
     parts: [
       { kind: "poly", joints: ["sh", "elbow", "hand"], cls: "bd4" },
-      { kind: "ring", at: "db", r: 6 },
+      { kind: "ring", at: "hand", r: 6 },
     ],
   }),
-  {
+  compose(BODIES.seatedBack(), {
     // back view: wide grip overhead, bar pulled to the collarbone,
     // elbows driving down and back past the ribs
     name: "LAT PULLDOWN",
     poses: {
       A: {
-        lSh: [91, 52], rSh: [109, 52], lElbow: [83, 36], rElbow: [117, 36],
+        lElbow: [83, 36], rElbow: [117, 36],
         lHand: [78, 20], rHand: [122, 20],
         barL: [74, 20], barR: [126, 20], barC: [100, 20],
       },
@@ -74,39 +65,27 @@ export const FIGURES = [
       { root: "lSh", mid: "lElbow", end: "lHand" },
       { root: "rSh", mid: "rElbow", end: "rHand" },
     ],
-    parts: [
+    equipment: [
       { kind: "fline", p: [100, 4, 100, 10] },
       { kind: "line", joints: [[100, 8], "barC"], cls: "eqT" },
-      // legs first: seen from behind, the seat occludes them
-      { kind: "line", joints: [[93, 90], [90, 99]] },
-      { kind: "line", joints: [[107, 90], [110, 99]] },
-      { kind: "foot", at: [90, 99], front: true },
-      { kind: "foot", at: [110, 99], front: true },
-      { kind: "rect", x: 84, y: 90, w: 32, h: 6 },
-      { kind: "fline", p: [100, 96, 100, 103] },
       { kind: "rect", x: 78, y: 84, w: 12, h: 5 },
       { kind: "rect", x: 110, y: 84, w: 12, h: 5 },
-      { kind: "line", joints: ["barL", "barR"], cls: "ac" },
-      { kind: "butt", at: [95, 86], r: 4.5 },
-      { kind: "butt", at: [105, 86], r: 4.5 },
-      { kind: "line", joints: [[100, 50], [100, 84]] },
-      { kind: "line", joints: ["lSh", "rSh"] },
-      { kind: "head", at: [100, 38] },
+    ],
+    // the bar renders inside the body's slot: over the seat, behind the torso
+    slot: [{ kind: "line", joints: ["barL", "barR"], cls: "ac" }],
+    parts: [
       { kind: "poly", joints: ["lSh", "lElbow", "lHand"], cls: "bd4" },
       { kind: "poly", joints: ["rSh", "rElbow", "rHand"], cls: "bd4" },
     ],
-  },
-  {
+  }),
+  compose(BODIES.seatedFront(), {
     name: "SEATED HIP ABDUCTION",
     poses: { A: {}, B: {} },
-    parts: [
+    equipment: [
       { kind: "rect", x: 86, y: 88, w: 28, h: 6 },
       { kind: "fline", p: [100, 94, 100, 103] },
-      { kind: "butt", at: [96, 86], r: 4 },
-      { kind: "butt", at: [104, 86], r: 4 },
-      { kind: "head", at: [100, 42] },
-      { kind: "line", joints: [[100, 52], [100, 84]] },
-      { kind: "line", joints: [[92, 54], [108, 54]] },
+    ],
+    parts: [
       {
         kind: "group", transform: { type: "rotate", values: ["0 100 82", "-14 100 82"] },
         children: [
@@ -124,17 +103,14 @@ export const FIGURES = [
         ],
       },
     ],
-  },
-  compose(skeleton("standing-3q", { x: 100 }), {
+  }),
+  compose(BODIES.standing3q(), {
     // three-quarter view, stack at the lifter's side (anti-rotation): both
     // arms anchor at their shoulders and clasp the handle; the press runs
     // along the foreshortened depth diagonal, far arm extending fully first
     name: "PALLOF PRESS",
     poses: {
-      A: {
-        lElbow: [80, 57], rElbow: [110, 60], hand: [95, 58],
-        tdHand: [30, 34],
-      },
+      A: { lElbow: [80, 57], rElbow: [110, 60], hand: [95, 58], tdHand: [30, 34] },
       B: { hand: [80, 62], tdHand: [30, 48] },
     },
     chains: [
@@ -159,80 +135,45 @@ export const FIGURES = [
       { kind: "dot", at: "tdHand", r: 2.5 },
     ],
   }),
-  {
+  compose(BODIES.standing({ x: 106, facing: 1, footPitch: [-12, 25], legSide: -1 }), {
     name: "STANDING CALF RAISE",
     poses: {
       // A = the bottom stretch: heels dipped below the platform edge
-      A: { legTop: [106, 60], knee: [105, 76], ankle: [103, 93], sh: [108, 32], elbow: [113, 47], hand: [111, 60], head: [111, 23], butt: [101, 61], db: [111, 65] },
-      B: { legTop: [106, 49], ankle: [101, 82], sh: [108, 21], hand: [111, 49], head: [111, 12], butt: [101, 50], db: [111, 54] },
+      A: { hip: [106, 60], knee: [105, 76], ankle: [103, 93], sh: [108, 32], elbow: [113, 47], hand: [111, 60], head: [111, 23], butt: [101, 61] },
+      B: { hip: [106, 49], ankle: [101, 82], sh: [108, 21], hand: [111, 49], head: [111, 12], butt: [101, 50] },
     },
-    chains: [
-      { root: "legTop", mid: "knee", end: "ankle", side: -1 },
-      { root: "sh", mid: "elbow", end: "hand" },
-    ],
-    parts: [
-      { kind: "rect", x: 106, y: 90, w: 56, h: 15 },
-      { kind: "poly", joints: ["legTop", "knee", "ankle"] },
-      { kind: "line", joints: ["legTop", "sh"] },
-      { kind: "butt", at: "butt" },
-      { kind: "head", at: "head" },
-      { kind: "poly", joints: ["sh", "elbow", "hand"], cls: "bd4" },
-      { kind: "ring", at: "db", r: 5.5 },
-      { kind: "foot", at: "ankle", facing: 1, pitch: [-12, 25] },
-    ],
-  },
-  {
+    equipment: [{ kind: "rect", x: 106, y: 90, w: 56, h: 15 }],
+    parts: [{ kind: "ring", at: "hand", r: 5.5 }],
+  }),
+  compose(BODIES.splitStance(), {
     name: "BULGARIAN SPLIT SQUAT",
     poses: {
-      A: { hip: [95, 62], fknee: [86, 81], fankle: [80, 99], rknee: [122, 84], rfoot: [148, 70], sh: [90, 34], elbow: [94, 47], hand: [93, 60], head: [89, 26], butt: [100, 64], db: [93, 66] },
-      B: { hip: [97, 82], sh: [90, 54], hand: [93, 80], head: [89, 46], butt: [102, 84], db: [93, 86] },
+      A: {},
+      B: { hip: [97, 82], sh: [90, 54], hand: [93, 80], head: [89, 46], butt: [102, 84] },
     },
-    chains: [
-      { root: "hip", mid: "fknee", end: "fankle" },
-      // loose: rear leg elongated for the elevated-foot perspective
-      { root: "hip", mid: "rknee", end: "rfoot", loose: true },
-      { root: "sh", mid: "elbow", end: "hand" },
-    ],
-    parts: [
+    equipment: [
       { kind: "rect", x: 140, y: 72, w: 44, h: 7 },
       { kind: "fline", p: [146, 79, 146, 103] },
       { kind: "fline", p: [176, 79, 176, 103] },
-      { kind: "poly", joints: ["hip", "fknee", "fankle"] },
-      { kind: "poly", joints: ["hip", "rknee", "rfoot"] },
-      { kind: "line", joints: ["hip", "sh"] },
-      { kind: "head", at: "head" },
-      { kind: "butt", at: "butt" },
-      { kind: "poly", joints: ["sh", "elbow", "hand"], cls: "bd4" },
-      { kind: "ring", at: "db", r: 5.5 },
-      { kind: "foot", at: "fankle", facing: -1 },
-      { kind: "foot", at: "rfoot", facing: -1, pitch: [60, 60] },
     ],
-  },
-  {
+    parts: [{ kind: "ring", at: "hand", r: 5.5 }],
+  }),
+  compose(BODIES.recline(), {
     name: "LEG PRESS",
     poses: {
       // A near 90° knee, B stops just short of lockout
-      A: { hip: [76, 88], knee: [85, 57], ankle: [102, 75], platA: [99, 61], platB: [114, 82] },
+      A: { platA: [99, 61], platB: [114, 82] },
       B: { ankle: [120, 57], platA: [117, 43], platB: [132, 64] },
     },
-    // loose: the machine figure is drawn at a larger scale than standing
-    chains: [{ root: "hip", mid: "knee", end: "ankle", loose: true }],
-    parts: [
-      { kind: "fline", p: [44, 62, 78, 96] },
-      { kind: "head", at: [44, 58] },
-      { kind: "line", joints: [[76, 90], [50, 66]] },
-      { kind: "butt", at: [72, 92] },
-      { kind: "poly", joints: ["hip", "knee", "ankle"] },
-      { kind: "line", joints: ["platA", "platB"], cls: "ac5" },
-      { kind: "foot", at: "ankle", facing: 1, pitch: [-125, -125] },
-    ],
-  },
-  compose(skeleton("standing-front", { x: 100 }), {
+    equipment: [{ kind: "fline", p: [44, 62, 78, 96] }],
+    parts: [{ kind: "line", joints: ["platA", "platB"], cls: "ac5" }],
+  }),
+  compose(BODIES.standingFront(), {
     name: "DB SHOULDER PRESS",
     poses: {
       // A: elbows tucked below shoulder level, bells at ear height
-      A: { lElbow: [76, 48], rElbow: [124, 48], lHand: [84, 34], rHand: [116, 34], lDb: [84, 29], rDb: [116, 29] },
-      B: { lHand: [92, 12], rHand: [108, 12], lDb: [92, 7], rDb: [108, 7] },
+      A: { lElbow: [76, 48], rElbow: [124, 48], lHand: [84, 34], rHand: [116, 34] },
+      B: { lHand: [92, 12], rHand: [108, 12] },
     },
     chains: [
       { root: "lSh", mid: "lElbow", end: "lHand" },
@@ -241,58 +182,37 @@ export const FIGURES = [
     parts: [
       { kind: "poly", joints: ["lSh", "lElbow", "lHand"], cls: "bd4" },
       { kind: "poly", joints: ["rSh", "rElbow", "rHand"], cls: "bd4" },
-      { kind: "ring", at: "lDb", r: 5.5 },
-      { kind: "ring", at: "rDb", r: 5.5 },
+      { kind: "ring", at: "lHand", r: 5.5 },
+      { kind: "ring", at: "rHand", r: 5.5 },
     ],
   }),
-  {
+  compose(BODIES.standing({ x: 100, facing: -1 }), {
     name: "CABLE PULL-THROUGH",
     poses: {
       // A = hinged stretch with hips back; B = standing tall — hips travel
       A: { hip: [106, 73], knee: [104, 87], ankle: [98, 99], sh: [80, 62], elbow: [90, 73], hand: [80, 84], head: [70, 58], butt: [111, 75] },
       B: { hip: [95, 70], sh: [95, 42], hand: [97, 72], head: [93, 32], butt: [100, 72] },
     },
-    chains: [
-      { root: "hip", mid: "knee", end: "ankle" },
-      { root: "sh", mid: "elbow", end: "hand" },
-    ],
     equipment: [{ kind: "rect", x: 178, y: 62, w: 10, h: 42 }],
     parts: [
-      { kind: "poly", joints: ["hip", "knee", "ankle"] },
-      { kind: "line", joints: ["hip", "sh"] },
-      { kind: "head", at: "head" },
-      { kind: "butt", at: "butt" },
-      { kind: "poly", joints: ["sh", "elbow", "hand"], cls: "bd4" },
       { kind: "line", joints: [[182, 100], "hand"], cls: "acT" },
       { kind: "dot", at: "hand", r: 3.5 },
-      { kind: "foot", at: "ankle", facing: -1 },
     ],
-  },
-  {
+  }),
+  compose(BODIES.kneelingBench(), {
     name: "ONE-ARM ROW",
     poses: {
-      A: { sh: [86, 58], elbow: [86, 73], hand: [86, 88], db: [86, 94] },
-      B: { hand: [96, 66], db: [96, 72] },
+      A: {},
+      B: { hand: [96, 66] },
     },
-    chains: [{ root: "sh", mid: "elbow", end: "hand", side: -1 }],
-    parts: [
+    equipment: [
       { kind: "rect", x: 56, y: 78, w: 88, h: 7 },
       { kind: "fline", p: [64, 85, 64, 103] },
       { kind: "fline", p: [136, 85, 136, 103] },
-      { kind: "head", at: [60, 50] },
-      { kind: "line", joints: [[112, 62], [72, 56]] },
-      { kind: "butt", at: [116, 59] },
-      { kind: "poly", joints: [[78, 58], [71, 68], [68, 77]], cls: "bd4" },
-      { kind: "line", joints: [[112, 62], [128, 76]] },
-      { kind: "line", joints: [[128, 76], [140, 79]] },
-      { kind: "poly", joints: [[112, 62], [113, 84], [120, 99]] },
-      { kind: "poly", joints: ["sh", "elbow", "hand"], cls: "bd4" },
-      { kind: "ring", at: "db", r: 5.5 },
-      { kind: "foot", at: [120, 99], facing: -1 },
-      { kind: "foot", at: [141, 80], facing: -1, pitch: [110, 110] },
     ],
-  },
-  compose(skeleton("prone-bench"), {
+    parts: [{ kind: "ring", at: "hand", r: 5.5 }],
+  }),
+  compose(BODIES.prone(), {
     name: "LYING LEG CURL",
     // padC tracks the roller pad's position through the group's -100 rotation
     poses: { A: { padC: [116, 81] }, B: { padC: [104, 67] } },
