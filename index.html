@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<title>Wrack</title>
+
+<meta name="theme-color" content="#131519">
+<meta name="description" content="Guided full-body workout tracker with rest timers and screen wake lock.">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Wrack">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="favicon-32.png" sizes="32x32">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700&family=Saira:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --iron:#131519;
+  --panel:#1C2027;
+  --panel-2:#252A33;
+  --line:#2E343E;
+  --chalk:#F1EEE7;
+  --dust:#8A919E;
+  --blue:#3D6FF0;
+  --red:#D6453C;
+  --green:#4EA36B;
+  --amber:#D9A02B;
+  --rail:34px;
+  --disp:"Saira Condensed","Roboto Condensed","Arial Narrow",system-ui,sans-serif;
+  --body:"Saira",system-ui,-apple-system,sans-serif;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;height:100%}
+body{
+  background:var(--iron);color:var(--chalk);
+  font-family:var(--body);font-size:16px;line-height:1.4;
+  overscroll-behavior-y:contain;
+  padding-top:env(safe-area-inset-top);
+}
+button{font-family:inherit;color:inherit;background:none;border:none;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.eyebrow{font-family:var(--disp);text-transform:uppercase;letter-spacing:.14em;font-weight:600;font-size:12px;color:var(--dust)}
+.num{font-variant-numeric:tabular-nums}
+
+#app{min-height:100%;display:flex;flex-direction:column}
+.screen{display:none;flex:1;flex-direction:column}
+.screen.on{display:flex}
+.pad{padding:0 16px}
+.scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:24px}
+
+/* ---------- indicator lights ---------- */
+.lights{display:flex;gap:12px;align-items:center}
+.light{display:inline-flex;align-items:center;gap:5px;font-family:var(--disp);
+  font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--dust);white-space:nowrap}
+.led{width:7px;height:7px;border-radius:50%;background:#3A414C;flex:0 0 7px}
+.led.green{background:var(--green);box-shadow:0 0 6px rgba(78,163,107,.65)}
+.led.amber{background:var(--amber);box-shadow:0 0 6px rgba(217,160,43,.6)}
+.led.red{background:var(--red)}
+
+.head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:16px 16px 4px}
+.head h1{font-family:var(--disp);font-weight:700;font-size:32px;letter-spacing:.16em;margin:0;text-transform:uppercase}
+
+/* ---------- home ---------- */
+.card{background:var(--panel);border-radius:14px;padding:18px;margin:14px 16px}
+.card h2{font-family:var(--disp);font-size:28px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin:4px 0 2px}
+.card .sub{color:var(--dust);font-size:14px}
+.exlist{margin:14px 0 0;padding:0;list-style:none;border-top:1px solid var(--line)}
+.exlist li{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid var(--line);font-size:14px}
+.exlist .m{color:var(--dust);font-family:var(--disp);letter-spacing:.06em;white-space:nowrap}
+
+.btn{display:block;width:100%;text-align:center;font-family:var(--disp);text-transform:uppercase;
+  letter-spacing:.12em;font-weight:700;font-size:17px;padding:17px;border-radius:12px;background:var(--blue);color:#fff}
+.btn:active{transform:translateY(1px)}
+.btn.quiet{background:none;color:var(--dust);font-size:13px;padding:12px;letter-spacing:.1em}
+.btn.soft{background:var(--panel);color:var(--chalk);font-size:13px;padding:13px;border-radius:10px;letter-spacing:.1em}
+
+.hist{margin:0;padding:0;list-style:none}
+.hist li{display:flex;justify-content:space-between;align-items:center;padding:13px 16px;border-bottom:1px solid #22262E}
+.hist .d{font-family:var(--disp);font-size:15px;letter-spacing:.06em}
+.hist .v{color:var(--dust);font-size:13px}
+.empty{color:var(--dust);font-size:14px;padding:6px 16px 20px}
+
+/* ---------- session ---------- */
+.sessionbody{flex:1;display:flex;min-height:0}
+.rail{width:var(--rail);flex:0 0 var(--rail);padding:14px 0 0;display:flex;flex-direction:column;
+  align-items:center;gap:7px;background:#0F1115}
+.plate{position:relative;height:26px;border-radius:3px;background:#2B313B;transition:background .18s}
+.plate.done{background:var(--blue)}
+.plate.part{background:linear-gradient(to top,var(--blue) var(--p,0%),#2B313B var(--p,0%))}
+.plate.cur::after{content:"";position:absolute;left:-9px;top:50%;transform:translateY(-50%);
+  border:5px solid transparent;border-left-color:var(--chalk)}
+.railcap{width:14px;height:4px;background:#454C58;border-radius:2px;margin-top:6px}
+
+.main{flex:1;min-width:0;display:flex;flex-direction:column}
+.exhead{padding:14px 16px 0}
+.exhead .idx{display:flex;justify-content:space-between;align-items:center}
+.exhead h2{font-family:var(--disp);font-weight:700;font-size:27px;line-height:1.05;
+  text-transform:uppercase;letter-spacing:.02em;margin:8px 0 5px}
+.target{color:var(--dust);font-size:14px}
+.note{margin-top:9px;font-size:13px;color:#B9C0CC;background:#20252D;border-left:2px solid var(--blue);padding:8px 10px;border-radius:0 6px 6px 0}
+
+.sets{padding:14px 16px 0}
+.set{display:grid;grid-template-columns:24px 1fr 1fr 52px;gap:8px;align-items:center;
+  padding:8px;border-radius:10px;margin-bottom:8px;background:var(--panel)}
+.set.active{background:var(--panel-2);box-shadow:inset 0 0 0 1px #39414E}
+.set.logged{opacity:.55}
+.set .sn{font-family:var(--disp);font-weight:700;color:var(--dust);text-align:center;font-size:15px}
+.field{display:flex;align-items:center;background:#161A20;border-radius:8px;overflow:hidden}
+.field button{width:34px;height:44px;font-size:20px;color:var(--dust);flex:0 0 34px}
+.field button:active{background:#262C35}
+.field input{flex:1;min-width:0;width:100%;background:none;border:none;color:var(--chalk);
+  text-align:center;font-size:17px;font-weight:600;font-variant-numeric:tabular-nums;padding:0}
+.field input::-webkit-outer-spin-button,.field input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.field input[type=number]{-moz-appearance:textfield}
+.log{height:44px;border-radius:8px;background:#161A20;font-size:19px;color:var(--dust)}
+.log.on{background:var(--green);color:#fff}
+.labels{display:grid;grid-template-columns:24px 1fr 1fr 52px;gap:8px;padding:0 8px 4px}
+.labels span{font-family:var(--disp);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#5F6773;text-align:center}
+.last{padding:2px 16px 0;font-size:12px;color:var(--dust);font-family:var(--disp);letter-spacing:.06em}
+
+/* ---------- explainer ---------- */
+.howbar{padding:12px 16px 0}
+.howtoggle{display:flex;align-items:center;justify-content:space-between;width:100%;
+  background:var(--panel);border-radius:10px;padding:12px 14px}
+.howtoggle .lab{font-family:var(--disp);font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--chalk)}
+.howtoggle .chev{color:var(--dust);font-size:13px;transition:transform .18s}
+.howtoggle[aria-expanded="true"] .chev{transform:rotate(180deg)}
+.how{margin:8px 0 0;background:var(--panel);border-radius:10px;padding:4px 14px 14px}
+.how[hidden]{display:none}
+.how dl{margin:0}
+.how dt{font-family:var(--disp);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--blue);margin:12px 0 3px}
+.how dd{margin:0;font-size:14.5px;line-height:1.45;color:#D5D9E0}
+.how dt.warn{color:var(--amber)}
+.figure{margin:6px 0 2px;background:#161A20;border-radius:8px;padding:10px}
+.figure svg{display:block;width:100%;height:auto}
+
+/* ---------- bottom bar / rest ---------- */
+.bar{padding:10px 16px calc(10px + env(safe-area-inset-bottom));background:#0F1115;border-top:1px solid #22262E;display:flex;gap:10px}
+.bar button{flex:1;font-family:var(--disp);text-transform:uppercase;letter-spacing:.1em;font-weight:700;
+  font-size:15px;padding:15px 8px;border-radius:11px;background:var(--panel-2)}
+.bar button.primary{flex:2;background:var(--blue);color:#fff}
+.bar button[disabled]{opacity:.35}
+.rest{background:var(--red);color:#fff;padding:12px 16px;display:flex;align-items:center;justify-content:space-between}
+.rest .t{font-family:var(--disp);font-size:30px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:.04em}
+.rest .lab{font-family:var(--disp);font-size:11px;letter-spacing:.16em;text-transform:uppercase;opacity:.85}
+.rest button{font-family:var(--disp);font-size:13px;letter-spacing:.12em;text-transform:uppercase;
+  background:rgba(0,0,0,.22);padding:10px 14px;border-radius:8px;color:#fff}
+.restwrap{display:none}
+.restwrap.on{display:block}
+.banner{background:#3A2A16;color:#F0D9A8;font-size:13px;padding:10px 16px;border-bottom:1px solid #513B1E}
+
+/* ---------- summary ---------- */
+.done{padding:36px 16px;text-align:center}
+.done .big{font-family:var(--disp);font-size:52px;font-weight:700;letter-spacing:.02em;line-height:1}
+.stats{display:flex;gap:10px;margin:22px 16px}
+.stat{flex:1;background:var(--panel);border-radius:12px;padding:14px;text-align:center}
+.stat .v{font-family:var(--disp);font-size:26px;font-weight:700}
+.stat .k{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--dust);font-family:var(--disp)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- HOME -->
+  <section class="screen on" id="s-home">
+    <div class="head">
+      <h1>Wrack</h1>
+      <div class="lights">
+        <span class="light"><i class="led" id="ledStore"></i><span id="txtStore">storage</span></span>
+        <span class="light"><i class="led" id="ledWakeH"></i><span id="txtWakeH">screen</span></span>
+      </div>
+    </div>
+    <div id="banner"></div>
+    <div class="scroll">
+      <div class="card">
+        <div class="eyebrow">Up next</div>
+        <h2 id="nextName">Day A</h2>
+        <div class="sub" id="nextSub">Hinge-dominant · 6 exercises</div>
+        <ul class="exlist" id="nextList"></ul>
+      </div>
+      <button class="btn" id="startBtn" style="margin:0 16px">Start workout</button>
+      <button class="btn quiet" id="swapBtn">Switch to the other day</button>
+
+      <div style="padding:0 16px" id="installWrap" hidden>
+        <button class="btn soft" id="installBtn">Install to home screen</button>
+      </div>
+
+      <div class="pad" style="margin-top:18px"><div class="eyebrow">History</div></div>
+      <ul class="hist" id="hist"></ul>
+      <div class="empty" id="histEmpty">No sessions logged yet.</div>
+
+      <div style="display:flex;gap:8px;padding:22px 16px 0">
+        <button class="btn soft" id="exportBtn">Export data</button>
+        <button class="btn soft" id="importBtn">Import data</button>
+      </div>
+      <input type="file" id="importFile" accept="application/json" hidden>
+    </div>
+  </section>
+
+  <!-- SESSION -->
+  <section class="screen" id="s-run">
+    <div class="head" style="padding:12px 16px 2px">
+      <div class="eyebrow" id="runTitle">Day A · Hinge</div>
+      <div class="lights">
+        <span class="light"><i class="led" id="ledStore2"></i><span id="txtStore2">storage</span></span>
+        <span class="light"><i class="led" id="ledWake"></i><span id="txtWake">screen</span></span>
+      </div>
+    </div>
+    <div class="sessionbody">
+      <div class="rail" id="rail"></div>
+      <div class="main">
+        <div class="scroll" id="runScroll">
+          <div class="exhead">
+            <div class="idx"><span class="eyebrow num" id="exCount">01 / 06</span><span class="eyebrow" id="restLab">Rest 2:00</span></div>
+            <h2 id="exName">Hip thrust</h2>
+            <div class="target" id="exTarget">4 sets · 8–10 reps</div>
+            <div class="note" id="exNote" hidden></div>
+          </div>
+          <div class="last" id="lastTime"></div>
+          <div class="sets">
+            <div class="labels"><span>#</span><span>Weight</span><span>Reps</span><span></span></div>
+            <div id="setRows"></div>
+          </div>
+          <div class="howbar">
+            <button class="howtoggle" id="howToggle" aria-expanded="false" aria-controls="howBox">
+              <span class="lab">How to do it</span><span class="chev">▾</span>
+            </button>
+            <div class="how" id="howBox" hidden></div>
+          </div>
+        </div>
+        <div class="restwrap" id="restWrap">
+          <div class="rest">
+            <div><div class="lab">Rest</div><div class="t num" id="restT">2:00</div></div>
+            <div style="display:flex;gap:8px">
+              <button id="rest30">+30s</button>
+              <button id="restSkip">Skip</button>
+            </div>
+          </div>
+        </div>
+        <div class="bar">
+          <button id="prevEx">Prev</button>
+          <button class="primary" id="nextEx">Next</button>
+          <button id="endBtn">End</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SUMMARY -->
+  <section class="screen" id="s-done">
+    <div class="scroll">
+      <div class="done">
+        <div class="eyebrow">Workout complete</div>
+        <div class="big" id="doneName">Day A</div>
+      </div>
+      <div class="stats">
+        <div class="stat"><div class="v num" id="stSets">0</div><div class="k">Sets</div></div>
+        <div class="stat"><div class="v num" id="stVol">0</div><div class="k">Volume lb</div></div>
+        <div class="stat"><div class="v num" id="stTime">0m</div><div class="k">Duration</div></div>
+      </div>
+      <button class="btn" id="homeBtn" style="margin:20px 16px">Back to start</button>
+    </div>
+  </section>
+</div>
+
+<video id="nosleep" muted playsinline loop
+       style="position:fixed;width:1px;height:1px;opacity:0;pointer-events:none;left:-10px"></video>
+
+<script>
+/* ============================================================
+   PROGRAM  —  `how` blocks render in the explainer panel.
+   Add an `illus` field (raw <svg> string) to draw a figure.
+   ============================================================ */
+const PROGRAM = {
+  A: { name:"Day A", sub:"Hinge-dominant", ex:[
+    { id:"hipthrust", name:"Hip thrust", sets:4, reps:"8–10", rest:120,
+      how:{
+        setup:"Upper back against a bench just under the shoulder blades, feet flat and hip-width. Set the feet so the shins are vertical at the top of the rep. Pad the bar across the hip crease.",
+        move:"Drive through the heels until torso and thighs form a straight line. Hold the top for a beat, then lower until the plates almost touch the floor.",
+        cue:"Tuck the ribs down and finish the rep with the glutes, not by arching the lower back.",
+        watch:"Feet too close turns this into a quad exercise; too far forward and the hamstrings take it over."
+      }},
+    { id:"rdl", name:"Romanian deadlift", sets:3, reps:"8", rest:120,
+      how:{
+        setup:"Bar against the thighs, weight in the mid-foot, knees bent slightly and then held at that same angle throughout.",
+        move:"Push the hips straight back and let the bar drag down the legs until the hamstrings load up — usually just below the knee. Stand by driving the hips forward.",
+        cue:"The bar stays in contact with the leg the whole way down and up.",
+        watch:"Stop at the point where the lower back would round. Depth isn't the goal, the stretch is."
+      }},
+    { id:"dbbench", name:"DB bench press", sets:3, reps:"8–10", rest:90,
+      note:"Neutral grip. Keep the elbows in front of the torso.",
+      how:{
+        setup:"Palms facing each other, elbows tucked to about 45°, dumbbells stacked over the lower chest.",
+        move:"Lower until the upper arm is roughly parallel with the floor, then press back up without clashing the bells.",
+        cue:"Wrists stacked over elbows, shoulder blades pinned to the bench.",
+        watch:"Stop the descent before the elbows travel behind the torso — that's the position that stresses a tenodesis."
+      }},
+    { id:"pulldown", name:"Lat pulldown", sets:3, reps:"10", rest:90,
+      note:"Neutral or pronated grip — not supinated.",
+      how:{
+        setup:"Thighs snug under the pad, hands just outside shoulder width, a slight lean back from the hips.",
+        move:"Pull the bar to the collarbone by driving the elbows down and back. Control the return until the arms are fully straight.",
+        cue:"Treat the hands as hooks and let the elbows do the work.",
+        watch:"Bar to the front, never behind the neck. A supinated grip loads the biceps anchor directly — skip it."
+      }},
+    { id:"abduct", name:"Cable hip abduction", sets:3, reps:"12–15", rest:45, side:true,
+      note:"Superset with the Pallof press.",
+      how:{
+        setup:"Ankle cuff on the low pin, working leg furthest from the stack. Stand tall and hold the frame for balance.",
+        move:"Sweep the leg out and slightly behind you, roughly 30–45°, then return under control without letting the stack rest.",
+        cue:"Lock the standing leg and stop the torso from leaning away as a counterweight.",
+        watch:"A small range done honestly beats a big swing driven by the lower back."
+      }},
+    { id:"pallof", name:"Cable Pallof press", sets:3, reps:"10", rest:45, side:true,
+      how:{
+        setup:"Cable at chest height. Stand side-on to the stack, handle at the sternum, feet hip-width.",
+        move:"Press the handle straight out and hold for 2–3 seconds while the cable tries to rotate you, then bring it back to the chest.",
+        cue:"The rep is the resistance to rotation, not the arm movement.",
+        watch:"Ribs down and hips square. Step further from the stack to make the hold harder."
+      }}
+  ]},
+  B: { name:"Day B", sub:"Knee-dominant", ex:[
+    { id:"bss", name:"Bulgarian split squat", sets:3, reps:"8–10", rest:120, side:true,
+      how:{
+        setup:"Rear foot on a bench, front foot far enough forward that the front shin stays near vertical at the bottom.",
+        move:"Drop straight down until the back knee is just off the floor, then drive up through the front heel.",
+        cue:"A slight forward torso lean shifts the work onto the glute.",
+        watch:"Dial in stance length before adding load. Too short and it becomes a quad-and-knee exercise."
+      }},
+    { id:"pullthru", name:"Cable pull-through", sets:3, reps:"12", rest:90,
+      how:{
+        setup:"Rope on the lowest pin. Face away from the stack, rope between the legs, soft knees, hands loose.",
+        move:"Let the cable pull the hips back into a stretch, then snap the hips forward to stand tall.",
+        cue:"Finish standing, glutes squeezed — don't lean back past vertical.",
+        watch:"Arms are just straps. If the biceps are working, you're rowing it."
+      }},
+    { id:"fly", name:"Standing cable fly", sets:3, reps:"12", rest:90,
+      note:"Dual cables. Stop the stretch at chest level.",
+      how:{
+        setup:"Both cables at or slightly above shoulder height. Split stance, slight forward lean, elbows soft.",
+        move:"Bring the handles together in front of the chest in a wide arc, then let them travel back out to about chest width.",
+        cue:"Fix the elbow angle at the start and hold it for the whole rep.",
+        watch:"Don't chase the stretch behind the torso — stop the hands at the plane of your chest."
+      }},
+    { id:"row", name:"One-arm row", sets:3, reps:"10", rest:90, side:true,
+      how:{
+        setup:"Hand and knee on a bench for dumbbells, or a split stance facing a mid-height cable. Flat back, hips square.",
+        move:"Pull the handle to the hip with the elbow tracking past the ribs. Lower until the shoulder blade reaches forward.",
+        cue:"Lead with the elbow, finish with the shoulder blade.",
+        watch:"Neutral grip keeps the load off the biceps anchor. No twisting the torso to finish the rep."
+      }},
+    { id:"kickback", name:"Cable glute kickback", sets:3, reps:"12", rest:45, side:true,
+      note:"Superset with the shoulder press.",
+      how:{
+        setup:"Ankle cuff on the low pin, facing the stack. Hinge forward slightly and brace a hand on the frame.",
+        move:"Drive the leg straight back, squeeze at the top, then return without letting the weight settle.",
+        cue:"End range is a glute squeeze, not a lower-back arch.",
+        watch:"If the ribs flare or the back extends to get more range, you've already passed your end range."
+      }},
+    { id:"ohp", name:"DB shoulder press", sets:3, reps:"10", rest:60,
+      how:{
+        setup:"Seated or standing, palms facing each other, dumbbells at ear height.",
+        move:"Press until the arms are straight without banging the bells together, then lower under control to ear height.",
+        cue:"Squeeze the glutes and brace the midsection so the press doesn't turn into a standing back arch.",
+        watch:"Neutral grip, path in front of the body. No behind-the-neck pressing and no wide flared elbows."
+      }}
+  ]}
+};
+
+/* ============================================================
+   STORAGE  —  IndexedDB first, host storage next, memory last
+   ============================================================ */
+const Store = (() => {
+  let backend = "memory", mem = {}, db = null;
+
+  function openIDB(){
+    return new Promise((res, rej) => {
+      let req;
+      try { req = indexedDB.open("wrack", 1); }
+      catch(e){ return rej(e); }
+      req.onupgradeneeded = () => req.result.createObjectStore("kv");
+      req.onsuccess = () => res(req.result);
+      req.onerror = () => rej(req.error);
+      req.onblocked = () => rej(new Error("blocked"));
+      setTimeout(() => rej(new Error("timeout")), 3000);
+    });
+  }
+  function idb(mode, fn){
+    return new Promise((res, rej) => {
+      const tx = db.transaction("kv", mode);
+      const r = fn(tx.objectStore("kv"));
+      tx.oncomplete = () => res(r.result);
+      tx.onerror = () => rej(tx.error);
+    });
+  }
+  async function init(){
+    try {
+      db = await openIDB();
+      await idb("readwrite", s => s.put(1, "__probe"));
+      backend = "indexeddb"; return backend;
+    } catch(e){ db = null; }
+    if (window.storage && typeof window.storage.get === "function"){
+      try { await window.storage.set("__probe", "1"); backend = "host"; return backend; } catch(e){}
+    }
+    backend = "memory"; return backend;
+  }
+  async function get(key){
+    if (backend === "indexeddb"){ const v = await idb("readonly", s => s.get(key)); return v ?? null; }
+    if (backend === "host"){
+      try { const r = await window.storage.get(key); return r ? JSON.parse(r.value) : null; } catch(e){ return null; }
+    }
+    return key in mem ? mem[key] : null;
+  }
+  async function set(key, val){
+    if (backend === "indexeddb") return idb("readwrite", s => s.put(val, key));
+    if (backend === "host"){ try { await window.storage.set(key, JSON.stringify(val)); } catch(e){} return; }
+    mem[key] = val;
+  }
+  return { init, get, set, backend: () => backend };
+})();
+
+const $ = id => document.getElementById(id);
+
+/* ============================================================
+   INDICATOR LIGHTS
+   ============================================================ */
+const Lights = (() => {
+  function paint(el, txt, state, label){
+    const led = $(el), t = $(txt);
+    if (!led) return;
+    led.className = "led" + (state ? " " + state : "");
+    t.textContent = label;
+  }
+  function storage(){
+    const b = Store.backend();
+    const map = {
+      indexeddb: ["green", "saved locally"],
+      host:      ["green", "saved"],
+      memory:    ["red",   "not saving"]
+    }[b];
+    paint("ledStore", "txtStore", map[0], map[1]);
+    paint("ledStore2", "txtStore2", map[0], map[1]);
+  }
+  function wake(mode){
+    const map = {
+      api:   ["green", "screen locked on"],
+      video: ["amber", "screen held awake"],
+      none:  ["red",   "screen may sleep"],
+      idle:  ["",      "screen idle"]
+    }[mode] || ["", "screen idle"];
+    paint("ledWake", "txtWake", map[0], map[1]);
+    paint("ledWakeH", "txtWakeH", map[0], map[1]);
+  }
+  return { storage, wake };
+})();
+
+/* ============================================================
+   WAKE LOCK  (+ captureStream video fallback)
+   ============================================================ */
+const Wake = (() => {
+  let lock = null, mode = "idle", vidOn = false, canvasTimer = null;
+  const vid = $("nosleep");
+
+  async function viaAPI(){
+    if (!("wakeLock" in navigator)) return false;
+    try {
+      lock = await navigator.wakeLock.request("screen");
+      lock.addEventListener("release", () => { lock = null; if (mode === "api") set("none"); });
+      return true;
+    } catch(e){ return false; }
+  }
+  function viaVideo(){
+    try {
+      if (!vid.srcObject){
+        const c = document.createElement("canvas");
+        c.width = c.height = 2;
+        const ctx = c.getContext("2d");
+        canvasTimer = setInterval(() => {
+          ctx.fillStyle = ctx.fillStyle === "#000000" ? "#111111" : "#000000";
+          ctx.fillRect(0, 0, 2, 2);
+        }, 1000);
+        vid.srcObject = c.captureStream(1);
+      }
+      const p = vid.play();
+      if (p && p.catch) p.catch(() => {});
+      vidOn = true;
+      return true;
+    } catch(e){ return false; }
+  }
+  function set(m){ mode = m; Lights.wake(mode); }
+
+  async function on(){
+    if (await viaAPI()) set("api");
+    else if (viaVideo()) set("video");
+    else set("none");
+  }
+  function off(){
+    if (lock){ lock.release().catch(() => {}); lock = null; }
+    if (vidOn){ vid.pause(); vidOn = false; }
+    if (canvasTimer){ clearInterval(canvasTimer); canvasTimer = null; }
+    set("idle");
+  }
+  document.addEventListener("visibilitychange", async () => {
+    // Screen wake locks are dropped whenever the page is hidden; re-take on return.
+    if (document.visibilityState === "visible" && live && !lock && mode !== "video"){
+      if (await viaAPI()) set("api"); else set("none");
+    }
+  });
+  return { on, off, mode: () => mode };
+})();
+
+/* ============================================================
+   PWA: service worker + install prompt
+   ============================================================ */
+const canSW = location.protocol === "https:" || ["localhost","127.0.0.1"].includes(location.hostname);
+if ("serviceWorker" in navigator && canSW){
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("sw.js").catch(() => {});
+  });
+}
+let deferredInstall = null;
+window.addEventListener("beforeinstallprompt", e => {
+  e.preventDefault();
+  deferredInstall = e;
+  $("installWrap").hidden = false;
+});
+$("installBtn").onclick = async () => {
+  if (!deferredInstall) return;
+  deferredInstall.prompt();
+  await deferredInstall.userChoice;
+  deferredInstall = null;
+  $("installWrap").hidden = true;
+};
+window.addEventListener("appinstalled", () => { $("installWrap").hidden = true; });
+
+/* ============================================================
+   STATE
+   ============================================================ */
+let sessions = [], live = null, dayKey = "A", exIdx = 0;
+let restTimer = null, restLeft = 0, howOpen = false;
+
+const pad2 = n => String(n).padStart(2, "0");
+const mmss = s => `${Math.floor(s/60)}:${pad2(s%60)}`;
+
+(async function boot(){
+  const backend = await Store.init();
+  sessions = (await Store.get("sessions")) || [];
+  howOpen = (await Store.get("howOpen")) === true;
+  const last = await Store.get("lastDay");
+  dayKey = last === "A" ? "B" : "A";
+
+  Lights.storage();
+  Lights.wake("idle");
+  if (backend === "memory"){
+    $("banner").innerHTML = '<div class="banner">This browser is blocking local storage, so nothing will be saved once you close the page. Open the app in Safari or Chrome to keep your history.</div>';
+  }
+  renderHome();
+})();
+
+/* ============================================================
+   HOME
+   ============================================================ */
+function renderHome(){
+  const d = PROGRAM[dayKey];
+  $("nextName").textContent = d.name;
+  $("nextSub").textContent = `${d.sub} · ${d.ex.length} exercises`;
+  $("nextList").innerHTML = d.ex.map(e =>
+    `<li><span>${e.name}</span><span class="m num">${e.sets} × ${e.reps}${e.side ? "/side" : ""}</span></li>`).join("");
+
+  const h = sessions.slice().reverse().slice(0, 12);
+  $("histEmpty").style.display = h.length ? "none" : "block";
+  $("hist").innerHTML = h.map(s => {
+    const dt = new Date(s.startedAt);
+    return `<li><span class="d">${PROGRAM[s.day].name} · ${dt.toLocaleDateString(undefined,{month:"short",day:"numeric"})}</span>
+            <span class="v num">${s.setCount} sets · ${volume(s).toLocaleString()} lb</span></li>`;
+  }).join("");
+}
+function volume(s){
+  let v = 0;
+  for (const k in s.log) for (const set of s.log[k]) if (set.done) v += (set.w || 0) * (set.r || 0);
+  return Math.round(v);
+}
+function show(id){
+  document.querySelectorAll(".screen").forEach(s => s.classList.remove("on"));
+  $("s-" + id).classList.add("on");
+  window.scrollTo(0, 0);
+}
+$("swapBtn").onclick = () => { dayKey = dayKey === "A" ? "B" : "A"; renderHome(); };
+$("startBtn").onclick = startSession;
+$("homeBtn").onclick = () => { show("home"); renderHome(); };
+
+/* ============================================================
+   SESSION
+   ============================================================ */
+async function startSession(){
+  const prev = (await Store.get("lastWeights")) || {};
+  live = { day: dayKey, startedAt: Date.now(), log: {}, prev };
+  for (const e of PROGRAM[dayKey].ex){
+    const seed = prev[e.id] || [];
+    live.log[e.id] = Array.from({length: e.sets}, (_, i) => ({
+      w: seed[i]?.w ?? seed[seed.length - 1]?.w ?? 0,
+      r: seed[i]?.r ?? parseInt(e.reps) ?? 8,
+      done: false
+    }));
+  }
+  exIdx = 0;
+  show("run");
+  $("runTitle").textContent = `${PROGRAM[dayKey].name} · ${PROGRAM[dayKey].sub}`;
+  Wake.on();
+  renderEx();
+}
+const curEx = () => PROGRAM[live.day].ex[exIdx];
+
+function renderRail(){
+  $("rail").innerHTML = PROGRAM[live.day].ex.map((e, i) => {
+    const sets = live.log[e.id];
+    const n = sets.filter(s => s.done).length;
+    const pct = Math.round(n / sets.length * 100);
+    const cls = n === sets.length ? "done" : n > 0 ? "part" : "";
+    return `<div class="plate ${cls} ${i === exIdx ? "cur" : ""}" style="width:${12 + e.sets * 3}px;--p:${pct}%"></div>`;
+  }).join("") + '<div class="railcap"></div>';
+}
+
+function renderEx(){
+  const e = curEx(), sets = live.log[e.id], total = PROGRAM[live.day].ex.length;
+  $("exCount").textContent = `${pad2(exIdx + 1)} / ${pad2(total)}`;
+  $("restLab").textContent = `Rest ${mmss(e.rest)}`;
+  $("exName").textContent = e.name;
+  $("exTarget").textContent = `${e.sets} sets · ${e.reps} reps${e.side ? " per side" : ""}`;
+  $("exNote").hidden = !e.note;
+  $("exNote").textContent = e.note || "";
+
+  const p = live.prev[e.id];
+  $("lastTime").textContent = p && p.length ? "Last time: " + p.map(s => `${s.w}×${s.r}`).join("  ") : "";
+
+  const firstOpen = sets.findIndex(s => !s.done);
+  $("setRows").innerHTML = sets.map((s, i) => `
+    <div class="set ${s.done ? "logged" : ""} ${i === firstOpen ? "active" : ""}" data-i="${i}">
+      <div class="sn num">${i + 1}</div>
+      <div class="field">
+        <button data-act="w-" aria-label="Less weight">−</button>
+        <input type="number" inputmode="decimal" step="2.5" data-f="w" value="${s.w}" aria-label="Weight">
+        <button data-act="w+" aria-label="More weight">+</button>
+      </div>
+      <div class="field">
+        <button data-act="r-" aria-label="Fewer reps">−</button>
+        <input type="number" inputmode="numeric" data-f="r" value="${s.r}" aria-label="Reps">
+        <button data-act="r+" aria-label="More reps">+</button>
+      </div>
+      <button class="log ${s.done ? "on" : ""}" data-act="log" aria-label="Log set ${i + 1}">✓</button>
+    </div>`).join("");
+
+  renderHow(e);
+  $("prevEx").disabled = exIdx === 0;
+  $("nextEx").textContent = exIdx === total - 1 ? "Finish" : "Next";
+  renderRail();
+}
+
+function renderHow(e){
+  const box = $("howBox"), tog = $("howToggle");
+  const h = e.how;
+  tog.setAttribute("aria-expanded", String(howOpen));
+  box.hidden = !howOpen;
+  if (!h){ box.innerHTML = '<dl><dd style="padding-top:12px">No notes for this one yet.</dd></dl>'; return; }
+  box.innerHTML =
+    (e.illus ? `<div class="figure">${e.illus}</div>` : "") +
+    `<dl>
+      <dt>Set up</dt><dd>${h.setup}</dd>
+      <dt>Move</dt><dd>${h.move}</dd>
+      <dt>Cue</dt><dd>${h.cue}</dd>
+      <dt class="warn">Watch for</dt><dd>${h.watch}</dd>
+    </dl>`;
+}
+$("howToggle").onclick = async () => {
+  howOpen = !howOpen;
+  renderHow(curEx());
+  await Store.set("howOpen", howOpen);
+};
+
+/* ---------- set logging ---------- */
+const round25 = n => Math.round(n * 4) / 4;
+$("setRows").addEventListener("click", ev => {
+  const btn = ev.target.closest("button"); if (!btn) return;
+  const i = +ev.target.closest(".set").dataset.i;
+  const e = curEx(), s = live.log[e.id][i], act = btn.dataset.act;
+  if (act === "w+") s.w = round25(s.w + 5);
+  if (act === "w-") s.w = Math.max(0, round25(s.w - 5));
+  if (act === "r+") s.r = s.r + 1;
+  if (act === "r-") s.r = Math.max(0, s.r - 1);
+  if (act === "log"){ s.done = !s.done; if (s.done) startRest(e.rest); }
+  renderEx();
+});
+$("setRows").addEventListener("change", ev => {
+  const inp = ev.target.closest("input"); if (!inp) return;
+  const i = +ev.target.closest(".set").dataset.i;
+  const s = live.log[curEx().id][i];
+  const v = parseFloat(inp.value);
+  s[inp.dataset.f] = isNaN(v) ? 0 : v;
+});
+
+$("prevEx").onclick = () => { if (exIdx > 0){ exIdx--; renderEx(); $("runScroll").scrollTop = 0; } };
+$("nextEx").onclick = () => {
+  const total = PROGRAM[live.day].ex.length;
+  if (exIdx < total - 1){ exIdx++; renderEx(); $("runScroll").scrollTop = 0; }
+  else finish();
+};
+$("endBtn").onclick = () => { if (confirm("End this workout and save what you've logged?")) finish(); };
+
+/* ---------- rest timer ---------- */
+function startRest(sec){
+  clearInterval(restTimer);
+  restLeft = sec;
+  $("restWrap").classList.add("on");
+  paintRest();
+  restTimer = setInterval(() => {
+    restLeft--;
+    if (restLeft <= 0){ stopRest(); ding(); if (navigator.vibrate) navigator.vibrate([200, 80, 200]); }
+    else paintRest();
+  }, 1000);
+}
+const paintRest = () => { $("restT").textContent = mmss(Math.max(0, restLeft)); };
+function stopRest(){ clearInterval(restTimer); restTimer = null; $("restWrap").classList.remove("on"); }
+$("restSkip").onclick = stopRest;
+$("rest30").onclick = () => { restLeft += 30; paintRest(); };
+
+let actx = null;
+function ding(){
+  try {
+    actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+    [0, .18].forEach(t => {
+      const o = actx.createOscillator(), g = actx.createGain();
+      o.frequency.value = 880; o.connect(g); g.connect(actx.destination);
+      g.gain.setValueAtTime(.001, actx.currentTime + t);
+      g.gain.exponentialRampToValueAtTime(.3, actx.currentTime + t + .01);
+      g.gain.exponentialRampToValueAtTime(.001, actx.currentTime + t + .14);
+      o.start(actx.currentTime + t); o.stop(actx.currentTime + t + .16);
+    });
+  } catch(e){}
+}
+
+/* ---------- finish ---------- */
+async function finish(){
+  stopRest(); Wake.off();
+  const setCount = Object.values(live.log).flat().filter(s => s.done).length;
+  const rec = { day: live.day, startedAt: live.startedAt, endedAt: Date.now(), log: live.log, setCount };
+  sessions.push(rec);
+  if (sessions.length > 200) sessions = sessions.slice(-200);
+
+  const lw = (await Store.get("lastWeights")) || {};
+  for (const k in live.log){
+    const done = live.log[k].filter(s => s.done).map(s => ({ w: s.w, r: s.r }));
+    if (done.length) lw[k] = done;
+  }
+  await Store.set("sessions", sessions);
+  await Store.set("lastWeights", lw);
+  await Store.set("lastDay", live.day);
+
+  $("doneName").textContent = PROGRAM[live.day].name;
+  $("stSets").textContent = setCount;
+  $("stVol").textContent = volume(rec).toLocaleString();
+  $("stTime").textContent = Math.max(1, Math.round((rec.endedAt - rec.startedAt) / 60000)) + "m";
+  dayKey = live.day === "A" ? "B" : "A";
+  live = null;
+  show("done");
+}
+
+/* ---------- export / import ---------- */
+$("exportBtn").onclick = async () => {
+  const data = { v: 1, sessions, lastWeights: await Store.get("lastWeights"), lastDay: await Store.get("lastDay") };
+  const url = URL.createObjectURL(new Blob([JSON.stringify(data)], { type: "application/json" }));
+  const a = document.createElement("a");
+  a.href = url; a.download = `wrack-${new Date().toISOString().slice(0,10)}.json`;
+  a.click(); setTimeout(() => URL.revokeObjectURL(url), 2000);
+};
+$("importBtn").onclick = () => $("importFile").click();
+$("importFile").onchange = async ev => {
+  const f = ev.target.files[0]; if (!f) return;
+  try {
+    const d = JSON.parse(await f.text());
+    if (!Array.isArray(d.sessions)) throw new Error("bad file");
+    sessions = d.sessions;
+    await Store.set("sessions", sessions);
+    if (d.lastWeights) await Store.set("lastWeights", d.lastWeights);
+    if (d.lastDay) await Store.set("lastDay", d.lastDay);
+    dayKey = d.lastDay === "A" ? "B" : "A";
+    renderHome();
+  } catch(e){ alert("That file couldn't be read. Pick a wrack-*.json export."); }
+  ev.target.value = "";
+};
+
+window.addEventListener("beforeunload", e => { if (live){ e.preventDefault(); e.returnValue = ""; } });
+</script>
+</body>
+</html>

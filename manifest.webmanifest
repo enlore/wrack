@@ -1,0 +1,19 @@
+{
+  "id": "/wrack/",
+  "name": "Wrack — Workout Tracker",
+  "short_name": "Wrack",
+  "description": "Guided full-body workout tracker with rest timers and screen wake lock.",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "portrait",
+  "background_color": "#131519",
+  "theme_color": "#131519",
+  "categories": ["health", "fitness", "productivity"],
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
