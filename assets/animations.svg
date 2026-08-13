@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 745" width="960">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 1905" width="960">
   <style>
     .bd{stroke:#F1EEE7;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;fill:none}
     .bd4{stroke:#F1EEE7;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;fill:none}
@@ -16,7 +16,7 @@
     .lab{fill:#5F6773;font:600 7px system-ui,sans-serif;letter-spacing:.1em}
     .frame{fill:none;stroke:#2E343E;stroke-width:1.5}
   </style>
-  <rect width="640" height="745" fill="#131519"/>
+  <rect width="220" height="1905" fill="#131519"/>
   <!-- HIP THRUST -->
   <g transform="translate(10,10)">
     <rect width="200" height="120" rx="8" class="cell"/>
@@ -33,7 +33,7 @@
     <text x="100" y="134" class="cap">HIP THRUST</text>
   </g>
   <!-- ROMANIAN DEADLIFT -->
-  <g transform="translate(220,10)">
+  <g transform="translate(10,155)">
     <rect width="200" height="120" rx="8" class="cell"/>
     <line x1="8" y1="105" x2="192" y2="105" class="gnd"/>
     <polyline points="100,68 99,84 102,99" class="bd"><animate attributeName="points" dur="2.6s" repeatCount="indefinite" values="100,68 99,84 102,99;114,70 107.1,84.5 102,99;114,70 107.1,84.5 102,99;100,68 99,84 102,99;100,68 99,84 102,99" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/></polyline>
@@ -46,7 +46,7 @@
     <text x="100" y="134" class="cap">ROMANIAN DEADLIFT</text>
   </g>
   <!-- DB BENCH PRESS -->
-  <g transform="translate(430,10)">
+  <g transform="translate(10,300)">
     <rect width="200" height="120" rx="8" class="cell"/>
     <line x1="8" y1="105" x2="192" y2="105" class="gnd"/>
     <rect x="44" y="78" width="100" height="7" rx="2" class="eq"/>
@@ -62,7 +62,7 @@
     <text x="100" y="134" class="cap">DB BENCH PRESS</text>
   </g>
   <!-- LAT PULLDOWN -->
-  <g transform="translate(10,155)">
+  <g transform="translate(10,445)">
     <rect width="200" height="120" rx="8" class="cell"/>
     <line x1="8" y1="105" x2="192" y2="105" class="gnd"/>
     <line x1="100" y1="4" x2="100" y2="10" class="eqL"/>
@@ -86,7 +86,7 @@
     <text x="100" y="134" class="cap">LAT PULLDOWN</text>
   </g>
   <!-- SEATED HIP ABDUCTION -->
-  <g transform="translate(220,155)">
+  <g transform="translate(10,590)">
     <rect width="200" height="120" rx="8" class="cell"/>
     <line x1="8" y1="105" x2="192" y2="105" class="gnd"/>
     <rect x="86" y="88" width="28" height="6" rx="2" class="eq"/>
@@ -107,7 +107,7 @@
     <text x="100" y="134" class="cap">SEATED HIP ABDUCTION</text>
   </g>
   <!-- PALLOF PRESS -->
-  <g transform="translate(430,155)">
+  <g transform="translate(10,735)">
     <rect width="200" height="120" rx="8" class="cell"/>
     <line x1="8" y1="105" x2="192" y2="105" class="gnd"/>
     <rect x="182" y="52" width="10" height="52" rx="2" class="eq"/>
@@ -136,7 +136,7 @@
     <text x="100" y="134" class="cap">PALLOF PRESS</text>
   </g>
   <!-- STANDING CALF RAISE -->
-  <g transform="translate(10,300)">
+  <g transform="translate(10,880)">
     <rect width="200" height="120" rx="8" class="cell"/>
     <line x1="8" y1="105" x2="192" y2="105" class="gnd"/>
     <rect x="106" y="90" width="56" height="15" rx="2" class="eq"/>
@@ -150,7 +150,7 @@
     <text x="100" y="134" class="cap">STANDING CALF RAISE</text>
   </g>
   <!-- BULGARIAN SPLIT SQUAT -->
-  <g transform="translate(220,300)">
+  <g transform="translate(10,1025)">
     <rect width="200" height="120" rx="8" class="cell"/>
     <line x1="8" y1="105" x2="192" y2="105" class="gnd"/>
     <rect x="140" y="72" width="44" height="7" rx="2" class="eq"/>
@@ -168,7 +168,7 @@
     <text x="100" y="134" class="cap">BULGARIAN SPLIT SQUAT</text>
   </g>
   <!-- LEG PRESS -->
-  <g transform="translate(430,300)">
+  <g transform="translate(10,1170)">
     <rect width="200" height="120" rx="8" class="cell"/>
     <line x1="8" y1="105" x2="192" y2="105" class="gnd"/>
     <line x1="44" y1="62" x2="78" y2="96" class="eqL"/>
@@ -181,7 +181,7 @@
     <text x="100" y="134" class="cap">LEG PRESS</text>
   </g>
   <!-- DB SHOULDER PRESS -->
-  <g transform="translate(10,445)">
+  <g transform="translate(10,1315)">
     <rect width="200" height="120" rx="8" class="cell"/>
     <line x1="8" y1="105" x2="192" y2="105" class="gnd"/>
     <circle cx="95" cy="74" r="4.5" class="hd"/>
@@ -200,7 +200,7 @@
     <text x="100" y="134" class="cap">DB SHOULDER PRESS</text>
   </g>
   <!-- CABLE PULL-THROUGH -->
-  <g transform="translate(220,445)">
+  <g transform="translate(10,1460)">
     <rect width="200" height="120" rx="8" class="cell"/>
     <line x1="8" y1="105" x2="192" y2="105" class="gnd"/>
     <polyline points="106,73 104,87 98,99" class="bd"><animate attributeName="points" dur="2.6s" repeatCount="indefinite" values="106,73 104,87 98,99;95,70 97.3,84 98,99;95,70 97.3,84 98,99;106,73 104,87 98,99;106,73 104,87 98,99" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/></polyline>
@@ -214,7 +214,7 @@
     <text x="100" y="134" class="cap">CABLE PULL-THROUGH</text>
   </g>
   <!-- ONE-ARM ROW -->
-  <g transform="translate(430,445)">
+  <g transform="translate(10,1605)">
     <rect width="200" height="120" rx="8" class="cell"/>
     <line x1="8" y1="105" x2="192" y2="105" class="gnd"/>
     <rect x="56" y="78" width="88" height="7" rx="2" class="eq"/>
@@ -234,7 +234,7 @@
     <text x="100" y="134" class="cap">ONE-ARM ROW</text>
   </g>
   <!-- LYING LEG CURL -->
-  <g transform="translate(10,590)">
+  <g transform="translate(10,1750)">
     <rect width="200" height="120" rx="8" class="cell"/>
     <line x1="8" y1="105" x2="192" y2="105" class="gnd"/>
     <rect x="36" y="80" width="74" height="7" rx="2" class="eq"/>

@@ -8,7 +8,7 @@ import { dirname, join } from "node:path";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 let warnings = 0;
-const svg = renderSheet(FIGURES, m => { warnings++; console.error("warn: " + m); });
+const svg = renderSheet(FIGURES, m => { warnings++; console.error("warn: " + m); }, { cols: 1 });
 const out = join(root, "assets/animations.svg");
 writeFileSync(out, svg);
 console.log(`wrote ${out} (${svg.length} bytes), ${warnings} warning(s)`);

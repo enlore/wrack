@@ -317,8 +317,8 @@ function renderPart(part, A, B, warn) {
 }
 
 /* ---------- sheet ---------- */
-export function renderSheet(figures, warn = m => console.error("warn: " + m)) {
-  const cols = 3, cellW = 200, cellH = 120, pitchX = 210, pitchY = 145, pad = 10;
+export function renderSheet(figures, warn = m => console.error("warn: " + m), { cols = 3 } = {}) {
+  const cellW = 200, cellH = 120, pitchX = 210, pitchY = 145, pad = 10;
   const rows = Math.ceil(figures.length / cols);
   const W = pad * 2 + cols * cellW + (cols - 1) * 10;
   const H = pad + rows * pitchY + 10;
