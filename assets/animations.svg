@@ -222,14 +222,14 @@
     <circle cx="44" cy="58" r="7" class="hd"/>
     <line x1="76" y1="90" x2="50" y2="66" class="bd"/>
     <circle cx="72" cy="92" r="5" class="hd"/>
-    <polyline points="76,88 94,58 104,70" class="bd">
-      <animate attributeName="points" dur="2.6s" repeatCount="indefinite" values="76,88 94,58 104,70;76,88 98,64 124,54;76,88 98,64 124,54;76,88 94,58 104,70;76,88 94,58 104,70" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/>
+    <polyline points="76,88 86,58 96,74" class="bd">
+      <animate attributeName="points" dur="2.6s" repeatCount="indefinite" values="76,88 86,58 96,74;76,88 100,66 126,52;76,88 100,66 126,52;76,88 86,58 96,74;76,88 86,58 96,74" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/>
     </polyline>
-    <line x1="97" y1="59" x2="111" y2="81" class="ac" stroke-width="5">
-      <animate attributeName="x1" dur="2.6s" repeatCount="indefinite" values="97;117;117;97;97" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/>
-      <animate attributeName="y1" dur="2.6s" repeatCount="indefinite" values="59;43;43;59;59" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/>
-      <animate attributeName="x2" dur="2.6s" repeatCount="indefinite" values="111;131;131;111;111" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/>
-      <animate attributeName="y2" dur="2.6s" repeatCount="indefinite" values="81;65;65;81;81" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/>
+    <line x1="88" y1="63" x2="104" y2="85" class="ac" stroke-width="5">
+      <animate attributeName="x1" dur="2.6s" repeatCount="indefinite" values="88;118;118;88;88" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/>
+      <animate attributeName="y1" dur="2.6s" repeatCount="indefinite" values="63;41;41;63;63" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/>
+      <animate attributeName="x2" dur="2.6s" repeatCount="indefinite" values="104;134;134;104;104" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/>
+      <animate attributeName="y2" dur="2.6s" repeatCount="indefinite" values="85;63;63;85;85" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/>
     </line>
     <text x="100" y="134" class="cap">LEG PRESS</text>
   </g>
@@ -306,7 +306,7 @@
     <circle cx="116" cy="59" r="5" class="hd"/>
     <line x1="78" y1="58" x2="68" y2="77" class="bd" stroke-width="4"/>
     <line x1="112" y1="62" x2="128" y2="76" class="bd"/>
-    <polyline points="112,62 122,88 120,103" class="bd"/>
+    <polyline points="112,62 113,84 120,103" class="bd"/>
     <line x1="86" y1="58" x2="84" y2="88" class="bd" stroke-width="4">
       <animate attributeName="x2" dur="2.6s" repeatCount="indefinite" values="84;96;96;84;84" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/>
       <animate attributeName="y2" dur="2.6s" repeatCount="indefinite" values="88;66;66;88;88" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/>
