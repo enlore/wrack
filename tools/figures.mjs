@@ -80,6 +80,7 @@ export const FIGURES = [
       { kind: "fline", p: [100, 96, 100, 103] },
       { kind: "rect", x: 78, y: 84, w: 12, h: 5 },
       { kind: "rect", x: 110, y: 84, w: 12, h: 5 },
+      { kind: "line", joints: ["barL", "barR"], cls: "ac" },
       { kind: "butt", at: [95, 86], r: 4.5 },
       { kind: "butt", at: [105, 86], r: 4.5 },
       { kind: "line", joints: [[100, 50], [100, 84]] },
@@ -90,7 +91,6 @@ export const FIGURES = [
       { kind: "foot", at: [110, 99], front: true },
       { kind: "poly", joints: ["lSh", "lElbow", "lHand"], cls: "bd4" },
       { kind: "poly", joints: ["rSh", "rElbow", "rHand"], cls: "bd4" },
-      { kind: "line", joints: ["barL", "barR"], cls: "ac" },
     ],
   },
   {

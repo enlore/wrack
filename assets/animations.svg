@@ -71,6 +71,7 @@
     <line x1="100" y1="96" x2="100" y2="103" class="eqL"/>
     <rect x="78" y="84" width="12" height="5" rx="2" class="eq"/>
     <rect x="110" y="84" width="12" height="5" rx="2" class="eq"/>
+    <line x1="74" y1="20" x2="126" y2="20" class="ac"><animate attributeName="y1" dur="2.6s" repeatCount="indefinite" values="20;52;52;20;20" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/><animate attributeName="y2" dur="2.6s" repeatCount="indefinite" values="20;52;52;20;20" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/></line>
     <circle cx="95" cy="86" r="4.5" class="hd"/>
     <circle cx="105" cy="86" r="4.5" class="hd"/>
     <line x1="100" y1="50" x2="100" y2="84" class="bd"/>
@@ -81,7 +82,6 @@
     <g transform="translate(110 99)"><g><animateTransform attributeName="transform" type="rotate" dur="2.6s" repeatCount="indefinite" values="0 0 0;0 0 0;0 0 0;0 0 0;0 0 0" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/><path d="M -4.5 0 Q -5.5 4.5 -2.5 5.5 L 2.5 5.5 Q 5.5 4.5 4.5 0 Q 0 -1.5 -4.5 0 Z" class="hd" transform="scale(1,1)"/></g></g>
     <polyline points="91,52 83,36 78,20" class="bd4"><animate attributeName="points" dur="2.6s" repeatCount="indefinite" values="91,52 83,36 78,20;91,52 83.7,68.3 80,52;91,52 83.7,68.3 80,52;91,52 83,36 78,20;91,52 83,36 78,20" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/></polyline>
     <polyline points="109,52 117,36 122,20" class="bd4"><animate attributeName="points" dur="2.6s" repeatCount="indefinite" values="109,52 117,36 122,20;109,52 116.3,68.3 120,52;109,52 116.3,68.3 120,52;109,52 117,36 122,20;109,52 117,36 122,20" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/></polyline>
-    <line x1="74" y1="20" x2="126" y2="20" class="ac"><animate attributeName="y1" dur="2.6s" repeatCount="indefinite" values="20;52;52;20;20" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/><animate attributeName="y2" dur="2.6s" repeatCount="indefinite" values="20;52;52;20;20" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/></line>
     <text x="100" y="134" class="cap">LAT PULLDOWN</text>
   </g>
   <!-- SEATED HIP ABDUCTION -->
