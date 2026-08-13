@@ -143,6 +143,34 @@ export function skeleton(kind, opts = {}) {
       ],
     };
   }
+  if (kind === "standing-3q") {
+    // Three-quarter view: camera at standing height, slightly off to the
+    // subject's side. Near (viewer-left) and far joints are offset a touch in
+    // x/y to convey the turn; "straight ahead of the chest" projects along a
+    // foreshortened down-left diagonal. 2D projection convention, not a 3D
+    // camera — author far-side reach with the diagonal in mind.
+    return {
+      joints: {
+        pelvis: [x + 2, 72], neck3: [x, 44], head: [x, 32],
+        lSh: [x - 9, 47], rSh: [x + 9, 45],
+        lButt: [x - 3, 74], rButt: [x + 7, 74],
+        nKnee: [x - 5, 85], nAnkle: [x - 7, ANKLE_Y],
+        fKnee: [x + 7, 85], fAnkle: [x + 9, ANKLE_Y],
+      },
+      chains: [],
+      parts: [
+        { kind: "butt", at: "lButt", r: 4.5 },
+        { kind: "butt", at: "rButt", r: 4.5 },
+        { kind: "poly", joints: ["pelvis", "nKnee", "nAnkle"] },
+        { kind: "poly", joints: ["pelvis", "fKnee", "fAnkle"] },
+        { kind: "line", joints: ["pelvis", "neck3"] },
+        { kind: "line", joints: ["lSh", "rSh"] },
+        { kind: "head", at: "head" },
+        { kind: "foot", at: "nAnkle", front: true },
+        { kind: "foot", at: "fAnkle", front: true },
+      ],
+    };
+  }
   if (kind === "seated-side") {
     // seated tall, thighs forward toward +facing... pulldown-style: thighs to the right
     return {

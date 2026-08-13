@@ -124,23 +124,27 @@ export const FIGURES = [
       },
     ],
   },
-  compose(skeleton("standing-front", { x: 100 }), {
-    // front view so the stack reads at the lifter's side (anti-rotation),
-    // hands clasped at the sternum pressing out in the picture plane
+  compose(skeleton("standing-3q", { x: 100 }), {
+    // three-quarter view, stack at the lifter's side (anti-rotation): both
+    // arms anchor at their shoulders and clasp the handle; the press runs
+    // along the foreshortened depth diagonal, far arm extending fully first
     name: "PALLOF PRESS",
     poses: {
       A: {
-        lKnee: [96, 85], rKnee: [104, 85], lAnkle: [93, 99], rAnkle: [107, 99],
-        chest: [100, 54], elbow: [108, 68], hand: [94, 60],
+        lElbow: [80, 57], rElbow: [110, 60], hand: [95, 58],
         tdHand: [30, 34],
       },
-      B: { hand: [68, 60], tdHand: [30, 48] },
+      B: { hand: [80, 62], tdHand: [30, 48] },
     },
-    chains: [{ root: "chest", mid: "elbow", end: "hand" }],
+    chains: [
+      { root: "lSh", mid: "lElbow", end: "hand" },
+      { root: "rSh", mid: "rElbow", end: "hand" },
+    ],
     equipment: [{ kind: "rect", x: 182, y: 52, w: 10, h: 52 }],
     parts: [
       { kind: "line", joints: [[184, 58], "hand"], cls: "acT" },
-      { kind: "poly", joints: ["chest", "elbow", "hand"], cls: "bd4" },
+      { kind: "poly", joints: ["lSh", "lElbow", "hand"], cls: "bd4" },
+      { kind: "poly", joints: ["rSh", "rElbow", "hand"], cls: "bd4" },
       { kind: "dot", at: "hand", r: 3.5 },
       // top-down inset: cable from the side, press straight out front
       { kind: "rect", x: 10, y: 8, w: 58, h: 46, cls: "frame" },
