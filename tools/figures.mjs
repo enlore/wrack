@@ -171,8 +171,8 @@ export const FIGURES = [
     name: "LEG PRESS",
     poses: {
       // A near 90° knee, B stops just short of lockout
-      A: { hip: [76, 88], knee: [85, 57], ankle: [104, 73], platA: [99, 61], platB: [114, 82] },
-      B: { ankle: [122, 55], platA: [117, 43], platB: [132, 64] },
+      A: { hip: [76, 88], knee: [85, 57], ankle: [102, 75], platA: [99, 61], platB: [114, 82] },
+      B: { ankle: [120, 57], platA: [117, 43], platB: [132, 64] },
     },
     chains: [{ root: "hip", mid: "knee", end: "ankle" }],
     parts: [
@@ -182,7 +182,7 @@ export const FIGURES = [
       { kind: "butt", at: [72, 92] },
       { kind: "poly", joints: ["hip", "knee", "ankle"] },
       { kind: "line", joints: ["platA", "platB"], cls: "ac5" },
-      { kind: "foot", at: "ankle", facing: 1, pitch: [-55, -55] },
+      { kind: "foot", at: "ankle", facing: 1, pitch: [-125, -125] },
     ],
   },
   compose(skeleton("standing-front", { x: 100 }), {
@@ -229,7 +229,7 @@ export const FIGURES = [
   {
     name: "ONE-ARM ROW",
     poses: {
-      A: { sh: [86, 58], elbow: [87, 73], hand: [84, 88], db: [84, 94] },
+      A: { sh: [86, 58], elbow: [86, 73], hand: [86, 88], db: [86, 94] },
       B: { hand: [96, 66], db: [96, 72] },
     },
     chains: [{ root: "sh", mid: "elbow", end: "hand", side: -1 }],
@@ -247,6 +247,7 @@ export const FIGURES = [
       { kind: "poly", joints: ["sh", "elbow", "hand"], cls: "bd4" },
       { kind: "ring", at: "db", r: 5.5 },
       { kind: "foot", at: [120, 99], facing: -1 },
+      { kind: "foot", at: [141, 80], facing: -1, pitch: [-110, -110] },
     ],
   },
   compose(skeleton("prone-bench"), {
