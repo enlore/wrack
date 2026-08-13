@@ -241,6 +241,7 @@
     <circle cx="44" cy="72" r="7" class="hd"/>
     <circle cx="116" cy="72" r="5" class="hd"/>
     <line x1="114" y1="77" x2="122" y2="79" class="bd"/>
+    <line x1="170" y1="78" x2="145" y2="82" class="acT"><animate attributeName="x2" dur="2.6s" repeatCount="indefinite" values="145;121;121;145;145" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/><animate attributeName="y2" dur="2.6s" repeatCount="indefinite" values="82;56;56;82;82" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/></line>
     <g><animateTransform attributeName="transform" type="rotate" dur="2.6s" repeatCount="indefinite" values="0 122 79;-100 122 79;-100 122 79;0 122 79;0 122 79" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/>
     <line x1="122" y1="82" x2="143" y2="85" class="eqL"/>
     <line x1="122" y1="79" x2="148" y2="82" class="bd"/>

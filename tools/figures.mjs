@@ -284,7 +284,8 @@ export const FIGURES = [
   },
   compose(skeleton("prone-bench"), {
     name: "LYING LEG CURL",
-    poses: { A: {}, B: {} },
+    // padC tracks the roller pad's position through the group's -100 rotation
+    poses: { A: { padC: [145, 82] }, B: { padC: [121, 56] } },
     equipment: [
       { kind: "rect", x: 36, y: 80, w: 116, h: 7 },
       { kind: "fline", p: [44, 87, 44, 103] },
@@ -294,6 +295,7 @@ export const FIGURES = [
       { kind: "rect", x: 164, y: 78, w: 12, h: 26 },
     ],
     parts: [
+      { kind: "line", joints: [[170, 78], "padC"], cls: "acT" },
       {
         kind: "group", transform: { type: "rotate", values: ["0 122 79", "-100 122 79"] },
         children: [
