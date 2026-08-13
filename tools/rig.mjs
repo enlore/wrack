@@ -66,9 +66,10 @@ export function solve2(root, end, l1, l2, side) {
 
 /* ---------- feet ---------- */
 // Vaguely sneaker-shaped, ankle at the local origin, toe pointing +x.
-const SNEAKER = "M -6 0 L -7.5 5 Q -7.5 7.5 -5 7.5 L 10 7.5 Q 14.5 7.5 15 4.5 Q 15 2.5 9.5 1.5 L 3 -0.5 Q -2 -1.5 -6 0 Z";
+// Sole sits SEG.sole below the ankle, so planted ankles go at ground - SEG.sole.
+const SNEAKER = "M -4.5 0 L -5.5 3.5 Q -5.5 6 -3 6 L 7 6 Q 10.5 6 11 3.5 Q 11 1.8 6.5 1 L 2 -0.5 Q -1.5 -1 -4.5 0 Z";
 // Front view: a squat rounded block.
-const FRONTFOOT = "M -6 0 Q -7.5 6 -3.5 7 L 3.5 7 Q 7.5 6 6 0 Q 0 -2 -6 0 Z";
+const FRONTFOOT = "M -4.5 0 Q -5.5 4.5 -2.5 5.5 L 2.5 5.5 Q 5.5 4.5 4.5 0 Q 0 -1.5 -4.5 0 Z";
 
 // facing: +1 toe points +x, -1 toe points -x. pitch rotates about the ankle
 // (positive lifts the heel of a +x-facing foot).
@@ -80,6 +81,124 @@ function footEl(ankleA, ankleB, pitchA, pitchB, facing, front) {
   const inner = tag("g", {}, animTransform("rotate", rotA, rotB) + path);
   return tag("g", { transform: `translate(${trA})` },
     (trA === trB ? "" : animTransform("translate", trA, trB)) + inner);
+}
+
+/* ---------- standard skeletons ---------- */
+// Reference segment lengths (cell units). Skeleton factories below use these
+// proportions; figure-specific poses should stay close to them — the chain
+// validators hold whatever pose A establishes.
+export const SEG = { torso: 28, thigh: 17, shin: 15, upperArm: 12, foreArm: 12, neck: 10, headR: 7, buttR: 5, sole: 6 };
+
+const GROUND = 105;
+const ANKLE_Y = GROUND - SEG.sole; // 99
+
+// skeleton(kind, opts) -> { joints, chains, parts } for pose A of a common
+// body position. Figures compose() these, override joints in poses.A/B, and
+// add equipment. facing: -1 = figure faces left (+1 right).
+export function skeleton(kind, opts = {}) {
+  const { x = 100, facing = -1 } = opts;
+  if (kind === "standing-side") {
+    return {
+      joints: {
+        hip: [x, 68], knee: [x + facing, 84], ankle: [x - facing * 2, ANKLE_Y],
+        sh: [x, 40], head: [x, 30], butt: [x - facing * 5, 71],
+        elbow: [x - facing, 52], hand: [x, 64],
+      },
+      chains: [
+        { root: "hip", mid: "knee", end: "ankle" },
+        { root: "sh", mid: "elbow", end: "hand" },
+      ],
+      parts: [
+        { kind: "poly", joints: ["hip", "knee", "ankle"] },
+        { kind: "line", joints: ["hip", "sh"] },
+        { kind: "head", at: "head" },
+        { kind: "butt", at: "butt" },
+        { kind: "poly", joints: ["sh", "elbow", "hand"], cls: "bd4" },
+        { kind: "foot", at: "ankle", facing },
+      ],
+    };
+  }
+  if (kind === "standing-front") {
+    // The glutes peek out past the hips on both sides — always visible.
+    return {
+      joints: {
+        pelvis: [x, 72], lKnee: [x - 5, 85], rKnee: [x + 5, 85],
+        lAnkle: [x - 8, ANKLE_Y], rAnkle: [x + 8, ANKLE_Y],
+        neckB: [x, 44], head: [x, 32], lSh: [x - 9, 46], rSh: [x + 9, 46],
+        lButt: [x - 5, 74], rButt: [x + 5, 74],
+      },
+      chains: [],
+      parts: [
+        { kind: "butt", at: "lButt", r: 4.5 },
+        { kind: "butt", at: "rButt", r: 4.5 },
+        { kind: "poly", joints: ["pelvis", "lKnee", "lAnkle"] },
+        { kind: "poly", joints: ["pelvis", "rKnee", "rAnkle"] },
+        { kind: "line", joints: ["pelvis", "neckB"] },
+        { kind: "head", at: "head" },
+        { kind: "foot", at: "lAnkle", front: true },
+        { kind: "foot", at: "rAnkle", front: true },
+      ],
+    };
+  }
+  if (kind === "seated-side") {
+    // seated tall, thighs forward toward +facing... pulldown-style: thighs to the right
+    return {
+      joints: {
+        hip: [95, 86], sh: [88, 52], head: [86, 42], butt: [90, 88],
+        knee: [120, 84], ankle: [118, ANKLE_Y],
+      },
+      chains: [],
+      parts: [
+        { kind: "line", joints: ["hip", "sh"] },
+        { kind: "head", at: "head" },
+        { kind: "butt", at: "butt" },
+        { kind: "poly", joints: ["hip", "knee", "ankle"] },
+        { kind: "foot", at: "ankle", facing: 1 },
+      ],
+    };
+  }
+  if (kind === "supine-bench") {
+    // lying face-up on a bench with feet on the floor, head at left
+    return {
+      joints: {
+        sh: [72, 72], hipS: [118, 74], knee: [137, 86], ankle: [136, ANKLE_Y],
+        head: [48, 70], butt: [118, 77],
+      },
+      chains: [],
+      parts: [
+        { kind: "line", joints: [[60, 74], "hipS"] },
+        { kind: "head", at: "head" },
+        { kind: "butt", at: "butt", r: 4.5 },
+        { kind: "poly", joints: ["hipS", "knee", "ankle"] },
+        { kind: "foot", at: "ankle", facing: 1 },
+      ],
+    };
+  }
+  if (kind === "prone-bench") {
+    // lying face-down along a bench, head at left, knees at the bench end
+    return {
+      joints: { head: [44, 72], hipP: [114, 77], knee: [122, 79], butt: [116, 72] },
+      chains: [],
+      parts: [
+        { kind: "line", joints: [[55, 77], "hipP"] },
+        { kind: "head", at: "head" },
+        { kind: "butt", at: "butt" },
+        { kind: "line", joints: ["hipP", "knee"] },
+      ],
+    };
+  }
+  throw new Error(`unknown skeleton kind: ${kind}`);
+}
+
+// Layer a figure over a skeleton: equipment renders behind the body,
+// figure parts on top; figure pose values override skeleton joints.
+export function compose(base, fig) {
+  return {
+    ...fig,
+    poses: { A: { ...base.joints, ...(fig.poses?.A || {}) }, B: fig.poses?.B || {} },
+    chains: [...(base.chains || []), ...(fig.chains || [])],
+    parts: [...(fig.equipment || []), ...base.parts.filter(p => !p.skip), ...(fig.parts || [])],
+  };
 }
 
 /* ---------- pose resolution ---------- */
