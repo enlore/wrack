@@ -111,18 +111,18 @@
     <rect width="200" height="120" rx="8" class="cell"/>
     <line x1="8" y1="105" x2="192" y2="105" class="gnd"/>
     <rect x="182" y="52" width="10" height="52" rx="2" class="eq"/>
-    <circle cx="97" cy="74" r="4.5" class="hd"/>
-    <circle cx="107" cy="74" r="4.5" class="hd"/>
-    <polyline points="102,72 95,85 93,99" class="bd"/>
-    <polyline points="102,72 107,85 109,99" class="bd"/>
-    <line x1="102" y1="72" x2="100" y2="44" class="bd"/>
-    <line x1="91" y1="47" x2="109" y2="45" class="bd"/>
-    <circle cx="100" cy="32" r="7" class="hd"/>
+    <circle cx="97" cy="70" r="4.5" class="hd"/>
+    <circle cx="107" cy="70" r="4.5" class="hd"/>
+    <polyline points="102,68 95,84 93,99" class="bd"/>
+    <polyline points="102,68 107,84 109,99" class="bd"/>
+    <line x1="102" y1="68" x2="100" y2="40" class="bd"/>
+    <line x1="91" y1="43" x2="109" y2="41" class="bd"/>
+    <circle cx="100" cy="28" r="7" class="hd"/>
     <g transform="translate(93 99)"><g><animateTransform attributeName="transform" type="rotate" dur="2.6s" repeatCount="indefinite" values="0 0 0;0 0 0;0 0 0;0 0 0;0 0 0" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/><path d="M -4.5 0 Q -5.5 4.5 -2.5 5.5 L 2.5 5.5 Q 5.5 4.5 4.5 0 Q 0 -1.5 -4.5 0 Z" class="hd" transform="scale(1,1)"/></g></g>
     <g transform="translate(109 99)"><g><animateTransform attributeName="transform" type="rotate" dur="2.6s" repeatCount="indefinite" values="0 0 0;0 0 0;0 0 0;0 0 0;0 0 0" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/><path d="M -4.5 0 Q -5.5 4.5 -2.5 5.5 L 2.5 5.5 Q 5.5 4.5 4.5 0 Q 0 -1.5 -4.5 0 Z" class="hd" transform="scale(1,1)"/></g></g>
     <line x1="184" y1="58" x2="95" y2="58" class="acT"><animate attributeName="x2" dur="2.6s" repeatCount="indefinite" values="95;80;80;95;95" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/><animate attributeName="y2" dur="2.6s" repeatCount="indefinite" values="58;62;62;58;58" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/></line>
-    <polyline points="91,47 80,57 95,58" class="bd4"><animate attributeName="points" dur="2.6s" repeatCount="indefinite" values="91,47 80,57 95,58;91,47 76.1,47.5 80,62;91,47 76.1,47.5 80,62;91,47 80,57 95,58;91,47 80,57 95,58" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/></polyline>
-    <polyline points="109,45 110,60 95,58" class="bd4"><animate attributeName="points" dur="2.6s" repeatCount="indefinite" values="109,45 110,60 95,58;109,45 96.5,53.3 80,62;109,45 96.5,53.3 80,62;109,45 110,60 95,58;109,45 110,60 95,58" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/></polyline>
+    <polyline points="91,43 80,57 95,58" class="bd4"><animate attributeName="points" dur="2.6s" repeatCount="indefinite" values="91,43 80,57 95,58;91,43 74,48.2 80,62;91,43 74,48.2 80,62;91,43 80,57 95,58;91,43 80,57 95,58" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/></polyline>
+    <polyline points="109,41 110,60 95,58" class="bd4"><animate attributeName="points" dur="2.6s" repeatCount="indefinite" values="109,41 110,60 95,58;109,41 94.1,52.9 80,62;109,41 94.1,52.9 80,62;109,41 110,60 95,58;109,41 110,60 95,58" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/></polyline>
     <circle cx="95" cy="58" r="3.5" class="acF"><animate attributeName="cx" dur="2.6s" repeatCount="indefinite" values="95;80;80;95;95" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/><animate attributeName="cy" dur="2.6s" repeatCount="indefinite" values="58;62;62;58;58" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/></circle>
     <rect x="10" y="8" width="58" height="46" rx="2" class="frame"/>
     <text x="15" y="17" class="lab">TOP</text>
@@ -184,19 +184,19 @@
   <g transform="translate(10,1315)">
     <rect width="200" height="120" rx="8" class="cell"/>
     <line x1="8" y1="105" x2="192" y2="105" class="gnd"/>
-    <circle cx="95" cy="74" r="4.5" class="hd"/>
-    <circle cx="105" cy="74" r="4.5" class="hd"/>
-    <polyline points="100,72 95,85 92,99" class="bd"/>
-    <polyline points="100,72 105,85 108,99" class="bd"/>
-    <line x1="100" y1="72" x2="100" y2="44" class="bd"/>
-    <line x1="91" y1="46" x2="109" y2="46" class="bd"/>
-    <circle cx="100" cy="32" r="7" class="hd"/>
+    <circle cx="95" cy="70" r="4.5" class="hd"/>
+    <circle cx="105" cy="70" r="4.5" class="hd"/>
+    <polyline points="100,68 95,84 92,99" class="bd"/>
+    <polyline points="100,68 105,84 108,99" class="bd"/>
+    <line x1="100" y1="68" x2="100" y2="40" class="bd"/>
+    <line x1="91" y1="42" x2="109" y2="42" class="bd"/>
+    <circle cx="100" cy="28" r="7" class="hd"/>
     <g transform="translate(92 99)"><g><animateTransform attributeName="transform" type="rotate" dur="2.6s" repeatCount="indefinite" values="0 0 0;0 0 0;0 0 0;0 0 0;0 0 0" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/><path d="M -4.5 0 Q -5.5 4.5 -2.5 5.5 L 2.5 5.5 Q 5.5 4.5 4.5 0 Q 0 -1.5 -4.5 0 Z" class="hd" transform="scale(1,1)"/></g></g>
     <g transform="translate(108 99)"><g><animateTransform attributeName="transform" type="rotate" dur="2.6s" repeatCount="indefinite" values="0 0 0;0 0 0;0 0 0;0 0 0;0 0 0" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/><path d="M -4.5 0 Q -5.5 4.5 -2.5 5.5 L 2.5 5.5 Q 5.5 4.5 4.5 0 Q 0 -1.5 -4.5 0 Z" class="hd" transform="scale(1,1)"/></g></g>
-    <polyline points="91,46 80,55 84,38" class="bd4"><animate attributeName="points" dur="2.6s" repeatCount="indefinite" values="91,46 80,55 84,38;91,46 90.6,31.8 92,14;91,46 90.6,31.8 92,14;91,46 80,55 84,38;91,46 80,55 84,38" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/></polyline>
-    <polyline points="109,46 120,55 116,38" class="bd4"><animate attributeName="points" dur="2.6s" repeatCount="indefinite" values="109,46 120,55 116,38;109,46 109.4,31.8 108,14;109,46 109.4,31.8 108,14;109,46 120,55 116,38;109,46 120,55 116,38" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/></polyline>
-    <circle cx="84" cy="33" r="5.5" class="ac"><animate attributeName="cx" dur="2.6s" repeatCount="indefinite" values="84;92;92;84;84" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/><animate attributeName="cy" dur="2.6s" repeatCount="indefinite" values="33;9;9;33;33" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/></circle>
-    <circle cx="116" cy="33" r="5.5" class="ac"><animate attributeName="cx" dur="2.6s" repeatCount="indefinite" values="116;108;108;116;116" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/><animate attributeName="cy" dur="2.6s" repeatCount="indefinite" values="33;9;9;33;33" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/></circle>
+    <polyline points="91,42 76,48 84,34" class="bd4"><animate attributeName="points" dur="2.6s" repeatCount="indefinite" values="91,42 76,48 84,34;91,42 85.6,26.8 92,12;91,42 85.6,26.8 92,12;91,42 76,48 84,34;91,42 76,48 84,34" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/></polyline>
+    <polyline points="109,42 124,48 116,34" class="bd4"><animate attributeName="points" dur="2.6s" repeatCount="indefinite" values="109,42 124,48 116,34;109,42 114.4,26.8 108,12;109,42 114.4,26.8 108,12;109,42 124,48 116,34;109,42 124,48 116,34" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/></polyline>
+    <circle cx="84" cy="29" r="5.5" class="ac"><animate attributeName="cx" dur="2.6s" repeatCount="indefinite" values="84;92;92;84;84" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/><animate attributeName="cy" dur="2.6s" repeatCount="indefinite" values="29;7;7;29;29" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/></circle>
+    <circle cx="116" cy="29" r="5.5" class="ac"><animate attributeName="cx" dur="2.6s" repeatCount="indefinite" values="116;108;108;116;116" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/><animate attributeName="cy" dur="2.6s" repeatCount="indefinite" values="29;7;7;29;29" keyTimes="0;0.35;0.55;0.85;1" calcMode="spline" keySplines=".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1"/></circle>
     <text x="100" y="134" class="cap">DB SHOULDER PRESS</text>
   </g>
   <!-- CABLE PULL-THROUGH -->

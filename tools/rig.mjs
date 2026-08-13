@@ -124,10 +124,10 @@ export function skeleton(kind, opts = {}) {
     // The glutes peek out past the hips on both sides — always visible.
     return {
       joints: {
-        pelvis: [x, 72], lKnee: [x - 5, 85], rKnee: [x + 5, 85],
+        pelvis: [x, 68], lKnee: [x - 5, 84], rKnee: [x + 5, 84],
         lAnkle: [x - 8, ANKLE_Y], rAnkle: [x + 8, ANKLE_Y],
-        neckB: [x, 44], head: [x, 32], lSh: [x - 9, 46], rSh: [x + 9, 46],
-        lButt: [x - 5, 74], rButt: [x + 5, 74],
+        neckB: [x, 40], head: [x, 28], lSh: [x - 9, 42], rSh: [x + 9, 42],
+        lButt: [x - 5, 70], rButt: [x + 5, 70],
       },
       chains: [],
       parts: [
@@ -151,11 +151,11 @@ export function skeleton(kind, opts = {}) {
     // camera — author far-side reach with the diagonal in mind.
     return {
       joints: {
-        pelvis: [x + 2, 72], neck3: [x, 44], head: [x, 32],
-        lSh: [x - 9, 47], rSh: [x + 9, 45],
-        lButt: [x - 3, 74], rButt: [x + 7, 74],
-        nKnee: [x - 5, 85], nAnkle: [x - 7, ANKLE_Y],
-        fKnee: [x + 7, 85], fAnkle: [x + 9, ANKLE_Y],
+        pelvis: [x + 2, 68], neck3: [x, 40], head: [x, 28],
+        lSh: [x - 9, 43], rSh: [x + 9, 41],
+        lButt: [x - 3, 70], rButt: [x + 7, 70],
+        nKnee: [x - 5, 84], nAnkle: [x - 7, ANKLE_Y],
+        fKnee: [x + 7, 84], fAnkle: [x + 9, ANKLE_Y],
       },
       chains: [],
       parts: [

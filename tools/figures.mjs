@@ -230,9 +230,9 @@ export const FIGURES = [
   compose(skeleton("standing-front", { x: 100 }), {
     name: "DB SHOULDER PRESS",
     poses: {
-      // A: elbows tucked below shoulder level, forearms near vertical
-      A: { lElbow: [80, 55], rElbow: [120, 55], lHand: [84, 38], rHand: [116, 38], lDb: [84, 33], rDb: [116, 33] },
-      B: { lHand: [92, 14], rHand: [108, 14], lDb: [92, 9], rDb: [108, 9] },
+      // A: elbows tucked below shoulder level, bells at ear height
+      A: { lElbow: [76, 48], rElbow: [124, 48], lHand: [84, 34], rHand: [116, 34], lDb: [84, 29], rDb: [116, 29] },
+      B: { lHand: [92, 12], rHand: [108, 12], lDb: [92, 7], rDb: [108, 7] },
     },
     chains: [
       { root: "lSh", mid: "lElbow", end: "lHand" },
