@@ -180,7 +180,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--blue);outline-o
   <section class="screen on" id="s-home">
     <div class="head">
       <div>
-        <h1>Wrack<span class="ver">v11</span></h1>
+        <h1>Wrack<span class="ver">v12</span></h1>
         <div class="motto">why are we still here? just to suffer?</div>
       </div>
       <div class="lights">
@@ -303,7 +303,7 @@ const PROGRAM = {
         load:"Men 95–135 lb, women 65–95 lb on the bar to start. This lift loads fast — add 10–20 lb once every set hits the top of the range.",
         watch:"Feet too close turns this into a quad exercise; too far forward and the hamstrings take it over."
       }},
-    { id:"rdl", name:"Romanian deadlift", sets:3, reps:"8", rest:120,
+    { id:"rdl", name:"Romanian deadlift", sets:3, reps:"8–10", rest:120,
       how:{
         setup:"Bar against the thighs, weight in the mid-foot, knees bent slightly and then held at that same angle throughout.",
         move:"Push the hips straight back and let the bar drag down the legs until the hamstrings load up — usually just below the knee. Stand by driving the hips forward.",
@@ -329,14 +329,14 @@ const PROGRAM = {
         load:"Men 70–100 lb, women 40–60 lb on the stack to start.",
         watch:"Bar to the front, never behind the neck. A supinated grip loads the biceps anchor directly — skip it."
       }},
-    { id:"abduct", name:"Cable hip abduction", sets:3, reps:"12–15", rest:45, side:true,
-      note:"Superset with the Pallof press.",
+    { id:"seatedabduct", name:"Seated hip abduction", sets:3, reps:"12–15", rest:45,
+      note:"Superset with the Pallof press. No machine? Banded lateral walk, 2×20 steps each way.",
       how:{
-        setup:"Ankle cuff on the low pin, working leg furthest from the stack. Stand tall and hold the frame for balance.",
-        move:"Sweep the leg out and slightly behind you, roughly 30–45°, then return under control without letting the stack rest.",
-        cue:"Lock the standing leg and stop the torso from leaning away as a counterweight.",
-        load:"Men 10–20 lb, women 5–15 lb. Stay light — control matters more than the stack.",
-        watch:"A small range done honestly beats a big swing driven by the lower back."
+        setup:"Sit tall in the machine, pads outside the knees, feet flat on the rests. Set the start width so there's light tension before the pads move.",
+        move:"Drive the knees apart as far as they'll go without the pelvis tucking, hold the squeeze for a beat, then return under control without letting the stack rest.",
+        cue:"Push through the outer knee, not the feet.",
+        load:"Men 70–100 lb, women 50–80 lb on the stack to start.",
+        watch:"Leaning way back or hauling on the handles to move a bigger stack — a smaller range with a hold beats it."
       }},
     { id:"pallof", name:"Cable Pallof press", sets:3, reps:"10", rest:45, side:true,
       how:{
@@ -345,6 +345,14 @@ const PROGRAM = {
         cue:"The rep is the resistance to rotation, not the arm movement.",
         load:"Men 15–25 lb, women 10–15 lb. If the hips twist, it's too heavy.",
         watch:"Ribs down and hips square. Step further from the stack to make the hold harder."
+      }},
+    { id:"calfraise", name:"Standing calf raise", sets:3, reps:"12–15", rest:60,
+      how:{
+        setup:"Balls of the feet on the machine platform or a step, heels hanging free. Machine, Smith bar, or a dumbbell in one hand with the other braced.",
+        move:"Rise as high onto the toes as possible, pause a full second at the top, then lower until the heels sit below the platform and the calves stretch.",
+        cue:"Dead stop in the bottom stretch — no bouncing out of it.",
+        load:"Bodyweight to start; add men 25–45 lb, women 10–25 lb once 3×15 is easy.",
+        watch:"Short, quick reps through the middle of the range. The stretched bottom position does most of the work."
       }}
   ]},
   B: { name:"Day B", sub:"Knee-dominant", ex:[
@@ -356,6 +364,22 @@ const PROGRAM = {
         load:"Bodyweight until the stance is dialed, then men 15–25 lb, women 8–15 lb per dumbbell.",
         watch:"Dial in stance length before adding load. Too short and it becomes a quad-and-knee exercise."
       }},
+    { id:"legpress", name:"Leg press", sets:3, reps:"10", rest:120,
+      how:{
+        setup:"Feet mid-platform, hip width. Set the seat so the knees don't force the hips to tuck at the bottom.",
+        move:"Lower the sled until the knees are near 90° or the hips start to lift off the pad, then press through the whole foot without slamming the knees into lockout.",
+        cue:"Knees track over the toes for the entire rep.",
+        load:"Men 90–180 lb, women 50–110 lb on the sled to start — machines vary a lot, so let the first session calibrate.",
+        watch:"Chasing depth until the butt curls off the seat — that rounds the lower back under load. Cut the depth there."
+      }},
+    { id:"ohp", name:"DB shoulder press", sets:3, reps:"10", rest:90,
+      how:{
+        setup:"Seated or standing, palms facing each other, dumbbells at ear height.",
+        move:"Press until the arms are straight without banging the bells together, then lower under control to ear height.",
+        cue:"Squeeze the glutes and brace the midsection so the press doesn't turn into a standing back arch.",
+        load:"Men 20–30 lb, women 8–15 lb per dumbbell to start.",
+        watch:"Neutral grip, path in front of the body. No behind-the-neck pressing and no wide flared elbows."
+      }},
     { id:"pullthru", name:"Cable pull-through", sets:3, reps:"12", rest:90,
       how:{
         setup:"Rope on the lowest pin. Face away from the stack, rope between the legs, soft knees, hands loose.",
@@ -364,39 +388,21 @@ const PROGRAM = {
         load:"Men 40–60 lb, women 25–40 lb to start. A smooth hip snap beats stack size.",
         watch:"Arms are just straps. If the biceps are working, you're rowing it."
       }},
-    { id:"fly", name:"Standing cable fly", sets:3, reps:"12", rest:90,
-      note:"Dual cables. Stop the stretch at chest level.",
-      how:{
-        setup:"Both cables at or slightly above shoulder height. Split stance, slight forward lean, elbows soft.",
-        move:"Bring the handles together in front of the chest in a wide arc, then let them travel back out to about chest width.",
-        cue:"Fix the elbow angle at the start and hold it for the whole rep.",
-        load:"Men 15–25 lb, women 7.5–15 lb per side. Err light to keep the elbow angle fixed.",
-        watch:"Don't chase the stretch behind the torso — stop the hands at the plane of your chest."
-      }},
     { id:"row", name:"One-arm row", sets:3, reps:"10", rest:90, side:true,
       how:{
-        setup:"Hand and knee on a bench for dumbbells, or a split stance facing a mid-height cable. Flat back, hips square.",
+        setup:"Hand and knee on a bench with a dumbbell, or chest-supported on an incline bench. Flat back, hips square.",
         move:"Pull the handle to the hip with the elbow tracking past the ribs. Lower until the shoulder blade reaches forward.",
         cue:"Lead with the elbow, finish with the shoulder blade.",
         load:"Men 30–45 lb, women 15–25 lb to start.",
         watch:"Neutral grip keeps the load off the biceps anchor. No twisting the torso to finish the rep."
       }},
-    { id:"kickback", name:"Cable glute kickback", sets:3, reps:"12", rest:45, side:true,
-      note:"Superset with the shoulder press.",
+    { id:"legcurl", name:"Lying leg curl", sets:3, reps:"10–12", rest:60,
       how:{
-        setup:"Ankle cuff on the low pin, facing the stack. Hinge forward slightly and brace a hand on the frame.",
-        move:"Drive the leg straight back, squeeze at the top, then return without letting the weight settle.",
-        cue:"End range is a glute squeeze, not a lower-back arch.",
-        load:"Men 10–20 lb, women 5–15 lb. Any weight that arches the back is too much.",
-        watch:"If the ribs flare or the back extends to get more range, you've already passed your end range."
-      }},
-    { id:"ohp", name:"DB shoulder press", sets:3, reps:"10", rest:60,
-      how:{
-        setup:"Seated or standing, palms facing each other, dumbbells at ear height.",
-        move:"Press until the arms are straight without banging the bells together, then lower under control to ear height.",
-        cue:"Squeeze the glutes and brace the midsection so the press doesn't turn into a standing back arch.",
-        load:"Men 20–30 lb, women 8–15 lb per dumbbell to start.",
-        watch:"Neutral grip, path in front of the body. No behind-the-neck pressing and no wide flared elbows."
+        setup:"Lie flat on the machine, pad resting just above the heels, kneecaps just off the edge of the bench.",
+        move:"Curl the heels toward the glutes without the hips rising, then lower until the legs are nearly straight.",
+        cue:"Drive the hips into the bench for the entire set.",
+        load:"Men 50–80 lb, women 30–50 lb on the stack to start.",
+        watch:"Hips popping up to sling the pad past the sticking point — that's the lower back taking over, not the hamstrings."
       }}
   ]}
 };
