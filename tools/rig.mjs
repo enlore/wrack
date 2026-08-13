@@ -27,7 +27,9 @@ export const STYLE = `
     .acF{fill:#3D6FF0}
     .gnd{stroke:#2E343E;stroke-width:2}
     .cell{fill:#161A20}
-    .cap{fill:#8A919E;font:600 10px system-ui,sans-serif;letter-spacing:.12em;text-anchor:middle}`;
+    .cap{fill:#8A919E;font:600 10px system-ui,sans-serif;letter-spacing:.12em;text-anchor:middle}
+    .lab{fill:#5F6773;font:600 7px system-ui,sans-serif;letter-spacing:.1em}
+    .frame{fill:none;stroke:#2E343E;stroke-width:1.5}`;
 
 const fmt = n => {
   const r = Math.round(n * 10) / 10;
@@ -262,6 +264,7 @@ function renderPart(part, A, B, warn) {
     const inner = animTag("cx", fmt(a[0]), fmt(b[0])) + animTag("cy", fmt(a[1]), fmt(b[1]));
     return tag("circle", { cx: fmt(a[0]), cy: fmt(a[1]), r, class: cls }, inner);
   }
+  if (k === "label") return tag("text", { x: part.x, y: part.y, class: "lab" }, part.text);
   if (k === "foot") {
     const a = P(A, part.at), b = P(B, part.at);
     return footEl(a, b, part.pitch?.[0] ?? 0, part.pitch?.[1] ?? part.pitch?.[0] ?? 0, part.facing ?? 1, part.front);
