@@ -10,8 +10,16 @@
 //
 // Run tools/build-sheet.mjs with node to regenerate assets/animations.svg.
 
-const DUR = "2.6s";
-const KT = "0;0.35;0.55;0.85;1";
+const DUR = "3.2s";
+// Rep tempo: values always run A;B;B;A;A — keyTimes shape the phases.
+// lift  (A = bottom/stretch): fast concentric, short top hold, slow eccentric,
+//                             noticeable pause at the bottom
+// lower (A = top, e.g. RDL/BSS): slow eccentric down, bottom pause, drive up
+const TEMPO = {
+  lift: "0;0.25;0.4;0.8;1",
+  lower: "0;0.4;0.6;0.85;1",
+};
+let KT = TEMPO.lift; // set per figure in renderSheet
 const KS = ".4 0 .2 1;0 0 1 1;.4 0 .2 1;0 0 1 1";
 
 export const STYLE = `
@@ -450,6 +458,7 @@ export function renderSheet(figures, warn = m => console.error("warn: " + m), { 
   const H = pad + rows * pitchY + 10;
   const cells = figures.map((fig, i) => {
     const x = pad + (i % cols) * pitchX, y = pad + Math.floor(i / cols) * pitchY;
+    KT = TEMPO[fig.tempo || "lift"];
     const { A, B } = resolvePoses(fig, warn);
     const parts = fig.parts.map(p => renderPart(p, A, B, warn)).join("\n    ");
     return `  <!-- ${fig.name} -->

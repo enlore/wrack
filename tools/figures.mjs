@@ -22,6 +22,7 @@ export const FIGURES = [
   }),
   compose(BODIES.standing({ x: 100, facing: -1 }), {
     name: "ROMANIAN DEADLIFT",
+    tempo: "lower",
     poses: {
       A: {},
       // hips back as counterweight; bar plumb under the shoulders, at the legs
@@ -147,6 +148,7 @@ export const FIGURES = [
   }),
   compose(BODIES.splitStance(), {
     name: "BULGARIAN SPLIT SQUAT",
+    tempo: "lower",
     poses: {
       A: {},
       B: { hip: [97, 82], sh: [90, 54], hand: [93, 80], head: [89, 46], butt: [102, 84] },
