@@ -84,11 +84,13 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--blue);outline-o
 .hist{margin:0;padding:0;list-style:none}
 .hist li{display:flex;justify-content:space-between;align-items:center;padding:13px 16px;border-bottom:1px solid #22262E;
   user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
-.hist .del{display:none;background:var(--red);color:#fff;font-family:var(--disp);font-weight:700;
+.hist .del,.hist .edit{display:none;font-family:var(--disp);font-weight:700;
   font-size:12px;letter-spacing:.12em;text-transform:uppercase;padding:8px 14px;border-radius:8px}
+.hist .del{background:var(--red);color:#fff}
+.hist .edit{background:var(--panel-2);color:var(--chalk);margin-right:8px}
 .hist li.arm{background:#20232B}
 .hist li.arm .v{display:none}
-.hist li.arm .del{display:block}
+.hist li.arm .del,.hist li.arm .edit{display:block}
 .hist .d{font-family:var(--disp);font-size:15px;letter-spacing:.06em}
 .hist .v{color:var(--dust);font-size:13px}
 .empty{color:var(--dust);font-size:14px;padding:6px 16px 20px}
@@ -180,7 +182,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--blue);outline-o
   <section class="screen on" id="s-home">
     <div class="head">
       <div>
-        <h1>Wrack<span class="ver">v14</span></h1>
+        <h1>Wrack<span class="ver">v15</span></h1>
         <div class="motto">why are we still here? just to suffer?</div>
       </div>
       <div class="lights">
@@ -542,7 +544,7 @@ const Wake = (() => {
   }
   document.addEventListener("visibilitychange", async () => {
     // Screen wake locks are dropped whenever the page is hidden; re-take on return.
-    if (document.visibilityState === "visible" && live && !lock && mode !== "video"){
+    if (document.visibilityState === "visible" && live && editIdx === null && !lock && mode !== "video"){
       if (await viaAPI()) set("api"); else set("none");
     }
   });
@@ -626,7 +628,7 @@ $("updateBtn").onclick = async () => {
 /* ============================================================
    STATE
    ============================================================ */
-let sessions = [], live = null, dayKey = "A", exIdx = 0;
+let sessions = [], live = null, dayKey = "A", exIdx = 0, editIdx = null;
 let restTimer = null, restLeft = 0, howOpen = false;
 
 const pad2 = n => String(n).padStart(2, "0");
@@ -664,7 +666,7 @@ function renderHome(){
     return `<li data-i="${sessions.length - 1 - di}">
             <span class="d">${PROGRAM[s.day].name} · ${dt.toLocaleDateString(undefined,{month:"short",day:"numeric"})}</span>
             <span class="v num">${s.setCount} sets · ${volume(s).toLocaleString()} lb</span>
-            <button class="del">Delete</button></li>`;
+            <span style="display:flex"><button class="edit">Edit</button><button class="del">Delete</button></span></li>`;
   }).join("");
 }
 function volume(s){
@@ -686,6 +688,7 @@ $("homeBtn").onclick = () => { show("home"); renderHome(); };
    ============================================================ */
 async function startSession(){
   const prev = (await Store.get("lastWeights")) || {};
+  editIdx = null;
   live = { day: dayKey, startedAt: Date.now(), log: {}, prev };
   for (const e of PROGRAM[dayKey].ex){
     const seed = prev[e.id] || [];
@@ -744,7 +747,8 @@ function renderEx(){
 
   renderHow(e);
   $("prevEx").disabled = exIdx === 0;
-  $("nextEx").textContent = exIdx === total - 1 ? "Finish" : "Next";
+  $("nextEx").textContent = exIdx === total - 1 ? (editIdx !== null ? "Save" : "Finish") : "Next";
+  $("endBtn").textContent = editIdx !== null ? "Cancel" : "End";
   renderRail();
 }
 
@@ -780,7 +784,7 @@ $("setRows").addEventListener("click", ev => {
   if (act === "w-") s.w = Math.max(0, round25(s.w - 2.5));
   if (act === "r+") s.r = s.r + 1;
   if (act === "r-") s.r = Math.max(0, s.r - 1);
-  if (act === "log"){ s.done = !s.done; if (s.done) startRest(e.rest); }
+  if (act === "log"){ s.done = !s.done; if (s.done && editIdx === null) startRest(e.rest); }
   renderEx();
 });
 $("setRows").addEventListener("change", ev => {
@@ -795,9 +799,49 @@ $("prevEx").onclick = () => { if (exIdx > 0){ exIdx--; renderEx(); $("runScroll"
 $("nextEx").onclick = () => {
   const total = PROGRAM[live.day].ex.length;
   if (exIdx < total - 1){ exIdx++; renderEx(); $("runScroll").scrollTop = 0; }
+  else if (editIdx !== null) saveEdit();
   else finish();
 };
-$("endBtn").onclick = () => { if (confirm("End this workout and save what you've logged?")) finish(); };
+$("endBtn").onclick = () => {
+  if (editIdx !== null){
+    if (confirm("Discard your changes to this workout?")){ live = null; editIdx = null; show("home"); renderHome(); }
+    return;
+  }
+  if (confirm("End this workout and save what you've logged?")) finish();
+};
+
+/* ---------- edit a logged workout ---------- */
+function startEdit(i){
+  const rec = sessions[i];
+  editIdx = i;
+  live = { day: rec.day, startedAt: rec.startedAt, log: JSON.parse(JSON.stringify(rec.log)), prev: {} };
+  // sessions from older program versions may lack current exercises
+  for (const e of PROGRAM[rec.day].ex){
+    if (!live.log[e.id]) live.log[e.id] = Array.from({length: e.sets}, () => ({ w: 0, r: parseInt(e.reps) || 8, done: false }));
+  }
+  exIdx = 0;
+  show("run");
+  const dt = new Date(rec.startedAt);
+  $("runTitle").textContent = `Editing · ${PROGRAM[rec.day].name} · ${dt.toLocaleDateString(undefined,{month:"short",day:"numeric"})}`;
+  renderEx();
+}
+async function saveEdit(){
+  const rec = sessions[editIdx];
+  rec.log = live.log;
+  rec.setCount = Object.values(live.log).flat().filter(s => s.done).length;
+  await Store.set("sessions", sessions);
+  // rebuild the "last time" seeds from full history so edits stay consistent
+  const lw = {};
+  for (const s of sessions){
+    for (const k in s.log){
+      const done = s.log[k].filter(x => x.done).map(x => ({ w: x.w, r: x.r }));
+      if (done.length) lw[k] = done;
+    }
+  }
+  await Store.set("lastWeights", lw);
+  live = null; editIdx = null;
+  show("home"); renderHome();
+}
 
 /* ---------- rest timer ---------- */
 function startRest(sec){
@@ -906,6 +950,8 @@ $("importFile").onchange = async ev => {
 
   hist.addEventListener("click", async e => {
     if (armed){ armed = false; return; }
+    const edit = e.target.closest(".edit");
+    if (edit){ startEdit(+edit.closest("li").dataset.i); return; }
     const del = e.target.closest(".del");
     if (!del){ disarm(); return; }
     const i = +del.closest("li").dataset.i;
