@@ -1,6 +1,6 @@
 /* Wrack service worker — cache-first app shell.
    Bump CACHE on every deploy to force clients to pick up new code. */
-const CACHE = "wrack-v13";
+const CACHE = "wrack-v14";
 const SHELL = [
   "./",
   "./index.html",

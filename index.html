@@ -180,7 +180,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--blue);outline-o
   <section class="screen on" id="s-home">
     <div class="head">
       <div>
-        <h1>Wrack<span class="ver">v13</span></h1>
+        <h1>Wrack<span class="ver">v14</span></h1>
         <div class="motto">why are we still here? just to suffer?</div>
       </div>
       <div class="lights">
@@ -776,8 +776,8 @@ $("setRows").addEventListener("click", ev => {
   const btn = ev.target.closest("button"); if (!btn) return;
   const i = +ev.target.closest(".set").dataset.i;
   const e = curEx(), s = live.log[e.id][i], act = btn.dataset.act;
-  if (act === "w+") s.w = round25(s.w + 5);
-  if (act === "w-") s.w = Math.max(0, round25(s.w - 5));
+  if (act === "w+") s.w = round25(s.w + 2.5);
+  if (act === "w-") s.w = Math.max(0, round25(s.w - 2.5));
   if (act === "r+") s.r = s.r + 1;
   if (act === "r-") s.r = Math.max(0, s.r - 1);
   if (act === "log"){ s.done = !s.done; if (s.done) startRest(e.rest); }
