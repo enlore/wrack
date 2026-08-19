@@ -190,7 +190,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--blue);outline-o
   <section class="screen on" id="s-home">
     <div class="head">
       <div>
-        <h1>Wrack<span class="ver">v17</span></h1>
+        <h1>Wrack<span class="ver">v18</span></h1>
         <div class="motto">why are we still here? just to suffer?</div>
       </div>
       <div class="lights">
@@ -440,7 +440,262 @@ const WORKOUTS = {
         watch:"If the hips sag to the floor between reps it turns into a hip-extension move — this slot is here for knee flexion, so keep the bridge."
       }}
   ]}
-}}};
+}},
+  beachstuff: {
+    name: "Beach Stuff",
+    desc: "A/B/C split: glutes carry over, chest and arms take the spotlight",
+    duration: 55,
+    days: {
+      A: {
+        name: "Day A",
+        sub: "Glutes & Chest",
+        ex: [
+          {
+            id: "hipthrust",
+            name: "Barbell Hip Thrust",
+            sets: 4,
+            reps: "8–10",
+            rest: 120,
+            how: {
+              setup: "Upper back on the bench edge, bar padded across the hips, feet planted so the shins are vertical at the top.",
+              move: "Drive through the heels until the hips lock out level with the shoulders, then lower under control.",
+              cue: "Finish every rep with a hard squeeze, chin tucked, ribs down.",
+              load: "Men 95–135 lb, women 65–95 lb on the bar to start.",
+              watch: "Don't arch the lower back to fake the lockout — the last inch comes from the glutes, not the spine."
+            }
+          },
+          {
+            id: "dbbench",
+            name: "Dumbbell Bench Press",
+            sets: 3,
+            reps: "8–10",
+            rest: 120,
+            how: {
+              setup: "Flat bench, dumbbells over the chest, shoulder blades pinched back and down into the pad.",
+              move: "Lower until the elbows drop just below the bench, then press back up over the chest.",
+              cue: "Elbows track about 45 degrees from the torso, not flared straight out.",
+              load: "Men 40–55 lb, women 15–25 lb per dumbbell to start.",
+              watch: "Don't let the shoulders roll forward off the pad at the top of the press."
+            }
+          },
+          {
+            id: "bss",
+            name: "Bulgarian Split Squat",
+            sets: 3,
+            reps: "10–12",
+            rest: 90,
+            side: true,
+            how: {
+              setup: "Rear foot laces-down on the bench, front foot far enough forward that the knee stays behind the toes at the bottom, dumbbell in each hand.",
+              move: "Drop straight down until the rear knee nearly touches the floor, then drive up through the front heel.",
+              cue: "A slight forward lean of the torso keeps the work in the glute.",
+              load: "Men 25–40 lb, women 10–20 lb per dumbbell to start.",
+              watch: "Don't push off the back foot — it's a kickstand, not a driver."
+            }
+          },
+          {
+            id: "dbfly",
+            name: "Dumbbell Fly",
+            sets: 3,
+            reps: "12–15",
+            rest: 60,
+            how: {
+              setup: "Flat bench, dumbbells pressed up over the chest, palms facing each other, elbows slightly bent.",
+              move: "Open the arms in a wide arc until you feel a stretch across the chest, then sweep back together over the chest.",
+              cue: "Freeze the elbow bend — the whole arc comes from the shoulders, like a hug.",
+              load: "Men 15–25 lb, women 8–12 lb per dumbbell to start.",
+              watch: "Going too deep turns a chest stretch into a shoulder problem — stop where the chest, not the shoulder, feels it."
+            }
+          },
+          {
+            id: "row",
+            name: "One-Arm Row",
+            sets: 3,
+            reps: "10–12",
+            rest: 90,
+            side: true,
+            note: "The insurance policy — every press day pays a pulling tax.",
+            how: {
+              setup: "One hand and knee on the bench, back flat, dumbbell hanging straight down from the shoulder.",
+              move: "Pull the dumbbell to the hip, not the armpit, then lower to a full hang.",
+              cue: "The elbow leads and stays close to the ribs.",
+              load: "Men 40–60 lb, women 15–25 lb to start.",
+              watch: "Don't twist the torso to jerk the weight up."
+            }
+          }
+        ]
+      },
+      B: {
+        name: "Day B",
+        sub: "Glutes & Arms",
+        ex: [
+          {
+            id: "rdl",
+            name: "Romanian Deadlift",
+            sets: 3,
+            reps: "8–10",
+            rest: 120,
+            how: {
+              setup: "Bar against the thighs, weight in the mid-foot, knees bent slightly and then held at that same angle throughout.",
+              move: "Push the hips straight back and let the bar slide down the legs, then stand by driving the hips forward.",
+              cue: "The bar stays in contact with the leg the whole way down and up.",
+              load: "Men 95–135 lb, women 55–85 lb on the bar to start.",
+              watch: "Stop at the point where the lower back would round. Depth isn't the goal, the stretch is."
+            }
+          },
+          {
+            id: "pullthru",
+            name: "Cable Pull-Through",
+            sets: 3,
+            reps: "12–15",
+            rest: 60,
+            how: {
+              setup: "Rope on the low pulley, face away from the stack, hands through the legs, walk out until the weight lifts.",
+              move: "Hinge back until the hamstrings load up, then snap the hips forward to stand tall.",
+              cue: "The hands are hooks — the glutes move the weight.",
+              load: "Men 40–60 lb, women 25–40 lb to start.",
+              watch: "Finish standing tall, not leaning back."
+            }
+          },
+          {
+            id: "barcurl",
+            name: "Barbell Curl",
+            sets: 3,
+            reps: "8–10",
+            rest: 90,
+            how: {
+              setup: "Standing, underhand grip at shoulder width, elbows pinned to the sides.",
+              move: "Curl the bar to the collarbone, then lower all the way to straight arms.",
+              cue: "If the elbows drift forward it becomes a front raise — keep them put.",
+              load: "Men 45–65 lb, women 20–35 lb to start; the empty bar is a fine first session.",
+              watch: "No hip bump out of the bottom of the rep."
+            }
+          },
+          {
+            id: "skullcrusher",
+            name: "Skull Crusher",
+            sets: 3,
+            reps: "10–12",
+            rest: 90,
+            how: {
+              setup: "Flat bench, a dumbbell in each hand held straight up over the shoulders, palms facing each other.",
+              move: "Bend only at the elbows to lower the weights back past the ears, then press back to straight.",
+              cue: "Upper arms stay vertical and still — the elbow is the only hinge.",
+              load: "Men 15–25 lb, women 5–12 lb per dumbbell to start.",
+              watch: "Elbows flaring wide turns it into a press — keep them narrow."
+            }
+          },
+          {
+            id: "inclinecurl",
+            name: "Incline Dumbbell Curl",
+            sets: 2,
+            reps: "10–12",
+            rest: 60,
+            how: {
+              setup: "Bench at about 45 degrees, sit back fully, arms hanging straight down behind the torso.",
+              move: "Curl both dumbbells up without letting the elbows drift forward, then lower to a full stretch.",
+              cue: "The stretch at the bottom is the point — don't cut it short.",
+              load: "Men 15–20 lb, women 5–10 lb per dumbbell to start.",
+              watch: "Shoulders creeping off the pad means the weight is too heavy."
+            }
+          },
+          {
+            id: "pressdown",
+            name: "Cable Pressdown",
+            sets: 3,
+            reps: "12–15",
+            rest: 60,
+            how: {
+              setup: "Rope or bar on the high pulley, elbows pinned at the sides, slight forward lean held steady.",
+              move: "Push down to full lockout, then let the hands ride back up to chest height.",
+              cue: "Only the forearms move.",
+              load: "Men 30–50 lb, women 15–25 lb to start.",
+              watch: "Don't lean body weight onto the bar — the triceps do the pushing."
+            }
+          }
+        ]
+      },
+      C: {
+        name: "Day C",
+        sub: "Chest & Arms",
+        ex: [
+          {
+            id: "inclinedb",
+            name: "Incline Dumbbell Press",
+            sets: 4,
+            reps: "8–10",
+            rest: 120,
+            how: {
+              setup: "Bench at about 30 degrees, dumbbells over the upper chest, shoulder blades pinched into the pad.",
+              move: "Lower to the outside of the upper chest until the elbows pass the bench, then press up and slightly together.",
+              cue: "The dumbbells finish over the collarbone, not the face.",
+              load: "Men 35–50 lb, women 12–20 lb per dumbbell to start.",
+              watch: "A too-steep bench turns this into a shoulder press — stay near 30 degrees."
+            }
+          },
+          {
+            id: "pulldown",
+            name: "Lat Pulldown",
+            sets: 3,
+            reps: "10–12",
+            rest: 90,
+            note: "The other half of the shoulder-insurance tax.",
+            how: {
+              setup: "Grip just outside the shoulders, chest tall, slight lean back set once and held.",
+              move: "Pull the bar to the top of the chest, then let the arms go all the way straight.",
+              cue: "Drive the elbows down toward the floor rather than pulling with the hands.",
+              load: "Men 90–120 lb, women 50–70 lb to start.",
+              watch: "No rocking for momentum — the lean stays fixed."
+            }
+          },
+          {
+            id: "cgbench",
+            name: "Close-Grip Bench Press",
+            sets: 3,
+            reps: "8–10",
+            rest: 120,
+            how: {
+              setup: "Barbell grip just inside shoulder width, shoulder blades pinched, feet planted.",
+              move: "Lower the bar to the lower chest with the elbows tucked, then press to lockout.",
+              cue: "Elbows brush the ribs on the way down.",
+              load: "Men 75–115 lb, women 45–65 lb to start.",
+              watch: "Close means just inside the shoulders — hands nearly touching wrecks the wrists."
+            }
+          },
+          {
+            id: "hammercurl",
+            name: "Hammer Curl",
+            sets: 3,
+            reps: "10–12",
+            rest: 60,
+            how: {
+              setup: "Standing, dumbbells at the sides, palms facing the thighs.",
+              move: "Curl to shoulder height without turning the wrists, then lower with control.",
+              cue: "Thumbs point up the entire rep.",
+              load: "Men 20–30 lb, women 8–15 lb per dumbbell to start.",
+              watch: "No shrug-and-swing — the shoulders stay quiet."
+            }
+          },
+          {
+            id: "facepull",
+            name: "Cable Face Pull",
+            sets: 2,
+            reps: "15–20",
+            rest: 60,
+            note: "Light on purpose. This is what keeps the pressing sustainable.",
+            how: {
+              setup: "Rope at upper-chest height, step back until the stack lifts, palms facing each other.",
+              move: "Pull the rope toward the bridge of the nose with the elbows high and wide, then let the arms straighten fully.",
+              cue: "End each rep with the hands beside the ears and the shoulder blades squeezed.",
+              load: "Men 20–35 lb, women 10–20 lb to start.",
+              watch: "If the elbows drop it has become a row — lower the weight until they can stay high."
+            }
+          }
+        ]
+      }
+    }
+  }
+};
 let workoutId = "buttstuff";
 let PROGRAM = WORKOUTS[workoutId].days;
 
@@ -666,6 +921,11 @@ $("updateBtn").onclick = async () => {
 let sessions = [], live = null, dayKey = "A", exIdx = 0, editIdx = null;
 let restTimer = null, restLeft = 0, howOpen = false;
 
+function nextDay(last){
+  const days = Object.keys(PROGRAM);
+  const i = days.indexOf(last);
+  return days[(i + 1) % days.length] || days[0];
+}
 const pad2 = n => String(n).padStart(2, "0");
 const mmss = s => `${Math.floor(s/60)}:${pad2(s%60)}`;
 
@@ -674,10 +934,8 @@ const mmss = s => `${Math.floor(s/60)}:${pad2(s%60)}`;
   sessions = (await Store.get("sessions")) || [];
   const savedWo = await Store.get("workout");
   if (savedWo && WORKOUTS[savedWo]){ workoutId = savedWo; PROGRAM = WORKOUTS[workoutId].days; }
-  if (!PROGRAM[dayKey]) dayKey = Object.keys(PROGRAM)[0];
   howOpen = (await Store.get("howOpen")) === true;
-  const last = await Store.get("lastDay");
-  dayKey = last === "A" ? "B" : "A";
+  dayKey = nextDay(await Store.get("lastDay"));
 
   Lights.storage();
   Lights.wake("idle");
@@ -989,7 +1247,7 @@ $("importFile").onchange = async ev => {
     await Store.set("sessions", sessions);
     if (d.lastWeights) await Store.set("lastWeights", d.lastWeights);
     if (d.lastDay) await Store.set("lastDay", d.lastDay);
-    dayKey = d.lastDay === "A" ? "B" : "A";
+    dayKey = nextDay(d.lastDay);
     renderHome();
   } catch(e){ alert("That file couldn't be read. Pick a wrack-*.json export."); }
   ev.target.value = "";
