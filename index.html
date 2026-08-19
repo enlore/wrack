@@ -190,7 +190,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--blue);outline-o
   <section class="screen on" id="s-home">
     <div class="head">
       <div>
-        <h1>Wrack<span class="ver">v18</span></h1>
+        <h1>Wrack<span class="ver">v19</span></h1>
         <div class="motto">why are we still here? just to suffer?</div>
       </div>
       <div class="lights">
@@ -689,6 +689,131 @@ const WORKOUTS = {
               cue: "End each rep with the hands beside the ears and the shoulder blades squeezed.",
               load: "Men 20–35 lb, women 10–20 lb to start.",
               watch: "If the elbows drop it has become a row — lower the weight until they can stay high."
+            }
+          }
+        ]
+      }
+    }
+  },
+  bellstuff: {
+    name: "Bell Stuff",
+    desc: "Kettlebell complexes — one bell, no setting it down",
+    duration: 35,
+    days: {
+      A: {
+        name: "Day A",
+        sub: "Hinge & drive",
+        ex: [
+          {
+            id: "kbswing",
+            name: "Two-Hand Swing",
+            sets: 5,
+            reps: "10",
+            rest: 60,
+            note: "Learn the swing and clean before touching the complexes — film yourself or get eyes on it. Everything in this program is built on these two.",
+            how: {
+              setup: "Bell a foot in front of you. Hinge, grip the horns with both hands, tilt the bell toward you, lats tight.",
+              move: "Hike the bell back high between the thighs, then snap the hips forward and stand hard. The bell floats to chest height on its own — arms are just ropes. Let it fall, hinge as it passes the ribs, repeat.",
+              cue: "It's a jump you don't leave the ground for — hips snap, arms do nothing.",
+              load: "Men 35 lb, women 26 lb. Earn 44/35 when 5x10 is crisp and quiet.",
+              watch: "Squatting the swing. Knees soften, but the bell goes back, not down."
+            }
+          },
+          {
+            id: "kbclean",
+            name: "One-Arm Clean",
+            sets: 3,
+            reps: "5",
+            rest: 60,
+            side: true,
+            note: "Practice, not work. Stop each set while it's still smooth.",
+            how: {
+              setup: "Same hinge as the swing, one hand on the handle, thumb pointed back.",
+              move: "Hike the bell back, snap the hips, and guide it up close to the body — elbow tucks, hand spears through the handle, bell lands softly in the rack: forearm vertical, bell resting on forearm and chest. Drop it back into the backswing to reset.",
+              cue: "Keep the bell close — it travels up the body, not out in an arc.",
+              load: "Men 26–35 lb, women 18–26 lb.",
+              watch: "The bell flipping over and banging the wrist. Tame the arc; a clean should land quiet."
+            }
+          },
+          {
+            id: "kbscp",
+            name: "Swing–Clean–Press Complex",
+            sets: 4,
+            reps: "5+5+5",
+            rest: 120,
+            note: "One round = full sequence left arm, then right, bell never touches the floor. Log the bell weight.",
+            how: {
+              setup: "One bell. Chalk if you have it. Don't start a round you can't finish — the press on the second arm is the test.",
+              move: "5 one-arm swings, then 5 cleans, then clean it once more and strict press it 5 times — squeeze the glutes, lock the elbow overhead each rep. Swing-switch to the other hand and repeat all three. That's one round; park the bell and rest.",
+              cue: "Breathe between reps in the rack — the rack position is where you recover.",
+              load: "Men 26–35 lb, women 18–26 lb. The press picks the bell; the swings and cleans come along.",
+              watch: "Leaning back to finish the press. Ribs down, glutes tight — bend the knees and it's a different exercise."
+            }
+          },
+          {
+            id: "kbcarry",
+            name: "Suitcase Carry",
+            sets: 3,
+            reps: "40 steps",
+            rest: 60,
+            side: true,
+            how: {
+              setup: "Deadlift the bell to your side like a suitcase. Stand tall, shoulders level.",
+              move: "Walk slow, controlled steps. The loaded side wants to pull you sideways — don't let it. Set the bell down with a hinge, not a slump.",
+              cue: "Someone watching from behind shouldn't be able to tell which hand holds the bell.",
+              load: "Your heaviest bell — men 44–53 lb, women 26–35 lb.",
+              watch: "Leaning away from the bell. Stay stacked; the fight happens in the obliques, not the lean."
+            }
+          }
+        ]
+      },
+      B: {
+        name: "Day B",
+        sub: "Squat & grind",
+        ex: [
+          {
+            id: "kbhalo",
+            name: "Halo",
+            sets: 2,
+            reps: "5+5",
+            rest: 45,
+            note: "Warm-up. 5 circles each direction per set.",
+            how: {
+              setup: "Hold the bell upside down by the horns at chest height, elbows tight.",
+              move: "Circle the bell around your head — behind the neck, around, back to the chest. 5 one way, 5 the other. Keep it close to the skull the whole orbit.",
+              cue: "The body stays still — only the arms travel.",
+              load: "Lightest bell: men 26 lb, women 18 lb.",
+              watch: "Flaring the ribs as the bell passes behind the head. Ribs down, abs on."
+            }
+          },
+          {
+            id: "kbcsp",
+            name: "Clean–Squat–Press Complex",
+            sets: 4,
+            reps: "5+5+5",
+            rest: 120,
+            note: "One round = full sequence left, then right, bell stays in hand throughout.",
+            how: {
+              setup: "One bell. This one lives in the rack — get the rack position right on Day A's cleans first.",
+              move: "Clean the bell, then 4 more cleans (5 total). Keep it racked and front squat 5 — sit between the heels, elbow tracks inside the knee. Then strict press 5. Swing-switch hands, repeat the sequence. Park the bell, rest.",
+              cue: "Own the rack between movements — reset your breath there before the squats and again before the presses.",
+              load: "Men 26–35 lb, women 18–26 lb. Same bell as Day A's complex.",
+              watch: "The racked elbow drifting away from the body in the squat — it drags you forward onto your toes."
+            }
+          },
+          {
+            id: "swingfin",
+            name: "Swing Finisher",
+            sets: 3,
+            reps: "15",
+            rest: 60,
+            note: "Two-hand swings, heavier bell than the complex. Every rep crisp or you're done.",
+            how: {
+              setup: "Same setup as Day A swings, one size up.",
+              move: "15 hard two-hand swings. Full snap and full float every rep — when the float dies, the set is over regardless of the count.",
+              cue: "Rep 15 should look exactly like rep 1.",
+              load: "One bell up from your complex bell — men 44 lb, women 26–35 lb.",
+              watch: "Rushing the backswing. Let the bell finish falling before the hips fire."
             }
           }
         ]
