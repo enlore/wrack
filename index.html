@@ -190,7 +190,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--blue);outline-o
   <section class="screen on" id="s-home">
     <div class="head">
       <div>
-        <h1>Wrack<span class="ver">v16</span></h1>
+        <h1>Wrack<span class="ver">v17</span></h1>
         <div class="motto">why are we still here? just to suffer?</div>
       </div>
       <div class="lights">
@@ -363,14 +363,14 @@ const WORKOUTS = {
         load:"Men 70–100 lb, women 40–60 lb on the stack to start.",
         watch:"Bar to the front, never behind the neck. A supinated grip loads the biceps anchor directly — skip it."
       }},
-    { id:"seatedabduct", name:"Seated hip abduction", sets:3, reps:"12–15", rest:45,
-      note:"Superset with the Pallof press. No machine? Banded lateral walk, 2×20 steps each way.",
+    { id:"sidelyingabduct", name:"Side-lying hip abduction", sets:3, reps:"12–15", rest:45, side:true,
+      note:"Superset with the Pallof press. If bands are around, banded lateral walks are an equal swap.",
       how:{
-        setup:"Sit tall in the machine, pads outside the knees, feet flat on the rests. Set the start width so there's light tension before the pads move.",
-        move:"Drive the knees apart as far as they'll go without the pelvis tucking, hold the squeeze for a beat, then return under control without letting the stack rest.",
-        cue:"Push through the outer knee, not the feet.",
-        load:"Men 70–100 lb, women 50–80 lb on the stack to start.",
-        watch:"Leaning way back or hauling on the handles to move a bigger stack — a smaller range with a hold beats it."
+        setup:"Lie on your side on the floor or a flat bench, body in a straight line, top leg straight with the toe pointed slightly down toward the floor.",
+        move:"Raise the top leg 12–18 inches, pause a beat at the top, lower under control. All reps one side, then flip.",
+        cue:"Lead with the heel, not the toe — that keeps it in the glute med instead of the hip flexor.",
+        load:"Start with bodyweight. When 15 reps are easy, rest a 5–10 lb plate or dumbbell on the outer thigh and work back up from 12.",
+        watch:"Don't let the hips roll backward to fake extra height — the range shrinks but the muscle works harder when you stay stacked."
       }},
     { id:"pallof", name:"Cable Pallof press", sets:3, reps:"10", rest:45, side:true,
       how:{
@@ -398,13 +398,13 @@ const WORKOUTS = {
         load:"Bodyweight until the stance is dialed, then men 15–25 lb, women 8–15 lb per dumbbell.",
         watch:"Dial in stance length before adding load. Too short and it becomes a quad-and-knee exercise."
       }},
-    { id:"legpress", name:"Leg press", sets:3, reps:"10", rest:120,
+    { id:"gobletsquat", name:"Goblet squat", sets:3, reps:"10–12", rest:90,
       how:{
-        setup:"Feet mid-platform, hip width. Set the seat so the knees don't force the hips to tuck at the bottom.",
-        move:"Lower the sled until the knees are near 90° or the hips start to lift off the pad, then press through the whole foot without slamming the knees into lockout.",
-        cue:"Knees track over the toes for the entire rep.",
-        load:"Men 90–180 lb, women 50–110 lb on the sled to start — machines vary a lot, so let the first session calibrate.",
-        watch:"Chasing depth until the butt curls off the seat — that rounds the lower back under load. Cut the depth there."
+        setup:"Hold one dumbbell vertically against the chest, elbows tucked, feet shoulder-width with toes out slightly.",
+        move:"Sit straight down between the heels until the elbows pass inside the knees, then drive back up without letting the chest drop.",
+        cue:"The dumbbell stays glued to your sternum — if it drifts away, you're tipping forward.",
+        load:"Men 40–60 lb, women 20–35 lb. Add 5 lb when you get 12 on all three sets; when you run out of dumbbells, slow the descent to 3 seconds.",
+        watch:"Don't cut depth as the weight climbs — half reps here defeat the point of the slot."
       }},
     { id:"ohp", name:"DB shoulder press", sets:3, reps:"10", rest:90,
       how:{
@@ -430,13 +430,14 @@ const WORKOUTS = {
         load:"Men 30–45 lb, women 15–25 lb to start.",
         watch:"Neutral grip keeps the load off the biceps anchor. No twisting the torso to finish the rep."
       }},
-    { id:"legcurl", name:"Lying leg curl", sets:3, reps:"10–12", rest:60,
+    { id:"sliderlegcurl", name:"Slider leg curl", sets:3, reps:"8–12", rest:60,
+      note:"Needs the heels to glide: a towel on wood/tile, or a pair of cheap furniture sliders on rubber gym flooring.",
       how:{
-        setup:"Lie flat on the machine, pad resting just above the heels, kneecaps just off the edge of the bench.",
-        move:"Curl the heels toward the glutes without the hips rising, then lower until the legs are nearly straight.",
-        cue:"Drive the hips into the bench for the entire set.",
-        load:"Men 50–80 lb, women 30–50 lb on the stack to start.",
-        watch:"Hips popping up to sling the pad past the sticking point — that's the lower back taking over, not the hamstrings."
+        setup:"Lie on your back, heels on the sliders, knees bent, hips lifted into a bridge and held there.",
+        move:"Slide the heels out until the legs are nearly straight, then drag them back under you — hips stay up the entire set.",
+        cue:"The hard half is the way out: fight the slide for a slow 3-count instead of letting the legs shoot away.",
+        load:"Bodyweight. Progress by slowing the slide-out, then pausing 2 seconds at full length, then single-leg reps at 6–8 per side.",
+        watch:"If the hips sag to the floor between reps it turns into a hip-extension move — this slot is here for knee flexion, so keep the bridge."
       }}
   ]}
 }}};
