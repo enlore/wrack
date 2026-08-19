@@ -71,6 +71,14 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--blue);outline-o
 .card{background:var(--panel);border-radius:14px;padding:18px;margin:14px 16px}
 .card h2{font-family:var(--disp);font-size:28px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin:4px 0 2px}
 .card .sub{color:var(--dust);font-size:14px}
+.wochip{background:none;border:1px solid var(--line);border-radius:999px;color:var(--dust);font-family:var(--disp);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;padding:5px 11px;cursor:pointer}
+.wolist{margin:14px 0 0;padding:0;list-style:none}
+.wolist li{background:var(--panel);border-radius:14px;padding:16px 18px;margin:0 16px 12px;cursor:pointer;border:1px solid transparent}
+.wolist li.sel{border-color:var(--line)}
+.wolist h3{font-family:var(--disp);font-size:20px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin:0}
+.wolist .desc{color:var(--dust);font-size:14px;margin-top:3px}
+.wolist .meta{color:var(--dust);font-family:var(--disp);font-size:12px;letter-spacing:.08em;text-transform:uppercase;margin-top:10px}
+.wolist .tag{color:var(--chalk);border:1px solid var(--line);border-radius:999px;font-size:11px;font-family:var(--disp);letter-spacing:.1em;text-transform:uppercase;padding:3px 9px}
 .exlist{margin:14px 0 0;padding:0;list-style:none;border-top:1px solid var(--line)}
 .exlist li{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid var(--line);font-size:14px}
 .exlist .m{color:var(--dust);font-family:var(--disp);letter-spacing:.06em;white-space:nowrap}
@@ -182,7 +190,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--blue);outline-o
   <section class="screen on" id="s-home">
     <div class="head">
       <div>
-        <h1>Wrack<span class="ver">v15</span></h1>
+        <h1>Wrack<span class="ver">v16</span></h1>
         <div class="motto">why are we still here? just to suffer?</div>
       </div>
       <div class="lights">
@@ -193,7 +201,10 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--blue);outline-o
     <div id="banner"></div>
     <div class="scroll">
       <div class="card">
-        <div class="eyebrow">Up next</div>
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div class="eyebrow">Up next</div>
+          <button class="wochip" id="workoutsBtn">Butt Stuff ›</button>
+        </div>
         <h2 id="nextName">Day A</h2>
         <div class="sub" id="nextSub">Hinge-dominant · 6 exercises</div>
         <ul class="exlist" id="nextList"></ul>
@@ -218,6 +229,22 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--blue);outline-o
         <button class="btn soft" id="updateBtn">Check for update</button>
       </div>
       <input type="file" id="importFile" accept="application/json" hidden>
+    </div>
+  </section>
+
+  <!-- WORKOUTS -->
+  <section class="screen" id="s-workouts">
+    <div class="head">
+      <div>
+        <h1>Workouts</h1>
+        <div class="motto">tap a program to make it active</div>
+      </div>
+    </div>
+    <div class="scroll">
+      <ul class="wolist" id="woList"></ul>
+      <div style="padding:8px 16px 0">
+        <button class="btn quiet" id="woBack">Back</button>
+      </div>
     </div>
   </section>
 
@@ -295,7 +322,12 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--blue);outline-o
    PROGRAM  —  `how` blocks render in the explainer panel.
    Add an `illus` field (raw <svg> string) to draw a figure.
    ============================================================ */
-const PROGRAM = {
+const WORKOUTS = {
+  buttstuff: {
+    name: "Butt Stuff",
+    desc: "A/B split emphasis on hinge movements and glutes",
+    duration: 60,
+    days: {
   A: { name:"Day A", sub:"Hinge-dominant", ex:[
     { id:"hipthrust", name:"Hip thrust", sets:4, reps:"8–10", rest:120,
       how:{
@@ -407,7 +439,9 @@ const PROGRAM = {
         watch:"Hips popping up to sling the pad past the sticking point — that's the lower back taking over, not the hamstrings."
       }}
   ]}
-};
+}}};
+let workoutId = "buttstuff";
+let PROGRAM = WORKOUTS[workoutId].days;
 
 /* ============================================================
    STORAGE  —  IndexedDB first, host storage next, memory last
@@ -637,6 +671,9 @@ const mmss = s => `${Math.floor(s/60)}:${pad2(s%60)}`;
 (async function boot(){
   const backend = await Store.init();
   sessions = (await Store.get("sessions")) || [];
+  const savedWo = await Store.get("workout");
+  if (savedWo && WORKOUTS[savedWo]){ workoutId = savedWo; PROGRAM = WORKOUTS[workoutId].days; }
+  if (!PROGRAM[dayKey]) dayKey = Object.keys(PROGRAM)[0];
   howOpen = (await Store.get("howOpen")) === true;
   const last = await Store.get("lastDay");
   dayKey = last === "A" ? "B" : "A";
@@ -653,6 +690,7 @@ const mmss = s => `${Math.floor(s/60)}:${pad2(s%60)}`;
    HOME
    ============================================================ */
 function renderHome(){
+  $("workoutsBtn").textContent = WORKOUTS[workoutId].name + " ›";
   const d = PROGRAM[dayKey];
   $("nextName").textContent = d.name;
   $("nextSub").textContent = `${d.sub} · ${d.ex.length} exercises`;
@@ -664,7 +702,7 @@ function renderHome(){
   $("hist").innerHTML = h.map((s, di) => {
     const dt = new Date(s.startedAt);
     return `<li data-i="${sessions.length - 1 - di}">
-            <span class="d">${PROGRAM[s.day].name} · ${dt.toLocaleDateString(undefined,{month:"short",day:"numeric"})}</span>
+            <span class="d">${PROGRAM[s.day]?.name || "Day " + s.day} · ${dt.toLocaleDateString(undefined,{month:"short",day:"numeric"})}</span>
             <span class="v num">${s.setCount} sets · ${volume(s).toLocaleString()} lb</span>
             <span style="display:flex"><button class="edit">Edit</button><button class="del">Delete</button></span></li>`;
   }).join("");
@@ -679,7 +717,38 @@ function show(id){
   $("s-" + id).classList.add("on");
   window.scrollTo(0, 0);
 }
-$("swapBtn").onclick = () => { dayKey = dayKey === "A" ? "B" : "A"; renderHome(); };
+$("swapBtn").onclick = () => {
+  const days = Object.keys(PROGRAM);
+  dayKey = days[(days.indexOf(dayKey) + 1) % days.length];
+  renderHome();
+};
+
+/* ============================================================
+   WORKOUTS  —  pick the active program
+   ============================================================ */
+function renderWorkouts(){
+  $("woList").innerHTML = Object.entries(WORKOUTS).map(([id, w]) => {
+    const days = Object.values(w.days);
+    return `<li data-id="${id}" class="${id === workoutId ? "sel" : ""}">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
+        <h3>${w.name}</h3>${id === workoutId ? '<span class="tag">Active</span>' : ""}
+      </div>
+      <div class="desc">${w.desc}</div>
+      <div class="meta">~${w.duration} min · ${days.map(d => `${d.name}: ${d.ex.length} ex`).join(" · ")}</div>
+    </li>`;
+  }).join("");
+}
+$("workoutsBtn").onclick = () => { renderWorkouts(); show("workouts"); };
+$("woBack").onclick = () => { show("home"); };
+$("woList").onclick = async e => {
+  const li = e.target.closest("li[data-id]");
+  if (!li) return;
+  workoutId = li.dataset.id;
+  PROGRAM = WORKOUTS[workoutId].days;
+  if (!PROGRAM[dayKey]) dayKey = Object.keys(PROGRAM)[0];
+  await Store.set("workout", workoutId);
+  show("home"); renderHome();
+};
 $("startBtn").onclick = startSession;
 $("homeBtn").onclick = () => { show("home"); renderHome(); };
 
@@ -816,13 +885,13 @@ function startEdit(i){
   editIdx = i;
   live = { day: rec.day, startedAt: rec.startedAt, log: JSON.parse(JSON.stringify(rec.log)), prev: {} };
   // sessions from older program versions may lack current exercises
-  for (const e of PROGRAM[rec.day].ex){
+  for (const e of (PROGRAM[rec.day]?.ex || [])){
     if (!live.log[e.id]) live.log[e.id] = Array.from({length: e.sets}, () => ({ w: 0, r: parseInt(e.reps) || 8, done: false }));
   }
   exIdx = 0;
   show("run");
   const dt = new Date(rec.startedAt);
-  $("runTitle").textContent = `Editing · ${PROGRAM[rec.day].name} · ${dt.toLocaleDateString(undefined,{month:"short",day:"numeric"})}`;
+  $("runTitle").textContent = `Editing · ${PROGRAM[rec.day]?.name || "Day " + rec.day} · ${dt.toLocaleDateString(undefined,{month:"short",day:"numeric"})}`;
   renderEx();
 }
 async function saveEdit(){
