@@ -190,7 +190,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--blue);outline-o
   <section class="screen on" id="s-home">
     <div class="head">
       <div>
-        <h1>Wrack<span class="ver">v19</span></h1>
+        <h1>Wrack<span class="ver">v20</span></h1>
         <div class="motto">why are we still here? just to suffer?</div>
       </div>
       <div class="lights">
@@ -1086,7 +1086,7 @@ function renderHome(){
   $("hist").innerHTML = h.map((s, di) => {
     const dt = new Date(s.startedAt);
     return `<li data-i="${sessions.length - 1 - di}">
-            <span class="d">${PROGRAM[s.day]?.name || "Day " + s.day} · ${dt.toLocaleDateString(undefined,{month:"short",day:"numeric"})}</span>
+            <span class="d">${(WORKOUTS[s.workout] || WORKOUTS.buttstuff).name} · ${progOf(s)[s.day]?.name || "Day " + s.day} · ${dt.toLocaleDateString(undefined,{month:"short",day:"numeric"})}</span>
             <span class="v num">${s.setCount} sets · ${volume(s).toLocaleString()} lb</span>
             <span style="display:flex"><button class="edit">Edit</button><button class="del">Delete</button></span></li>`;
   }).join("");
@@ -1142,7 +1142,7 @@ $("homeBtn").onclick = () => { show("home"); renderHome(); };
 async function startSession(){
   const prev = (await Store.get("lastWeights")) || {};
   editIdx = null;
-  live = { day: dayKey, startedAt: Date.now(), log: {}, prev };
+  live = { workout: workoutId, day: dayKey, startedAt: Date.now(), log: {}, prev };
   for (const e of PROGRAM[dayKey].ex){
     const seed = prev[e.id] || [];
     live.log[e.id] = Array.from({length: e.sets}, (_, i) => ({
@@ -1157,10 +1157,11 @@ async function startSession(){
   Wake.on();
   renderEx();
 }
-const curEx = () => PROGRAM[live.day].ex[exIdx];
+const progOf = rec => (WORKOUTS[rec.workout] || WORKOUTS.buttstuff).days;
+const curEx = () => progOf(live)[live.day].ex[exIdx];
 
 function renderRail(){
-  $("rail").innerHTML = PROGRAM[live.day].ex.map((e, i) => {
+  $("rail").innerHTML = progOf(live)[live.day].ex.map((e, i) => {
     const sets = live.log[e.id];
     const n = sets.filter(s => s.done).length;
     const pct = Math.round(n / sets.length * 100);
@@ -1170,7 +1171,7 @@ function renderRail(){
 }
 
 function renderEx(){
-  const e = curEx(), sets = live.log[e.id], total = PROGRAM[live.day].ex.length;
+  const e = curEx(), sets = live.log[e.id], total = progOf(live)[live.day].ex.length;
   $("exCount").textContent = `${pad2(exIdx + 1)} / ${pad2(total)}`;
   $("restLab").textContent = `Rest ${mmss(e.rest)}`;
   $("exName").textContent = e.name;
@@ -1250,7 +1251,7 @@ $("setRows").addEventListener("change", ev => {
 
 $("prevEx").onclick = () => { if (exIdx > 0){ exIdx--; renderEx(); $("runScroll").scrollTop = 0; } };
 $("nextEx").onclick = () => {
-  const total = PROGRAM[live.day].ex.length;
+  const total = progOf(live)[live.day].ex.length;
   if (exIdx < total - 1){ exIdx++; renderEx(); $("runScroll").scrollTop = 0; }
   else if (editIdx !== null) saveEdit();
   else finish();
@@ -1267,15 +1268,15 @@ $("endBtn").onclick = () => {
 function startEdit(i){
   const rec = sessions[i];
   editIdx = i;
-  live = { day: rec.day, startedAt: rec.startedAt, log: JSON.parse(JSON.stringify(rec.log)), prev: {} };
+  live = { workout: rec.workout || "buttstuff", day: rec.day, startedAt: rec.startedAt, log: JSON.parse(JSON.stringify(rec.log)), prev: {} };
   // sessions from older program versions may lack current exercises
-  for (const e of (PROGRAM[rec.day]?.ex || [])){
+  for (const e of (progOf(rec)[rec.day]?.ex || [])){
     if (!live.log[e.id]) live.log[e.id] = Array.from({length: e.sets}, () => ({ w: 0, r: parseInt(e.reps) || 8, done: false }));
   }
   exIdx = 0;
   show("run");
   const dt = new Date(rec.startedAt);
-  $("runTitle").textContent = `Editing · ${PROGRAM[rec.day]?.name || "Day " + rec.day} · ${dt.toLocaleDateString(undefined,{month:"short",day:"numeric"})}`;
+  $("runTitle").textContent = `Editing · ${(WORKOUTS[rec.workout] || WORKOUTS.buttstuff).name} · ${progOf(rec)[rec.day]?.name || "Day " + rec.day} · ${dt.toLocaleDateString(undefined,{month:"short",day:"numeric"})}`;
   renderEx();
 }
 async function saveEdit(){
@@ -1332,7 +1333,7 @@ function ding(){
 async function finish(){
   stopRest(); Wake.off();
   const setCount = Object.values(live.log).flat().filter(s => s.done).length;
-  const rec = { day: live.day, startedAt: live.startedAt, endedAt: Date.now(), log: live.log, setCount };
+  const rec = { workout: live.workout, day: live.day, startedAt: live.startedAt, endedAt: Date.now(), log: live.log, setCount };
   sessions.push(rec);
   if (sessions.length > 200) sessions = sessions.slice(-200);
 
@@ -1345,7 +1346,7 @@ async function finish(){
   await Store.set("lastWeights", lw);
   await Store.set("lastDay", live.day);
 
-  $("doneName").textContent = PROGRAM[live.day].name;
+  $("doneName").textContent = progOf(live)[live.day].name;
   $("stSets").textContent = setCount;
   $("stVol").textContent = volume(rec).toLocaleString();
   $("stTime").textContent = Math.max(1, Math.round((rec.endedAt - rec.startedAt) / 60000)) + "m";
